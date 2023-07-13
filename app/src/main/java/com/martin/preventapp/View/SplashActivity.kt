@@ -4,25 +4,25 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.animation.AnimationUtils
 import com.martin.preventapp.R
+import com.martin.preventapp.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
-    private val splashTimeOut: Long = 3000 // Tiempo en milisegundos (3 segundos)
-
+    private lateinit var binding:ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Setea el archivo de diseño del splash screen
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
 
-        // Crea un handler para retrasar el inicio de la siguiente actividad
+        setContentView(binding.root)
+
+        val animation = AnimationUtils.loadAnimation(this, R.anim.splash_screen)
+        binding.tvSplash.startAnimation(animation)
+
         Handler().postDelayed({
-            // Inicia la siguiente actividad después del tiempo de espera
-            val intent = Intent(this@SplashActivity, MainActivity::class.java)
-            startActivity(intent)
-
-            // Cierra la actividad del splash screen
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }, splashTimeOut)
+        }, 2000)
     }
 }
