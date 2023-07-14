@@ -20,6 +20,9 @@
             android:layout_marginTop="5dp"
             android:autofillHints="@string/prompt_email"
             android:hint="@string/prompt_email"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray"
+            android:backgroundTint="@color/border"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,13 +36,14 @@
             android:layout_marginHorizontal="15dp"
             android:autofillHints="@string/prompt_password"
             android:hint="@string/prompt_password"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray"
+            android:backgroundTint="@color/border"
             android:inputType="textPassword"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
@@ -47,7 +51,7 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="50dp"
             android:text="INICIAR SESIÓN"
             android:textColor="@color/white" />
 

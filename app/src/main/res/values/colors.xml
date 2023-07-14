@@ -3,9 +3,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#6B7371</color>
+    <color name="soft_gray">#989C9B</color>
 
     <!--appColor-->
     <color name="background">#041229</color>
     <color name="border">#3FCAA0</color>
+    <color name="blue">#24385B</color>
 
 </resources>

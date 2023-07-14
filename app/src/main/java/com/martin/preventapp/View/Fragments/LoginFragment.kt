@@ -1,24 +1,35 @@
 package com.martin.preventapp.View.Fragments
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.martin.preventapp.Controller.Interfaces.LoginInterfaces
+import com.martin.preventapp.Controller.LoginController
 import com.martin.preventapp.R
+import com.martin.preventapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
+    @JvmField
+    var context: Activity? = null
+    @JvmField
+    var view: View? = null
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
-        private var instance: LoginFragment? = null
-
+        private var loginFragment: LoginFragment? = null
         @JvmStatic
-        fun getInstance(): LoginFragment {
-            if (instance == null) {
-                instance = LoginFragment()
+        val instance: LoginFragment?
+            get() {
+                if (loginFragment == null) {
+                    loginFragment = LoginFragment()
+                }
+                return loginFragment
             }
-            return instance!!
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +40,15 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding.login.setOnClickListener{
+            LoginController.instance!!.goMain()
+        }
+    }
 }
