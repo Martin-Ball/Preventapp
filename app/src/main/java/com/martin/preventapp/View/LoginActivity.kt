@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.martin.preventapp.Controller.Interfaces.LoginInterfaces
 import com.martin.preventapp.Controller.LoginController
 import com.martin.preventapp.R
-import com.martin.preventapp.View.Fragments.LoginFragment
+import com.martin.preventapp.View.Fragments.Login.LoginFragment
 import com.martin.preventapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), LoginInterfaces.View {

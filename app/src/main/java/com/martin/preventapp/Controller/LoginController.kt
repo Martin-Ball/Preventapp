@@ -1,9 +1,7 @@
 package com.martin.preventapp.Controller
 
 import android.app.Activity
-import android.view.View
 import com.martin.preventapp.Controller.Interfaces.LoginInterfaces
-import com.martin.preventapp.View.Fragments.LoginFragment
 
 class LoginController : LoginInterfaces.Controller {
     @JvmField

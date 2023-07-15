@@ -9,5 +9,7 @@
     <color name="background">#041229</color>
     <color name="border">#3FCAA0</color>
     <color name="blue">#24385B</color>
+    <color name="blue_light">#6E788A</color>
+
 
 </resources>
