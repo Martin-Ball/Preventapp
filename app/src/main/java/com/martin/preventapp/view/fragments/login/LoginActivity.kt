@@ -1,13 +1,13 @@
-package com.martin.preventapp.View
+package com.martin.preventapp.view.fragments.login
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.martin.preventapp.Controller.Interfaces.LoginInterfaces
-import com.martin.preventapp.Controller.LoginController
+import com.martin.preventapp.controller.interfaces.LoginInterfaces
+import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.R
-import com.martin.preventapp.View.Fragments.Login.LoginFragment
 import com.martin.preventapp.databinding.ActivityLoginBinding
+import com.martin.preventapp.view.MainActivity
 
 class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
 

@@ -10,6 +10,7 @@
     <color name="border">#3FCAA0</color>
     <color name="blue">#24385B</color>
     <color name="blue_light">#6E788A</color>
+    <color name="blue_background_order">#1D2E4F</color>
 
 
 </resources>

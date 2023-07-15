@@ -1,4 +1,4 @@
-package com.martin.preventapp.View
+package com.martin.preventapp.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
 import com.martin.preventapp.R
-import com.martin.preventapp.View.LoginActivity
 import com.martin.preventapp.databinding.ActivitySplashBinding
+import com.martin.preventapp.view.fragments.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding:ActivitySplashBinding

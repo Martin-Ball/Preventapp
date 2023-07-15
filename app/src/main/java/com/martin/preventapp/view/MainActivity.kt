@@ -1,10 +1,10 @@
-package com.martin.preventapp.View
+package com.martin.preventapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
-import com.martin.preventapp.View.Fragments.Create.CreateOrderFragment
+import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

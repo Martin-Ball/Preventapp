@@ -1,4 +1,4 @@
-package com.martin.preventapp.View.Fragments.Create
+package com.martin.preventapp.view.fragments.create
 
 import android.R
 import android.app.Activity
@@ -12,12 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.martin.preventapp.Controller.LoginController
-import com.martin.preventapp.View.Fragments.Login.LoginFragment
+import com.martin.preventapp.controller.createOrder.CreateOrderController
+import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
-import com.martin.preventapp.databinding.FragmentLoginBinding
+import com.martin.preventapp.view.adapter.ProductAdapter
 
-class CreateOrderFragment : Fragment() {
+class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
     @JvmField
     var context: Activity? = null
@@ -42,7 +42,7 @@ class CreateOrderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCreateOrderBinding.inflate(inflater)
         return binding.root
     }
@@ -50,7 +50,7 @@ class CreateOrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val products = arrayOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
+        val products = listOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
 
         val userAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
@@ -58,7 +58,7 @@ class CreateOrderFragment : Fragment() {
             products
         )
 
-        binding.userList.adapter = userAdapter
+        binding.userList.adapter = ProductAdapter(requireContext(), products)
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -77,20 +77,12 @@ class CreateOrderFragment : Fragment() {
 
         binding.userList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = userAdapter.getItem(position)
-            onItemSelected(selectedItem!!)
+            CreateOrderController.instance!!.onProductSelected(selectedItem!!)
 
         }
-
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setView(view)
-            .setPositiveButton("Cerrar") { dialog, _ ->
-                dialog?.dismiss()
-            }
-
-        builder.create()
     }
 
     private fun onItemSelected(item : String){
-        Toast.makeText(requireContext(),item, Toast.LENGTH_LONG)
+        Toast.makeText(requireContext(),item, Toast.LENGTH_LONG).show()
     }
 }

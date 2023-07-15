@@ -1,7 +1,7 @@
-package com.martin.preventapp.Controller
+package com.martin.preventapp.controller.login
 
 import android.app.Activity
-import com.martin.preventapp.Controller.Interfaces.LoginInterfaces
+import com.martin.preventapp.controller.interfaces.LoginInterfaces
 
 class LoginController : LoginInterfaces.Controller {
     @JvmField

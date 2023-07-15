@@ -1,4 +1,4 @@
-package com.martin.preventapp.Controller.Interfaces
+package com.martin.preventapp.controller.interfaces
 
 import android.app.Activity
 

@@ -1,4 +1,4 @@
-package com.martin.preventapp.View.Fragments.Login
+package com.martin.preventapp.view.fragments.login
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.martin.preventapp.Controller.LoginController
+import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
