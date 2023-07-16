@@ -7,6 +7,7 @@ import com.martin.preventapp.view.adapter.ItemAmount
 class CreateOrderModel : CreateOrderInterface.Model {
 
     private var itemList: List<ItemAmount> = listOf()
+    private var clientSelected : String = ""
 
     companion object {
         private var createOrderModel: CreateOrderModel? = null
@@ -25,5 +26,7 @@ class CreateOrderModel : CreateOrderInterface.Model {
         this.itemList = listItems
     }
 
-
+    override fun setClientSelected(clientSelected: String) {
+        this.clientSelected = clientSelected
+    }
 }

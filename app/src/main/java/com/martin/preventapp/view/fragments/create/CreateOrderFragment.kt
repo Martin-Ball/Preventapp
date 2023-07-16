@@ -62,6 +62,7 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
             products
         )
 
+
         val adapter = AmountAdapter(itemList)
         binding.rvAmount.adapter = adapter
         binding.rvAmount.layoutManager = LinearLayoutManager(requireContext())
@@ -89,7 +90,12 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         }
 
         binding.nextStepOrder.setOnClickListener {
-            CreateOrderController.instance?.goToStepClient(itemList)
+            if(itemList.isEmpty()){
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG)
+            }else{
+                CreateOrderController.instance?.goToStepClient(itemList)
+            }
+
         }
 
 

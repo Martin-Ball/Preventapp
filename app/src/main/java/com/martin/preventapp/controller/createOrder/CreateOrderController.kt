@@ -36,4 +36,8 @@ class CreateOrderController : CreateOrderInterface.Controller {
     override fun setViewClient(clientSelectionActivity: ClientSelectionActivity) {
         this.contextClient = clientSelectionActivity
     }
+
+    override fun setClientSelected(clientSelected: String) {
+        CreateOrderModel.instance?.setClientSelected(clientSelected)
+    }
 }

@@ -15,10 +15,14 @@ interface CreateOrderInterface {
 
         //STEP CLIENT
         fun setViewClient(clientSelectionActivity: ClientSelectionActivity)
+        fun setClientSelected(clientSelected : String)
     }
 
     interface Model {
         //STEP PRODUCTS
         fun productsOrder(listItems : List<ItemAmount>)
+
+        //STEP CLIENT
+        fun setClientSelected(clientSelected:String)
     }
 }
