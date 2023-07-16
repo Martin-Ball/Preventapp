@@ -12,10 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
-import com.martin.preventapp.view.adapter.ProductAdapter
+import com.martin.preventapp.view.adapter.AmountAdapter
+import com.martin.preventapp.view.adapter.ItemAmount
 
 class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
@@ -50,7 +52,8 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val products = listOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
+        val products = arrayOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
+        val itemList: MutableList<ItemAmount> = createItemList()
 
         val userAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
@@ -58,7 +61,11 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
             products
         )
 
-        binding.userList.adapter = ProductAdapter(requireContext(), products)
+        val adapter = AmountAdapter(itemList)
+        binding.rvAmount.adapter = adapter
+        binding.rvAmount.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.userList.adapter = userAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -78,11 +85,18 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         binding.userList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = userAdapter.getItem(position)
             CreateOrderController.instance!!.onProductSelected(selectedItem!!)
-
+            adapter.addItem(ItemAmount(selectedItem.toString()))
         }
+
+
     }
 
-    private fun onItemSelected(item : String){
-        Toast.makeText(requireContext(),item, Toast.LENGTH_LONG).show()
+    private fun createItemList(): MutableList<ItemAmount> {
+        return mutableListOf(
+            ItemAmount("Elemento 1"),
+            ItemAmount("Elemento 2"),
+            ItemAmount("Elemento 3"),
+        )
     }
+
 }
