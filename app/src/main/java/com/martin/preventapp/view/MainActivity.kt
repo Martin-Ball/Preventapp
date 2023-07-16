@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,17 +29,37 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding.root)
 
-        showFragment(CreateOrderFragment.instance!!)
+        binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
+           when (menuItem.itemId) {
+                R.id.navigation_list -> {
+                    showFragment(CreateOrderFragment.instance!!)
+                    true
+                }
+                R.id.navigation_recommended -> {
+                    showFragment(CreateOrderFragment.instance!!)
+                    true
+                }
+                R.id.navigation_orders -> {
+                    showFragment(CreateOrderFragment.instance!!)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    showFragment(CreateOrderFragment.instance!!)
+                    true
+                }
+                else -> {
+                    showFragment(CreateOrderFragment.instance!!)
+                    true
+                }
+            }
+        }
+
+        binding.bottomNavigationView.selectedItemId = R.id.navigation_list
     }
 
     private fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_container, fragment)
-            .addToBackStack(null)
+            .replace(R.id.main_container, fragment)
             .commit()
-    }
-
-    fun showClientActivity(){
-
     }
 }
