@@ -1,18 +1,17 @@
 package com.martin.preventapp.controller.createOrder
 
 import android.app.Activity
-import android.content.Intent
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.createOrder.CreateOrderModel
-import com.martin.preventapp.view.MainActivity
 import com.martin.preventapp.view.adapter.ItemAmount
-import com.martin.preventapp.view.fragments.create.ClientSelectionActivity
+import com.martin.preventapp.view.fragments.create.ClientSelectionFragment
+import com.martin.preventapp.view.fragments.create.CompleteOrderActivity
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 
 class CreateOrderController : CreateOrderInterface.Controller {
 
     @JvmField
-    var contextClient: Activity? = null
+    var contextClient: CreateOrderInterface.CompleteOrderView? = null
 
     companion object {
         private var createOrderController: CreateOrderController? = null
@@ -33,8 +32,9 @@ class CreateOrderController : CreateOrderInterface.Controller {
     }
 
     //STEP CLIENT
-    override fun setViewClient(clientSelectionActivity: ClientSelectionActivity) {
+    override fun setViewClient(clientSelectionActivity: CreateOrderInterface.CompleteOrderView) {
         this.contextClient = clientSelectionActivity
+        contextClient!!.showClientFragment(ClientSelectionFragment.instance!!)
     }
 
     override fun setClientSelected(clientSelected: String) {

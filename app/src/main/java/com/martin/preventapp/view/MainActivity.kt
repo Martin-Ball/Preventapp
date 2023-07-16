@@ -1,14 +1,11 @@
 package com.martin.preventapp.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
-import com.martin.preventapp.view.fragments.create.ClientSelectionActivity
 
 class MainActivity : AppCompatActivity() {
 

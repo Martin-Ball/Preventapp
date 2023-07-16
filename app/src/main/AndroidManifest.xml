@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Preventapp"
         tools:targetApi="31">
         <activity
-            android:name=".view.fragments.create.ClientSelectionActivity"
+            android:name=".view.fragments.create.CompleteOrderActivity"
             android:exported="false" />
         <activity
             android:name=".view.fragments.login.LoginActivity"
