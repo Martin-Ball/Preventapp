@@ -52,6 +52,7 @@ class ClientSelectionActivity : AppCompatActivity() {
 
         binding.clientList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             clientSelected = clientsAdapter.getItem(position).toString()
+            binding.tvClient.text = "Cliente seleccionado: $clientSelected"
         }
 
         binding.nextStepClient.setOnClickListener {
