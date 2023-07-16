@@ -1,17 +1,33 @@
 package com.martin.preventapp.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
+import com.martin.preventapp.view.fragments.create.ClientSelectionActivity
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private var mainActivity: MainActivity? = null
+        @JvmStatic
+        val instance: MainActivity?
+            get() {
+                if (mainActivity == null) {
+                    mainActivity = MainActivity()
+                }
+                return mainActivity
+            }
+    }
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding.root)
 
@@ -23,5 +39,9 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.main_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    fun showClientActivity(){
+
     }
 }

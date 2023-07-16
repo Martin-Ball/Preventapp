@@ -3,6 +3,7 @@ package com.martin.preventapp.view.fragments.create
 import android.R
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,9 +54,9 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         super.onViewCreated(view, savedInstanceState)
 
         val products = arrayOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
-        val itemList: MutableList<ItemAmount> = createItemList()
+        val itemList: MutableList<ItemAmount> = mutableListOf()
 
-        val userAdapter: ArrayAdapter<String> = ArrayAdapter(
+        val productsAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             R.layout.simple_list_item_1,
             products
@@ -65,38 +66,36 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         binding.rvAmount.adapter = adapter
         binding.rvAmount.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.userList.adapter = userAdapter
+        binding.productList.adapter = productsAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
                 if (products.contains(query)) {
-                    userAdapter.filter.filter(query)
+                    productsAdapter.filter.filter(query)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                userAdapter.filter.filter(newText)
+                productsAdapter.filter.filter(newText)
                 return false
             }
         })
 
-        binding.userList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedItem = userAdapter.getItem(position)
-            CreateOrderController.instance!!.onProductSelected(selectedItem!!)
+        binding.productList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectedItem = productsAdapter.getItem(position)
             adapter.addItem(ItemAmount(selectedItem.toString()))
+        }
+
+        binding.nextStepOrder.setOnClickListener {
+            CreateOrderController.instance?.goToStepClient(itemList)
         }
 
 
     }
 
-    private fun createItemList(): MutableList<ItemAmount> {
-        return mutableListOf(
-            ItemAmount("Elemento 1"),
-            ItemAmount("Elemento 2"),
-            ItemAmount("Elemento 3"),
-        )
+    override fun showClientActivity(){
+        requireActivity().startActivity(Intent(requireContext(), ClientSelectionActivity::class.java))
     }
-
 }
