@@ -90,7 +90,7 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
         binding.nextStepOrder.setOnClickListener {
             if(itemList.isEmpty()){
-                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG).show()
             }else{
                 CreateOrderController.instance?.goToStepClient(itemList)
             }

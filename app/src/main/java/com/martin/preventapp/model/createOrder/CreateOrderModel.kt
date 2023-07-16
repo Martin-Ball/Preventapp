@@ -2,12 +2,14 @@ package com.martin.preventapp.model.createOrder
 
 import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
+import com.martin.preventapp.model.entities.OrderModel
 import com.martin.preventapp.view.adapter.ItemAmount
 
 class CreateOrderModel : CreateOrderInterface.Model {
 
     private var itemList: List<ItemAmount> = listOf()
     private var clientSelected : String = ""
+    private lateinit var order : OrderModel
 
     companion object {
         private var createOrderModel: CreateOrderModel? = null
@@ -28,5 +30,13 @@ class CreateOrderModel : CreateOrderInterface.Model {
 
     override fun setClientSelected(clientSelected: String) {
         this.clientSelected = clientSelected
+    }
+
+    override fun getOrder(): OrderModel {
+        return OrderModel(clientSelected, itemList, "")
+    }
+
+    override fun sendOrder(order: OrderModel) {
+        this.order = order
     }
 }

@@ -1,6 +1,7 @@
 package com.martin.preventapp.controller.interfaces
 
 import androidx.fragment.app.Fragment
+import com.martin.preventapp.model.entities.OrderModel
 import com.martin.preventapp.view.adapter.ItemAmount
 import com.martin.preventapp.view.fragments.create.CompleteOrderActivity
 
@@ -11,7 +12,8 @@ interface CreateOrderInterface {
     }
 
     interface CompleteOrderView {
-        fun showClientFragment(fragment: Fragment)
+        fun showFragment(fragment: Fragment)
+        fun goToMain()
     }
 
     interface Controller {
@@ -21,6 +23,10 @@ interface CreateOrderInterface {
         //STEP CLIENT
         fun setViewClient(clientSelectionActivity: CompleteOrderView)
         fun setClientSelected(clientSelected : String)
+
+        //STEP RESUME
+        fun getOrder() : OrderModel
+        fun sendOrder(order: OrderModel)
     }
 
     interface Model {
@@ -29,5 +35,9 @@ interface CreateOrderInterface {
 
         //STEP CLIENT
         fun setClientSelected(clientSelected:String)
+
+        //STEP RESUME
+        fun getOrder() : OrderModel
+        fun sendOrder(order: OrderModel)
     }
 }

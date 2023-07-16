@@ -76,7 +76,7 @@ class ClientSelectionFragment : Fragment() {
 
         binding.nextStepClient.setOnClickListener {
             if(clientSelected == ""){
-                Toast.makeText(requireContext(), "DEBE SELECCIONAR UN CLIENTE", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR UN CLIENTE", Toast.LENGTH_LONG).show()
             }else{
                 CreateOrderController.instance?.setClientSelected(clientSelected)
             }
