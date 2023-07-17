@@ -6,21 +6,10 @@ import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
+import com.martin.preventapp.view.fragments.recommended.RecommendedFragment
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        private var mainActivity: MainActivity? = null
-        @JvmStatic
-        val instance: MainActivity?
-            get() {
-                if (mainActivity == null) {
-                    mainActivity = MainActivity()
-                }
-                return mainActivity
-            }
-    }
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_recommended -> {
-                    showFragment(CreateOrderFragment.instance!!)
+                    showFragment(RecommendedFragment.instance!!)
                     true
                 }
                 R.id.navigation_orders -> {

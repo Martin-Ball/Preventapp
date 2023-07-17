@@ -13,6 +13,11 @@
         android:theme="@style/Theme.Preventapp"
         tools:targetApi="31">
         <activity
+            android:name=".view.fragments.recommended.RecommendedProductsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_recommended_products"
+            android:theme="@style/Theme.Preventapp" />
+        <activity
             android:name=".view.fragments.create.CompleteOrderActivity"
             android:exported="false" />
         <activity

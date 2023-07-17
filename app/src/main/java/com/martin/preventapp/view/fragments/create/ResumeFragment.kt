@@ -64,4 +64,6 @@ class ResumeFragment : Fragment() {
                     "NOTAS: ${order.notes}", Toast.LENGTH_LONG).show()
         }
     }
+
+
 }
