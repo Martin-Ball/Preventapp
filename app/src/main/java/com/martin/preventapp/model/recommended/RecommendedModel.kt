@@ -22,4 +22,8 @@ class RecommendedModel : RecommendedInterface.Model {
     override fun setClientSelected(clientSelected: String) {
         this.clientSelected = clientSelected
     }
+
+    override fun getClientSelected(): String {
+        return this.clientSelected
+    }
 }

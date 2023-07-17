@@ -22,4 +22,8 @@ class RecommendedController : RecommendedInterface.Controller {
         RecommendedModel.instance?.setClientSelected(clientSelected)
         RecommendedFragment.instance?.showRecommendedProductsActivity()
     }
+
+    override fun getClientSelected(): String {
+        return RecommendedModel.instance!!.getClientSelected()
+    }
 }
