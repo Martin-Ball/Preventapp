@@ -1,9 +1,8 @@
 package com.martin.preventapp.model.createOrder
 
-import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.entities.OrderModel
-import com.martin.preventapp.view.adapter.ItemAmount
+import com.martin.preventapp.view.entities.ItemAmount
 
 class CreateOrderModel : CreateOrderInterface.Model {
 

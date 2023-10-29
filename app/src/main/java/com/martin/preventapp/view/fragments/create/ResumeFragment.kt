@@ -7,13 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.martin.preventapp.R
 import com.martin.preventapp.controller.createOrder.CreateOrderController
-import com.martin.preventapp.databinding.FragmentClientSelectionBinding
 import com.martin.preventapp.databinding.FragmentResumeBinding
-import com.martin.preventapp.view.adapter.AmountAdapter
-import com.martin.preventapp.view.adapter.ItemAmount
+import com.martin.preventapp.view.entities.ItemAmount
 
 class ResumeFragment : Fragment() {
 

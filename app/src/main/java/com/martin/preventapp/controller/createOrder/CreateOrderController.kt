@@ -3,7 +3,7 @@ package com.martin.preventapp.controller.createOrder
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.createOrder.CreateOrderModel
 import com.martin.preventapp.model.entities.OrderModel
-import com.martin.preventapp.view.adapter.ItemAmount
+import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.fragments.create.ClientSelectionFragment
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.view.fragments.create.ResumeFragment

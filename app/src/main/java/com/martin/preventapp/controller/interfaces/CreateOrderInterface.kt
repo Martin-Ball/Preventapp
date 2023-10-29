@@ -2,8 +2,7 @@ package com.martin.preventapp.controller.interfaces
 
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.model.entities.OrderModel
-import com.martin.preventapp.view.adapter.ItemAmount
-import com.martin.preventapp.view.fragments.create.CompleteOrderActivity
+import com.martin.preventapp.view.entities.ItemAmount
 
 interface CreateOrderInterface {
     interface View {

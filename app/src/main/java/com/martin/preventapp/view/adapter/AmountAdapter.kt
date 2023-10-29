@@ -3,12 +3,12 @@ package com.martin.preventapp.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.martin.preventapp.R
+import com.martin.preventapp.view.entities.ItemAmount
 
 class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerView.Adapter<AmountAdapter.ViewHolder>() {
 
@@ -29,6 +29,10 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
     fun addItem(item: ItemAmount) {
         itemList.add(item)
         notifyItemInserted(itemList.size - 1)
+    }
+
+    fun checkIfExist(itemTitle: String): Boolean {
+        return itemList.any { it.title == itemTitle }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

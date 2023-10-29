@@ -1,14 +1,11 @@
 package com.martin.preventapp.view.fragments.recommended
 
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.martin.preventapp.databinding.ActivityRecommendedProductsBinding
@@ -20,8 +17,6 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.recommended.RecommendedController
-import com.martin.preventapp.view.adapter.AmountAdapter
-import com.martin.preventapp.view.adapter.ItemAmount
 
 class RecommendedProductsActivity : AppCompatActivity() {
 

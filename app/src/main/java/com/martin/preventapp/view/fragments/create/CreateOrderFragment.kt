@@ -1,6 +1,6 @@
 package com.martin.preventapp.view.fragments.create
 
-import android.R
+import ProductListAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,7 +16,8 @@ import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
 import com.martin.preventapp.view.adapter.AmountAdapter
-import com.martin.preventapp.view.adapter.ItemAmount
+import com.martin.preventapp.view.entities.ItemAmount
+import com.martin.preventapp.view.entities.Product
 
 class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
@@ -52,40 +52,46 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val products = arrayOf("Queso", "Bondiola", "Jamon", "Mayonesa", "Vino", "Salame", "Vacio")
         val itemList: MutableList<ItemAmount> = mutableListOf()
 
-        val productsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            R.layout.simple_list_item_1,
-            products
-        )
+        val products = listOf(Product("Queso"),
+            Product("Bondiola"),
+            Product("Jamon"),
+            Product("Mayonesa"),
+            Product("Vino"),
+            Product("Salame"),
+            Product("Vacio"))
+
+        val productsAdapter = ProductListAdapter(requireContext(), products)
+        binding.productList.adapter = productsAdapter
 
 
         val adapter = AmountAdapter(itemList)
         binding.rvAmount.adapter = adapter
         binding.rvAmount.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.productList.adapter = productsAdapter
-
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
-                if (products.contains(query)) {
-                    productsAdapter.filter.filter(query)
+                if (query != null) {
+                    productsAdapter.filter(query)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                productsAdapter.filter.filter(newText)
+                if (newText != null) {
+                    productsAdapter.filter(newText)
+                }
                 return false
             }
         })
 
         binding.productList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = productsAdapter.getItem(position)
-            adapter.addItem(ItemAmount(selectedItem.toString()))
+            if(!adapter.checkIfExist(selectedItem.title)) {
+                adapter.addItem(ItemAmount(selectedItem.title))
+            }
         }
 
         binding.nextStepOrder.setOnClickListener {
