@@ -1,7 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/blue" />
-    <stroke android:color="@color/gray" android:width="1dp" />
+    <stroke android:color="@color/white" android:width="1dp" />
     <corners android:radius="14dp" />
-    <item android:state_focused="true" android:color="@color/soft_gray" />
-    <item android:state_pressed="true" android:color="@color/soft_gray" />
+    <item android:state_pressed="true" android:color="@color/white" />
 </shape>

@@ -1,5 +1,6 @@
 package com.martin.preventapp.view.fragments.create
 
+import ClientAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,33 +45,30 @@ class ClientSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val clients = arrayOf("Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6", "Cliente 7", "Cliente 8")
+        val clientList = listOf("Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4")
 
-        val clientsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            clients
-        )
-
-        binding.clientList.adapter = clientsAdapter
+        val clientAdapter = ClientAdapter(requireContext(), clientList)
+        binding.clientList.adapter = clientAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
-                if (clients.contains(query)) {
-                    clientsAdapter.filter.filter(query)
+                if (query != null && clientList.contains(query)) {
+                    clientAdapter.filter(query)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                clientsAdapter.filter.filter(newText)
+                if (newText != null) {
+                    clientAdapter.filter(newText)
+                }
                 return false
             }
         })
 
         binding.clientList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            clientSelected = clientsAdapter.getItem(position).toString()
+            clientSelected = clientAdapter.getItem(position).toString()
             binding.tvClient.text = "Cliente seleccionado: $clientSelected"
         }
 
