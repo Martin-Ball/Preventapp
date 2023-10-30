@@ -55,6 +55,10 @@ class ResumeFragment : Fragment() {
                     "PRODUCTOS: ${order.products} \n" +
                     "NOTAS: ${order.notes}", Toast.LENGTH_LONG).show()
         }
+
+        binding.backButton.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
 

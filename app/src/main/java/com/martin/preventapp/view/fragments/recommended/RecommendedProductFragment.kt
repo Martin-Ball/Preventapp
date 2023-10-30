@@ -131,6 +131,10 @@ class RecommendedProductFragment : Fragment() {
         })
 
         binding.llChartContainer.addView(lineChart)
+
+        binding.backButton.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun getMonths(): List<String> {
