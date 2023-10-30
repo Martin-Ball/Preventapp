@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.FragmentResumeBinding
+import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.ItemAmount
 
 class ResumeFragment : Fragment() {
@@ -44,12 +45,7 @@ class ResumeFragment : Fragment() {
         binding.tvClient.text = order!!.client
         binding.tvNotes.text = order.notes
 
-        val productsAdapter: ArrayAdapter<ItemAmount> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            order.products
-        )
-
+        val productsAdapter = ProductResumeAdapter(requireContext(), order.products)
         binding.listProducts.adapter = productsAdapter
 
         binding.sendOrder.setOnClickListener {

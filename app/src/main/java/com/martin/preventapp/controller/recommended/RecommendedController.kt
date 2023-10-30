@@ -20,7 +20,7 @@ class RecommendedController : RecommendedInterface.Controller {
 
     override fun setClientSelected(clientSelected: String) {
         RecommendedModel.instance?.setClientSelected(clientSelected)
-        RecommendedFragment.instance?.showRecommendedProductsActivity()
+        RecommendedFragment.instance?.showRecommendedProducts()
     }
 
     override fun getClientSelected(): String {

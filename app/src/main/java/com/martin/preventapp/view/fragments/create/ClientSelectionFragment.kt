@@ -1,6 +1,7 @@
 package com.martin.preventapp.view.fragments.create
 
 import ClientAdapter
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.FragmentClientSelectionBinding
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
+import com.martin.preventapp.view.MainActivity
 
 class ClientSelectionFragment : Fragment() {
 
@@ -78,6 +80,10 @@ class ClientSelectionFragment : Fragment() {
             }else{
                 CreateOrderController.instance?.setClientSelected(clientSelected)
             }
+        }
+
+        binding.backButton.setOnClickListener {
+            requireActivity().finish()
         }
     }
 }

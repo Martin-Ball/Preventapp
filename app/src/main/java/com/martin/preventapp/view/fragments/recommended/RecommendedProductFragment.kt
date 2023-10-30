@@ -1,14 +1,19 @@
 package com.martin.preventapp.view.fragments.recommended
 
+import ProductListAdapter
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.martin.preventapp.databinding.ActivityRecommendedProductsBinding
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -17,30 +22,51 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.recommended.RecommendedController
+import com.martin.preventapp.databinding.FragmentRecommendedBinding
+import com.martin.preventapp.databinding.FragmentRecommendedProductBinding
+import com.martin.preventapp.view.entities.Product
 
-class RecommendedProductsActivity : AppCompatActivity() {
+class RecommendedProductFragment : Fragment() {
+    companion object {
+        private var recommendedProductFragment: RecommendedProductFragment? = null
+        @JvmStatic
+        val instance: RecommendedProductFragment?
+            get() {
+                if (recommendedProductFragment == null) {
+                    recommendedProductFragment = RecommendedProductFragment()
+                }
+                return recommendedProductFragment
+            }
+    }
 
-    private lateinit var binding: ActivityRecommendedProductsBinding
+    private var _binding: FragmentRecommendedProductBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRecommendedProductBinding.inflate(inflater)
+        return binding.root
+    }
 
-        binding = ActivityRecommendedProductsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         createLineChart()
 
-        val products = arrayOf("Queso", "Bondiola", "Jamon")
-
-        val productsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            products
+        val products = listOf(
+            Product("Queso"),
+            Product("Bondiola"),
+            Product("Jamon"),
+            Product("Mayonesa"),
+            Product("Vino"),
+            Product("Salame"),
+            Product("Vacio")
         )
 
+        val productsAdapter = ProductListAdapter(requireContext(), products)
         binding.listProducts.adapter = productsAdapter
-
     }
 
     private fun createLineChart() {
@@ -63,7 +89,7 @@ class RecommendedProductsActivity : AppCompatActivity() {
 
         val lineData = LineData(dataSet)
 
-        val lineChart = LineChart(this)
+        val lineChart = LineChart(requireContext())
         lineChart.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT
@@ -71,7 +97,7 @@ class RecommendedProductsActivity : AppCompatActivity() {
         lineChart.data = lineData
 
         dataSet.lineWidth = 5f
-        dataSet.color = ContextCompat.getColor(this, R.color.border)
+        dataSet.color = ContextCompat.getColor(requireContext(), R.color.border)
 
         dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
 
@@ -97,7 +123,7 @@ class RecommendedProductsActivity : AppCompatActivity() {
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 binding.tvPurchases.text = "El cliente ${RecommendedController.instance?.getClientSelected()} compro en el mes ${e?.x} $ ${e?.y}"
-            //Toast.makeText(applicationContext, "El cliente" + e?.y, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "El cliente" + e?.y, Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected() {

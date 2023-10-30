@@ -3,10 +3,11 @@ package com.martin.preventapp.model.createOrder
 import com.martin.preventapp.controller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.entities.OrderModel
 import com.martin.preventapp.view.entities.ItemAmount
+import com.martin.preventapp.view.entities.Product
 
 class CreateOrderModel : CreateOrderInterface.Model {
 
-    private var itemList: List<ItemAmount> = listOf()
+    private var itemList: MutableList<Product> = mutableListOf()
     private var clientSelected : String = ""
     private lateinit var order : OrderModel
 
@@ -24,7 +25,9 @@ class CreateOrderModel : CreateOrderInterface.Model {
     }
 
     override fun productsOrder(listItems: List<ItemAmount>) {
-        this.itemList = listItems
+        listItems.forEach { product ->
+            this.itemList.add(Product(product.title))
+        }
     }
 
     override fun setClientSelected(clientSelected: String) {

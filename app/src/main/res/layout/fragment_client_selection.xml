@@ -6,30 +6,52 @@
     tools:context=".view.fragments.create.CompleteOrderActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="15dp"
-        android:paddingTop="10dp"
-        android:text="Productos recomendados"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cliente"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingStart="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp">
 
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:background="#00FFFFFF"
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="15dp"
+                android:text="Productos recomendados"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title_client"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cliente"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="10dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_clients"
@@ -42,7 +64,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_client"
+        app:layout_constraintTop_toBottomOf="@id/ll_toolbar"
         app:layout_constraintBottom_toTopOf="@id/tv_client">
 
         <SearchView

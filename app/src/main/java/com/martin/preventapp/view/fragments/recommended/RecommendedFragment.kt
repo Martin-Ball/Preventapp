@@ -1,5 +1,6 @@
 package com.martin.preventapp.view.fragments.recommended
 
+import ClientAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.martin.preventapp.R
 import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.interfaces.RecommendedInterface
 import com.martin.preventapp.controller.recommended.RecommendedController
@@ -45,33 +49,30 @@ class RecommendedFragment : Fragment(), RecommendedInterface.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val clients = arrayOf("Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6", "Cliente 7", "Cliente 8")
+        val clientList = listOf("Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4")
 
-        val clientsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            clients
-        )
-
-        binding.clientList.adapter = clientsAdapter
+        val clientAdapter = ClientAdapter(requireContext(), clientList)
+        binding.clientList.adapter = clientAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
-                if (clients.contains(query)) {
-                    clientsAdapter.filter.filter(query)
+                if (query != null && clientList.contains(query)) {
+                    clientAdapter.filter(query)
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                clientsAdapter.filter.filter(newText)
+                if (newText != null) {
+                    clientAdapter.filter(newText)
+                }
                 return false
             }
         })
 
         binding.clientList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            clientSelected = clientsAdapter.getItem(position).toString()
+            clientSelected = clientAdapter.getItem(position)
             binding.tvClient.text = "Cliente seleccionado: $clientSelected"
         }
 
@@ -84,7 +85,11 @@ class RecommendedFragment : Fragment(), RecommendedInterface.View {
         }
     }
 
-    override fun showRecommendedProductsActivity() {
-        requireActivity().startActivity(Intent(requireContext(), RecommendedProductsActivity::class.java))
+    override fun showRecommendedProducts() {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.main_container, RecommendedProductFragment())
+        transaction.commit()
     }
 }

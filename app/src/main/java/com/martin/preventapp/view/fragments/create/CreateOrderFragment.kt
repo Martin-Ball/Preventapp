@@ -102,8 +102,6 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
             }
 
         }
-
-
     }
 
     override fun showClientActivity(){
