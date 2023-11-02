@@ -1,5 +1,6 @@
 package com.martin.preventapp.view.fragments.orders
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.fragments.create.ResumeFragment
+import java.util.Calendar
 
 class OrdersFragment : Fragment() {
 
@@ -71,6 +73,27 @@ class OrdersFragment : Fragment() {
 
         val adapter = OrderAdapter(requireContext(), items)
         binding.orderList.adapter = adapter
+
+        binding.btnOpenDatePicker.setOnClickListener {
+            showDatePicker()
+        }
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+            },
+            year, month, day
+        )
+
+        datePickerDialog.show()
     }
 
 
