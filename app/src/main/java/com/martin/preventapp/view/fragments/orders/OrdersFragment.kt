@@ -87,6 +87,7 @@ class OrdersFragment : Fragment() {
 
         val datePickerDialog = DatePickerDialog(
             requireContext(),
+            R.style.DialogTheme,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
             },
