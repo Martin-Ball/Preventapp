@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.createOrder.CreateOrderController
+import com.martin.preventapp.controller.interfaces.OrdersInterface
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
 import com.martin.preventapp.databinding.FragmentOrdersBinding
 import com.martin.preventapp.databinding.FragmentResumeBinding
@@ -16,9 +19,10 @@ import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.fragments.create.ResumeFragment
+import com.martin.preventapp.view.fragments.recommended.RecommendedProductFragment
 import java.util.Calendar
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
@@ -71,7 +75,7 @@ class OrdersFragment : Fragment() {
             OrderItem("Pedido 2"),
         )
 
-        val adapter = OrderAdapter(requireContext(), items)
+        val adapter = OrderAdapter(requireContext(), items, this)
         binding.orderList.adapter = adapter
 
         binding.btnOpenDatePicker.setOnClickListener {
@@ -90,6 +94,7 @@ class OrdersFragment : Fragment() {
             R.style.DialogTheme,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                binding.dateSelected.text = "Fecha: ${selectedDate}"
             },
             year, month, day
         )
@@ -97,5 +102,11 @@ class OrdersFragment : Fragment() {
         datePickerDialog.show()
     }
 
-
+    override fun showFragmentDetail() {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.main_container, DetailOrderFragment.instance!!)
+        transaction.commit()
+    }
 }
