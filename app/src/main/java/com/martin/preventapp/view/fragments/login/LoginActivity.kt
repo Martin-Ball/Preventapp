@@ -1,13 +1,15 @@
 package com.martin.preventapp.view.fragments.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.martin.preventapp.controller.interfaces.LoginInterfaces
+import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.R
 import com.martin.preventapp.databinding.ActivityLoginBinding
-import com.martin.preventapp.view.MainActivity
+import com.martin.preventapp.view.activities.admin.MainAdminActivity
+import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
 
@@ -31,8 +33,18 @@ class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
             .commit()
     }
 
-    override fun goMain(){
-        startActivity(Intent(this, MainActivity::class.java))
+    override fun goToActivitySeller() {
+        startActivity(Intent(this, MainSellerActivity::class.java))
         finish()
+    }
+
+    override fun goToActivityAdmin() {
+        startActivity(Intent(this, MainAdminActivity::class.java))
+        finish()
+    }
+
+    override fun goToActivityDelivery() {
+        /*startActivity(Intent(this, ))
+        finish()*/
     }
 }

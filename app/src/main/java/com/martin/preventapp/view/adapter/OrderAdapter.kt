@@ -8,8 +8,8 @@ import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.interfaces.OrdersInterface
-import com.martin.preventapp.controller.orders.OrdersController
+import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
+import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.view.entities.OrderItem
 
 class OrderAdapter (private val context: Context, private val items: List<OrderItem>) : BaseAdapter() {

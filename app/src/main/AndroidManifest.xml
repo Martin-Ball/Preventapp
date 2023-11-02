@@ -13,11 +13,14 @@
         android:theme="@style/Theme.Preventapp"
         tools:targetApi="31">
         <activity
+            android:name=".view.activities.admin.MainAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.fragments.recommended.RecommendedProductsActivity"
             android:exported="false"
             android:label="@string/title_activity_recommended_products" />
         <activity
-            android:name=".view.fragments.create.CompleteOrderActivity"
+            android:name=".view.fragments.seller.create.CompleteOrderActivity"
             android:exported="false" />
         <activity
             android:name=".view.fragments.login.LoginActivity"
@@ -34,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activities.seller.MainSellerActivity"
             android:exported="true" />
     </application>
 

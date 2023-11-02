@@ -1,7 +1,8 @@
 package com.martin.preventapp.controller.login
 
 import android.app.Activity
-import com.martin.preventapp.controller.interfaces.LoginInterfaces
+import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
+import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class LoginController : LoginInterfaces.Controller {
     @JvmField
@@ -29,7 +30,11 @@ class LoginController : LoginInterfaces.Controller {
         this.context = _context
     }
 
-    override fun goMain() {
-        view!!.goMain()
+    override fun login(userName: String) {
+        when (userName) {
+            "1" -> view!!.goToActivitySeller()
+            "2" -> view!!.goToActivityAdmin()
+            "3" -> view!!.goToActivityDelivery()
+        }
     }
 }
