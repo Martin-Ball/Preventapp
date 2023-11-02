@@ -16,6 +16,7 @@ import com.martin.preventapp.controller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.FragmentClientSelectionBinding
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
 import com.martin.preventapp.view.MainActivity
+import com.martin.preventapp.view.entities.Client
 
 class ClientSelectionFragment : Fragment() {
 
@@ -47,7 +48,10 @@ class ClientSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val clientList = listOf("Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4")
+        val clientList = listOf(
+            Client("Cliente 1",), Client("Cliente 2"), Client("Cliente 3"), Client("Cliente 4"))
+
+        val clientNames = clientList.map { it.name }
 
         val clientAdapter = ClientAdapter(requireContext(), clientList)
         binding.clientList.adapter = clientAdapter
@@ -55,7 +59,7 @@ class ClientSelectionFragment : Fragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
-                if (query != null && clientList.contains(query)) {
+                if (query != null && clientNames.contains(query)) {
                     clientAdapter.filter(query)
                 }
                 return false

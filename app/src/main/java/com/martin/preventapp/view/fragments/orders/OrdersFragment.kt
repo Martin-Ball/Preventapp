@@ -17,7 +17,9 @@ import com.martin.preventapp.databinding.FragmentOrdersBinding
 import com.martin.preventapp.databinding.FragmentResumeBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
+import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
+import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.fragments.create.ResumeFragment
 import com.martin.preventapp.view.fragments.recommended.RecommendedProductFragment
 import java.util.Calendar
@@ -51,31 +53,21 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         super.onViewCreated(view, savedInstanceState)
 
         val items = listOf(
-            OrderItem("Pedido 1"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
-            OrderItem("Pedido 2"),
+            OrderItem("Pedido 1", listOf(Product("Producto 1"), Product("Producto 12")), Client("Cliente 1"), "nota de pedido"),
+            OrderItem("Pedido 2", listOf(Product("Producto 2"), Product("Producto 13")), Client("Cliente 2"), "nota de pedido1"),
+            OrderItem("Pedido 3", listOf(Product("Producto 3"), Product("Producto 14")), Client("Cliente 3"), "nota de pedido2"),
+            OrderItem("Pedido 4", listOf(Product("Producto 4"), Product("Producto 15")), Client("Cliente 4"), "nota de pedido3"),
+            OrderItem("Pedido 5", listOf(Product("Producto 5"), Product("Producto 16")), Client("Cliente 5"), "nota de pedido4"),
+            OrderItem("Pedido 6", listOf(Product("Producto 6"), Product("Producto 17")), Client("Cliente 6"), "nota de pedido5"),
+            OrderItem("Pedido 7", listOf(Product("Producto 7"), Product("Producto 18")), Client("Cliente 7"), "nota de pedido6"),
+            OrderItem("Pedido 8", listOf(Product("Producto 8"), Product("Producto 19")), Client("Cliente 8"), "nota de pedido7"),
+            OrderItem("Pedido 9", listOf(Product("Producto 9"), Product("Producto 20")), Client("Cliente 9"), "nota de pedido7"),
+            OrderItem("Pedido 10", listOf(Product("Producto 10"), Product("Producto 21")), Client("Cliente 10"), "nota de pedido9"),
+            OrderItem("Pedido 11", listOf(Product("Producto 11"), Product("Producto 22")), Client("Cliente 11"), "nota de pedido10"),
+
         )
 
-        val adapter = OrderAdapter(requireContext(), items, this)
+        val adapter = OrderAdapter(requireContext(), items)
         binding.orderList.adapter = adapter
 
         binding.btnOpenDatePicker.setOnClickListener {

@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.martin.preventapp.controller.createOrder.CreateOrderController
+import com.martin.preventapp.controller.interfaces.OrdersInterface
+import com.martin.preventapp.controller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
+import com.martin.preventapp.view.entities.OrderItem
 
 class DetailOrderFragment : Fragment() {
 
     private var _binding: FragmentDetailOrderBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var itemToDetail:OrderItem
 
     companion object {
         private var detailOrderFragment: DetailOrderFragment? = null
@@ -27,6 +32,14 @@ class DetailOrderFragment : Fragment() {
             }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val item = OrdersController.instance!!.getItemToDetail()
+        if(item != null) {
+            itemToDetail = item
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +51,17 @@ class DetailOrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvClient.text = itemToDetail.client.name
+        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail.products)
+        binding.listProducts.adapter = productsAdapter
+
+        binding.tvNotes.text = itemToDetail.note
+
         binding.backButton.setOnClickListener {
+            OrdersController.instance!!.setItemToDetail(null)
             requireActivity().onBackPressed()
         }
     }
+
+
 }

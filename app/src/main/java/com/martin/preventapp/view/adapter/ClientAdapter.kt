@@ -7,18 +7,19 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import com.martin.preventapp.R
+import com.martin.preventapp.view.entities.Client
 
-class ClientAdapter(context: Context, private val clientList: List<String>) : BaseAdapter() {
+class ClientAdapter(context: Context, private val clientList: List<Client>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var filteredClientList: List<String> = clientList
+    private var filteredClientList: List<Client> = clientList
 
     override fun getCount(): Int {
         return filteredClientList.size
     }
 
     override fun getItem(position: Int): String {
-        return filteredClientList[position]
+        return filteredClientList[position].name
     }
 
     override fun getItemId(position: Int): Long {
@@ -38,13 +39,13 @@ class ClientAdapter(context: Context, private val clientList: List<String>) : Ba
             viewHolder = view.tag as ViewHolder
         }
 
-        viewHolder.clientName.text = filteredClientList[position]
+        viewHolder.clientName.text = filteredClientList[position].name
 
         return view
     }
 
     fun filter(query: String) {
-        filteredClientList = clientList.filter { it.contains(query, ignoreCase = true) }
+        filteredClientList = clientList.filter { it.name.contains(query, ignoreCase = true) }
         notifyDataSetChanged()
     }
 
