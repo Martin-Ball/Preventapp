@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
 import com.martin.preventapp.view.fragments.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
+import com.martin.preventapp.view.fragments.Profile.ProfileFragment
 import com.martin.preventapp.view.fragments.orders.OrdersFragment
 import com.martin.preventapp.view.fragments.recommended.RecommendedFragment
 import java.util.UUID
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
-                    showFragment(CreateOrderFragment.instance!!)
+                    showFragment(ProfileFragment.instance!!)
                     true
                 }
                 else -> {
