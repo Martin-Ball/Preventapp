@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.ConfirmedOrdersController
+import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
+import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
+import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
-import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 import com.martin.preventapp.view.fragments.seller.recommended.RecommendedFragment
 
@@ -20,16 +23,18 @@ class MainAdminActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.navigation_list -> {
-                    showFragment(CreateOrderFragment.instance!!)
+                R.id.navigation_orders -> {
+                    ConfirmedOrdersFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
+                    showFragment(OrdersAdminFragment.instance!!)
                     true
                 }
-                R.id.navigation_recommended -> {
+                R.id.navigation_list -> {
                     showFragment(RecommendedFragment.instance!!)
                     true
                 }
-                R.id.navigation_orders -> {
-                    showFragment(OrdersFragment.instance!!)
+                R.id.navigation_users -> {
+                    ConfirmedOrdersFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
+                    showFragment(OrdersAdminFragment.instance!!)
                     true
                 }
                 R.id.navigation_profile -> {
@@ -37,13 +42,14 @@ class MainAdminActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    showFragment(CreateOrderFragment.instance!!)
+                    ConfirmedOrdersFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
+                    showFragment(OrdersAdminFragment.instance!!)
                     true
                 }
             }
         }
 
-        binding.bottomNavigationView.selectedItemId = R.id.navigation_list
+        binding.bottomNavigationView.selectedItemId = R.id.navigation_orders
     }
 
     private fun showFragment(fragment: Fragment){

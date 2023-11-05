@@ -1,46 +1,36 @@
-package com.martin.preventapp.view.fragments.seller.orders
+package com.martin.preventapp.view.fragments.admin.neworders
 
-import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
-import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
-import com.martin.preventapp.databinding.FragmentCreateOrderBinding
-import com.martin.preventapp.databinding.FragmentOrdersBinding
-import com.martin.preventapp.databinding.FragmentResumeBinding
-import com.martin.preventapp.view.adapter.OrderAdapter
-import com.martin.preventapp.view.adapter.OrderItemClickListener
-import com.martin.preventapp.view.adapter.ProductResumeAdapter
+import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
+import com.martin.preventapp.databinding.FragmentOrdersAdminBinding
+import com.martin.preventapp.view.adapter.NewOrdersAdapter
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
-import com.martin.preventapp.view.fragments.seller.recommended.RecommendedProductFragment
-import java.util.Calendar
+import com.martin.preventapp.view.fragments.seller.create.CompleteOrderActivity
+import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
 
-class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
-
-    private var _binding: FragmentOrdersBinding? = null
+class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
+    private var _binding: FragmentOrdersAdminBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listener: OrderItemClickListener
-
     companion object {
-        private var ordersFragment: OrdersFragment? = null
+        private var ordersAdminFragment: OrdersAdminFragment? = null
         @JvmStatic
-        val instance: OrdersFragment?
+        val instance: OrdersAdminFragment?
             get() {
-                if (ordersFragment == null) {
-                    ordersFragment = OrdersFragment()
+                if (ordersAdminFragment == null) {
+                    ordersAdminFragment = OrdersAdminFragment()
                 }
-                return ordersFragment
+                return ordersAdminFragment
             }
     }
 
@@ -48,7 +38,7 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentOrdersBinding.inflate(inflater)
+        _binding = FragmentOrdersAdminBinding.inflate(inflater)
         return binding.root
     }
 
@@ -70,42 +60,20 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
             )
 
-        val adapter = OrderAdapter(requireContext(), items, listener)
+        val adapter = NewOrdersAdapter(requireContext(), items)
         binding.orderList.adapter = adapter
 
-        binding.btnOpenDatePicker.setOnClickListener {
-            showDatePicker()
+        binding.btnConfirmOrders.setOnClickListener {
+            requireActivity().startActivity(Intent(requireContext(), ConfirmedOrdersActivity::class.java))
         }
-    }
 
-    private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            R.style.DialogTheme,
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
-                binding.dateSelected.text = "Fecha: ${selectedDate}"
-            },
-            year, month, day
-        )
-
-        datePickerDialog.show()
     }
 
     override fun showFragmentDetail() {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
-        transaction.replace(R.id.main_container, DetailOrderFragment.instance!!)
+        transaction.replace(R.id.main_container, DetailNewOrderFragment .instance!!)
         transaction.commit()
-    }
-
-    override fun setListener(listener: OrderItemClickListener) {
-        this.listener = listener
     }
 }

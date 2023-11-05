@@ -8,13 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
+import com.martin.preventapp.controller.admin.NewOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.view.entities.OrderItem
 
-class OrderAdapter (private val context: Context,
-                    private val items: List<OrderItem>,
-                    private val listener: OrderItemClickListener) : BaseAdapter() {
+class NewOrdersAdapter (private val context: Context, private val items: List<OrderItem>) : BaseAdapter() {
     override fun getCount(): Int {
         return items.size
     }
@@ -32,7 +30,7 @@ class OrderAdapter (private val context: Context,
         val viewHolder: ViewHolder
 
         if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false)
+            view = LayoutInflater.from(context).inflate(R.layout.item_new_order, parent, false)
             viewHolder = ViewHolder(view)
             view.tag = viewHolder
         } else {
@@ -42,20 +40,19 @@ class OrderAdapter (private val context: Context,
 
         val item = getItem(position)
 
-        viewHolder.titleTextView.text = item.title
+        viewHolder.client.text = item.client.name
+        viewHolder.seller.text = item.seller
         viewHolder.actionButton.setOnClickListener {
-            listener.onOrderItemClicked(item)
+            NewOrdersController.instance!!.setItemToDetail(item)
+            NewOrdersController.instance!!.showFragmentDetail()
         }
 
         return view
     }
 
     private class ViewHolder(view: View) {
-        val titleTextView: TextView = view.findViewById(R.id.title)
+        val client: TextView = view.findViewById(R.id.client)
+        val seller: TextView = view.findViewById(R.id.seller)
         val actionButton: ImageButton = view.findViewById(R.id.actionButton)
     }
-}
-
-interface OrderItemClickListener {
-    fun onOrderItemClicked(item: OrderItem)
 }

@@ -1,22 +1,22 @@
-package com.martin.preventapp.controller.seller.orders
+package com.martin.preventapp.controller.admin
 
-import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
-import com.martin.preventapp.controller.seller.recommended.RecommendedController
+import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
-class OrdersController : OrdersInterface.Controller, OrderItemClickListener {
+class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemClickListener {
 
     private var itemToDetail : OrderItem? = null
+    private var view: ConfirmedOrderInterface.ViewOrders? = null
 
     companion object {
-        private var ordersController: OrdersController? = null
+        private var ordersController: ConfirmedOrdersController? = null
         @JvmStatic
-        val instance: OrdersController?
+        val instance: ConfirmedOrdersController?
             get() {
                 if (ordersController == null) {
-                    ordersController = OrdersController()
+                    ordersController = ConfirmedOrdersController()
                 }
                 return ordersController
             }
@@ -32,6 +32,14 @@ class OrdersController : OrdersInterface.Controller, OrderItemClickListener {
 
     override fun getItemToDetail(): OrderItem? {
         return itemToDetail
+    }
+
+    override fun goToMain() {
+        view!!.goToMain()
+    }
+
+    override fun setView(view: ConfirmedOrderInterface.ViewOrders) {
+        this.view = view
     }
 
     override fun onOrderItemClicked(item: OrderItem) {

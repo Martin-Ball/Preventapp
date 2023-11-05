@@ -1,4 +1,4 @@
-package com.martin.preventapp.view.fragments.seller.orders
+package com.martin.preventapp.view.fragments.admin.neworders
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -6,39 +6,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
-import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
-import com.martin.preventapp.databinding.FragmentCreateOrderBinding
+import com.martin.preventapp.controller.admin.ConfirmedOrdersController
+import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
+import com.martin.preventapp.databinding.FragmentConfirmedOrdersBinding
 import com.martin.preventapp.databinding.FragmentOrdersBinding
-import com.martin.preventapp.databinding.FragmentResumeBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
-import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
-import com.martin.preventapp.view.fragments.seller.recommended.RecommendedProductFragment
+import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
+import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 import java.util.Calendar
 
-class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
-
-    private var _binding: FragmentOrdersBinding? = null
+class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
+    private var _binding: FragmentConfirmedOrdersBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var listener: OrderItemClickListener
 
     companion object {
-        private var ordersFragment: OrdersFragment? = null
+        private var ordersFragment: ConfirmedOrdersFragment? = null
         @JvmStatic
-        val instance: OrdersFragment?
+        val instance: ConfirmedOrdersFragment?
             get() {
                 if (ordersFragment == null) {
-                    ordersFragment = OrdersFragment()
+                    ordersFragment = ConfirmedOrdersFragment()
                 }
                 return ordersFragment
             }
@@ -48,7 +43,7 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentOrdersBinding.inflate(inflater)
+        _binding = FragmentConfirmedOrdersBinding.inflate(inflater)
         return binding.root
     }
 
@@ -76,6 +71,10 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         binding.btnOpenDatePicker.setOnClickListener {
             showDatePicker()
         }
+
+        binding.backButton.setOnClickListener {
+            ConfirmedOrdersController.instance!!.goToMain()
+        }
     }
 
     private fun showDatePicker() {
@@ -97,7 +96,7 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         datePickerDialog.show()
     }
 
-    override fun showFragmentDetail() {
+    private fun showFragmentDetail() {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
@@ -108,4 +107,5 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
     override fun setListener(listener: OrderItemClickListener) {
         this.listener = listener
     }
+
 }

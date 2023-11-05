@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
@@ -30,6 +31,7 @@ class MainSellerActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_orders -> {
+                    OrdersFragment.instance!!.setListener(OrdersController.instance!!)
                     showFragment(OrdersFragment.instance!!)
                     true
                 }
