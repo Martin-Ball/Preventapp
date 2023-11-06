@@ -96,14 +96,6 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
         datePickerDialog.show()
     }
 
-    private fun showFragmentDetail() {
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
-        transaction.replace(R.id.main_container, DetailOrderFragment.instance!!)
-        transaction.commit()
-    }
-
     override fun setListener(listener: OrderItemClickListener) {
         this.listener = listener
     }

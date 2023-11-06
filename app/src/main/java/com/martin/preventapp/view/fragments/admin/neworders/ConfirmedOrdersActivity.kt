@@ -31,6 +31,13 @@ class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.Vie
             .commit()
     }
 
+    override fun showFragmentDetail() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.completed_order_container, DetailNewOrderFragment.instance!!)
+            .addToBackStack(null)
+            .commit()
+    }
+
     override fun goToMain() {
         val intent = Intent(this, MainAdminActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

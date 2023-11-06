@@ -6,6 +6,7 @@ import com.martin.preventapp.view.entities.OrderItem
 interface ConfirmedOrderInterface {
     interface ViewOrders {
         fun showFragment()
+        fun showFragmentDetail()
         fun goToMain()
     }
 
@@ -14,7 +15,7 @@ interface ConfirmedOrderInterface {
     }
 
     interface Controller {
-        fun showFragmentDetail()
+        fun showFragmentDetail(item: OrderItem?)
         fun setItemToDetail(item: OrderItem?)
         fun getItemToDetail() : OrderItem?
         fun goToMain()

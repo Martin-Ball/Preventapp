@@ -3,6 +3,7 @@ package com.martin.preventapp.controller.admin
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.OrderItem
+import com.martin.preventapp.view.fragments.admin.neworders.DetailNewOrderFragment
 import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
 class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemClickListener {
@@ -22,8 +23,9 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
             }
     }
 
-    override fun showFragmentDetail() {
-        OrdersFragment.instance!!.showFragmentDetail()
+    override fun showFragmentDetail(item: OrderItem?) {
+        DetailNewOrderFragment.instance!!.setItemToDetail(item)
+        view!!.showFragmentDetail()
     }
 
     override fun setItemToDetail(item: OrderItem?) {
@@ -44,6 +46,6 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
 
     override fun onOrderItemClicked(item: OrderItem) {
         this.itemToDetail = item
-        showFragmentDetail()
+        showFragmentDetail(item)
     }
 }

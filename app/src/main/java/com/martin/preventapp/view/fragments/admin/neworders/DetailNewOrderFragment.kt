@@ -18,7 +18,7 @@ class DetailNewOrderFragment : Fragment() {
     private var _binding: FragmentDetailNewOrderBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var itemToDetail: OrderItem
+    private var itemToDetail: OrderItem? = null
 
     companion object {
         private var detailNewOrderFragment: DetailNewOrderFragment? = null
@@ -51,15 +51,22 @@ class DetailNewOrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvClient.text = itemToDetail.client.name
-        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail.products)
+        binding.tvClient.text = itemToDetail!!.client.name
+        binding.llSeller.visibility = View.VISIBLE
+        binding.tvTitleSeller.visibility = View.VISIBLE
+        binding.tvSeller.text = itemToDetail!!.seller
+        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products)
         binding.listProducts.adapter = productsAdapter
 
-        binding.tvNotes.text = itemToDetail.note
+        binding.tvNotes.text = itemToDetail!!.note
 
         binding.backButton.setOnClickListener {
             OrdersController.instance!!.setItemToDetail(null)
             requireActivity().onBackPressed()
         }
+    }
+
+    fun setItemToDetail(item: OrderItem?){
+        this.itemToDetail = item
     }
 }
