@@ -24,7 +24,7 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
     }
 
     override fun showFragmentDetail(item: OrderItem?) {
-        DetailNewOrderFragment.instance!!.setItemToDetail(item)
+        NewOrdersController.instance!!.setItemToDetail(item, false)
         view!!.showFragmentDetail()
     }
 

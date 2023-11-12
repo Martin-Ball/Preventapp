@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/ll_toolbar"
@@ -93,7 +89,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingStart="10dp"
-            android:text="Cliente"
+            android:text="Preventista"
             android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="15dp"
@@ -143,7 +139,7 @@
         <LinearLayout
             android:id="@+id/ll_order"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="250dp"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="12dp"
             android:background="@color/blue"
@@ -199,7 +195,32 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_send_to_delivery"
+            android:layout_width="327dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background"
+            android:text="ENVIAR PEDIDO A REPARTO"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_notes"/>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel_order"
+            android:layout_width="327dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/button_not_pressed"
+            android:text="CANCELAR PEDIDO"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/btn_send_to_delivery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

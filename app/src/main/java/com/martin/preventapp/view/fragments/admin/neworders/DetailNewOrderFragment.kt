@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.NewOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
@@ -19,6 +20,7 @@ class DetailNewOrderFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var itemToDetail: OrderItem? = null
+    private var newOrder: Boolean = false
 
     companion object {
         private var detailNewOrderFragment: DetailNewOrderFragment? = null
@@ -34,10 +36,8 @@ class DetailNewOrderFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val item = NewOrdersController.instance!!.getItemToDetail()
-        if(item != null) {
-            itemToDetail = item
-        }
+        itemToDetail = NewOrdersController.instance!!.getItemToDetail()
+        newOrder = NewOrdersController.instance!!.getIsNewOrder()
     }
 
     override fun onCreateView(
@@ -55,6 +55,9 @@ class DetailNewOrderFragment : Fragment() {
         binding.llSeller.visibility = View.VISIBLE
         binding.tvTitleSeller.visibility = View.VISIBLE
         binding.tvSeller.text = itemToDetail!!.seller
+        binding.btnSendToDelivery.isVisible = newOrder
+        binding.btnCancelOrder.isVisible = newOrder
+
         val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products)
         binding.listProducts.adapter = productsAdapter
 
@@ -64,9 +67,5 @@ class DetailNewOrderFragment : Fragment() {
             OrdersController.instance!!.setItemToDetail(null)
             requireActivity().onBackPressed()
         }
-    }
-
-    fun setItemToDetail(item: OrderItem?){
-        this.itemToDetail = item
     }
 }

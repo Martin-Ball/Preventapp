@@ -46,6 +46,7 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
         super.onViewCreated(view, savedInstanceState)
 
         val items = listOf(
+            OrderItem("Pedido 1", listOf(Product("Producto 1"), Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12"),Product("Producto 12")), Client("Cliente 1"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(Product("Producto 1"), Product("Producto 12")), Client("Cliente 1"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 2", listOf(Product("Producto 2"), Product("Producto 13")), Client("Cliente 2"),"Preventista 2", "nota de pedido1"),
             OrderItem("Pedido 3", listOf(Product("Producto 3"), Product("Producto 14")), Client("Cliente 3"),"Preventista 1", "nota de pedido2"),

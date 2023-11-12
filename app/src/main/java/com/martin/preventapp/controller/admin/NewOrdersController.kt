@@ -6,6 +6,7 @@ import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
 
 class NewOrdersController : NewOrderInterface.Controller {
     private var itemToDetail : OrderItem? = null
+    private var newOrder: Boolean = false
 
     companion object {
         private var newOrdersController: NewOrdersController? = null
@@ -23,12 +24,16 @@ class NewOrdersController : NewOrderInterface.Controller {
         OrdersAdminFragment.instance!!.showFragmentDetail()
     }
 
-    override fun setItemToDetail(item: OrderItem?) {
+    override fun setItemToDetail(item: OrderItem?, newOrder: Boolean) {
+        this.newOrder = newOrder
         this.itemToDetail = item
     }
 
     override fun getItemToDetail(): OrderItem? {
         return itemToDetail
+    }
+    override fun getIsNewOrder(): Boolean {
+        return newOrder
     }
 
 }

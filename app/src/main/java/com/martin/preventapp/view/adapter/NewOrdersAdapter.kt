@@ -43,7 +43,7 @@ class NewOrdersAdapter (private val context: Context, private val items: List<Or
         viewHolder.client.text = item.client.name
         viewHolder.seller.text = item.seller
         viewHolder.actionButton.setOnClickListener {
-            NewOrdersController.instance!!.setItemToDetail(item)
+            NewOrdersController.instance!!.setItemToDetail(item, true)
             NewOrdersController.instance!!.showFragmentDetail()
         }
 

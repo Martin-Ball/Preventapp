@@ -9,7 +9,8 @@ interface NewOrderInterface {
 
     interface Controller {
         fun showFragmentDetail()
-        fun setItemToDetail(item: OrderItem?)
+        fun setItemToDetail(item: OrderItem?, newOrder: Boolean)
         fun getItemToDetail() : OrderItem?
+        fun getIsNewOrder(): Boolean
     }
 }
