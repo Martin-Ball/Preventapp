@@ -9,8 +9,16 @@ interface NewOrderInterface {
 
     interface Controller {
         fun showFragmentDetail()
-        fun setItemToDetail(item: OrderItem?, newOrder: Boolean)
+        fun setItemToDetail(item: OrderItem?, newOrder: Boolean, position: Int?)
         fun getItemToDetail() : OrderItem?
         fun getIsNewOrder(): Boolean
+        fun getNewOrders() : List<OrderItem>
+        fun confirmOrder()
+    }
+
+    interface Model {
+        fun getNewOrders() : List<OrderItem>
+
+        fun confirmOrder(position: Int)
     }
 }

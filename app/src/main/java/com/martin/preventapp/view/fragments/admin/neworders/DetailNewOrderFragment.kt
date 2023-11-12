@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.NewOrdersController
@@ -65,6 +66,18 @@ class DetailNewOrderFragment : Fragment() {
 
         binding.backButton.setOnClickListener {
             OrdersController.instance!!.setItemToDetail(null)
+            requireActivity().onBackPressed()
+        }
+
+        binding.btnSendToDelivery.setOnClickListener {
+            Toast.makeText(requireContext(), "PEDIDO ENVIADO", Toast.LENGTH_LONG).show()
+            NewOrdersController.instance!!.confirmOrder()
+            requireActivity().onBackPressed()
+        }
+
+        binding.btnCancelOrder.setOnClickListener {
+            Toast.makeText(requireContext(), "PEDIDO CANCELADO", Toast.LENGTH_LONG).show()
+            NewOrdersController.instance!!.confirmOrder()
             requireActivity().onBackPressed()
         }
     }
