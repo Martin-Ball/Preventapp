@@ -26,7 +26,7 @@ class CreateOrderModel : CreateOrderInterface.Model {
 
     override fun productsOrder(listItems: List<ItemAmount>) {
         listItems.forEach { product ->
-            this.itemList.add(Product(product.title))
+            this.itemList.add(Product(product.title, product.price))
         }
     }
 

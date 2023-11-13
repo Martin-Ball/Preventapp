@@ -56,13 +56,13 @@ class RecommendedProductFragment : Fragment() {
         createLineChart()
 
         val products = listOf(
-            Product("Queso"),
-            Product("Bondiola"),
-            Product("Jamon"),
-            Product("Mayonesa"),
-            Product("Vino"),
-            Product("Salame"),
-            Product("Vacio")
+            Product("Queso", 1121.11),
+            Product("Bondiola", 1121.11),
+            Product("Jamon", 1121.11),
+            Product("Mayonesa", 1121.11),
+            Product("Vino", 1121.11),
+            Product("Salame", 1121.11),
+            Product("Vacio", 1121.11)
         )
 
         val productsAdapter = ProductListAdapter(requireContext(), products)

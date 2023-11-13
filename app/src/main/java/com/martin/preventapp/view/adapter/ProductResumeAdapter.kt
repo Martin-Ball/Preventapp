@@ -38,11 +38,13 @@ class ProductResumeAdapter(private val context: Context, private val productList
 
         val product = getItem(position)
         viewHolder.productName.text = product.title
+        viewHolder.productPrice.text = product.price.toString()
 
         return view
     }
 
     private class ViewHolder(view: View) {
-        val productName: TextView = view.findViewById(R.id.customListItemText)
+        val productName: TextView = view.findViewById(R.id.name_product)
+        val productPrice: TextView = view.findViewById(R.id.price_product)
     }
 }

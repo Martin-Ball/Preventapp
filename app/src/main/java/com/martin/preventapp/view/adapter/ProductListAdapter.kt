@@ -38,7 +38,8 @@ class ProductListAdapter(context: Context, private val products: List<Product>) 
             viewHolder = view.tag as ViewHolder
         }
 
-        viewHolder.textView.text = filteredProducts[position].title
+        viewHolder.textViewName.text = filteredProducts[position].title
+        viewHolder.textViewPrice.text = "$${filteredProducts[position].price}"
 
         return view
     }
@@ -49,6 +50,7 @@ class ProductListAdapter(context: Context, private val products: List<Product>) 
     }
 
     private class ViewHolder(view: View) {
-        val textView: TextView = view.findViewById(R.id.customListItemText)
+        val textViewName: TextView = view.findViewById(R.id.name_product)
+        val textViewPrice: TextView = view.findViewById(R.id.price_product)
     }
 }

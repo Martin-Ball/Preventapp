@@ -1,5 +1,6 @@
 package com.martin.preventapp.view.fragments.admin.list
 
+import ProductListAdapter
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,15 +8,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.martin.preventapp.R
+import com.martin.preventapp.databinding.ActivityListSelectionBinding
 import com.martin.preventapp.view.entities.Product
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.InputStream
 
 class ListSelectionActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityListSelectionBinding
 
     private val launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -28,7 +30,8 @@ class ListSelectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_selection)
+        binding = ActivityListSelectionBinding.inflate(layoutInflater);
+        setContentView(binding.root)
         openFilePicker()
     }
 
@@ -38,6 +41,10 @@ class ListSelectionActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_OPENABLE)
 
         launcher.launch(intent)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun readExcelFile(uri: android.net.Uri) {
@@ -46,21 +53,19 @@ class ListSelectionActivity : AppCompatActivity() {
             val workbook: Workbook = XSSFWorkbook(inputStream)
             val sheet: Sheet = workbook.getSheetAt(0)
 
-            val listaProductos: MutableList<Product> = mutableListOf()
+            val productsList: MutableList<Product> = mutableListOf()
 
-            for (i in 1 until sheet.physicalNumberOfRows) {
+            for (i in 0 until sheet.physicalNumberOfRows) {
                 val row: Row = sheet.getRow(i)
-                val nombreProducto: String = row.getCell(0).stringCellValue
-                val precio: Double = row.getCell(1).numericCellValue
+                val productName: String = row.getCell(0).stringCellValue
+                val productPrice: Double = row.getCell(1).numericCellValue
 
-                val producto = Product(nombreProducto)
-                listaProductos.add(producto)
+                val producto = Product(productName, productPrice)
+                productsList.add(producto)
             }
 
-            // Aquí tienes la lista de productos. Puedes hacer lo que necesites con ella.
-            for (producto in listaProductos) {
-                println("Nombre: ${producto.title}, Precio: ${producto.title}")
-            }
+            val productsAdapter = ProductListAdapter(this, productsList)
+            binding.productList.adapter = productsAdapter
 
             inputStream?.close()
         } catch (e: Exception) {
