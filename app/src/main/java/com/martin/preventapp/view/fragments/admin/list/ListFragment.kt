@@ -44,7 +44,7 @@ class ListFragment : Fragment() {
         }
 
         binding.btnNewClients.setOnClickListener {
-
+            requireActivity().startActivity(Intent(requireContext(), ClientListActivity::class.java))
         }
 
         binding.btnViewList.setOnClickListener {
