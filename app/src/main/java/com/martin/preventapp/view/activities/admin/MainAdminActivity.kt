@@ -7,6 +7,7 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.ConfirmedOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
+import com.martin.preventapp.view.fragments.admin.list.ListFragment
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
@@ -29,7 +30,7 @@ class MainAdminActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_list -> {
-                    showFragment(RecommendedFragment.instance!!)
+                    showFragment(ListFragment.instance!!)
                     true
                 }
                 R.id.navigation_users -> {
