@@ -4,15 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.ConfirmedOrdersController
-import com.martin.preventapp.controller.seller.orders.OrdersController
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
 import com.martin.preventapp.view.fragments.admin.list.ListFragment
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
+import com.martin.preventapp.view.fragments.admin.users.UserFragment
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
-import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
-import com.martin.preventapp.view.fragments.seller.recommended.RecommendedFragment
 
 class MainAdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainAdminBinding
@@ -34,8 +32,7 @@ class MainAdminActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_users -> {
-                    ConfirmedOrdersFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
-                    showFragment(OrdersAdminFragment.instance!!)
+                    showFragment(UserFragment.instance!!)
                     true
                 }
                 R.id.navigation_profile -> {

@@ -3,14 +3,11 @@ package com.martin.preventapp.view.fragments.admin.neworders
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.ConfirmedOrdersController
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
-import com.martin.preventapp.databinding.ActivityClientSelectionBinding
 import com.martin.preventapp.databinding.ActivityConfirmedOrdersBinding
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
-import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.ViewOrders {
 

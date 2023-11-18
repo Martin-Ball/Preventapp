@@ -6,20 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.ConfirmedOrdersController
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.databinding.FragmentConfirmedOrdersBinding
-import com.martin.preventapp.databinding.FragmentOrdersBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
-import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 import java.util.Calendar
 
 class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {

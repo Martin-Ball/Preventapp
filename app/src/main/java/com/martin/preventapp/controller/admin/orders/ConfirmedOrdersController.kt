@@ -1,10 +1,8 @@
-package com.martin.preventapp.controller.admin
+package com.martin.preventapp.controller.admin.orders
 
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.fragments.admin.neworders.DetailNewOrderFragment
-import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
 class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemClickListener {
 

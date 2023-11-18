@@ -1,4 +1,4 @@
-package com.martin.preventapp.controller.admin
+package com.martin.preventapp.controller.admin.orders
 
 import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
 import com.martin.preventapp.model.admin.NewOrdersModel

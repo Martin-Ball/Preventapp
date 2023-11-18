@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.NewOrdersController
+import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailNewOrderBinding
-import com.martin.preventapp.databinding.FragmentDetailOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
 
 class DetailNewOrderFragment : Fragment() {
     private var _binding: FragmentDetailNewOrderBinding? = null

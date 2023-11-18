@@ -9,15 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.NewOrdersController
+import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
 import com.martin.preventapp.databinding.FragmentOrdersAdminBinding
 import com.martin.preventapp.view.adapter.NewOrdersAdapter
-import com.martin.preventapp.view.entities.Client
-import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.fragments.seller.create.CompleteOrderActivity
-import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
 
 class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     private var _binding: FragmentOrdersAdminBinding? = null
