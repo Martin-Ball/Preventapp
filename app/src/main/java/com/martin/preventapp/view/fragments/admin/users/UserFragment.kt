@@ -37,7 +37,15 @@ class UserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnNewUser.setOnClickListener {
-            requireActivity().startActivity(Intent(requireContext(), UserManagerActivity::class.java))
+            val intent = Intent(requireContext(), UserManagerActivity::class.java)
+            intent.putExtra("createUser", true)
+            requireActivity().startActivity(intent)
+        }
+
+        binding.btnViewUser.setOnClickListener {
+            val intent = Intent(requireContext(), UserManagerActivity::class.java)
+            intent.putExtra("createUser", false)
+            requireActivity().startActivity(intent)
         }
     }
 }

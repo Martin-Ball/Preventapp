@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.FragmentCreateUserBinding
@@ -37,6 +38,8 @@ class CreateUserFragment : Fragment() {
     ): View {
         _binding = FragmentCreateUserBinding.inflate(inflater)
 
+        val user = UserManagerController.instance!!.getUserToModify()
+
         val roles = arrayOf("Preventista", "Repartidor")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, roles)
@@ -45,7 +48,33 @@ class CreateUserFragment : Fragment() {
 
         binding.spinnerRol.adapter = adapter
 
-        selectedRol = roles[0]
+        if(user == null){
+            selectedRol = roles[0]
+
+            binding.btnRegisterUser.setOnClickListener {
+                val userName = binding.username.text.toString()
+                val password = binding.password.text.toString()
+                val confirmPassword = binding.confirmPassword.text.toString()
+
+                if (userName.isNotEmpty() &&
+                    password.isNotEmpty() &&
+                    confirmPassword.isNotEmpty() &&
+                    password == confirmPassword &&
+                    selectedRol.isNotEmpty()) {
+                    Toast.makeText(requireContext(), "Usuario registrado", Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(requireContext(), "Los datos ingresados son incorrectos", Toast.LENGTH_LONG).show()
+                }
+            }
+        }else{
+            binding.username.setText(user.email)
+            binding.username.isEnabled = false
+            binding.btnRegisterUser.isVisible = false
+            binding.btnModifyUser.isVisible = true
+
+            selectedRol = roles[roles.indexOf(user.rol)]
+            binding.spinnerRol.setSelection(roles.indexOf(user.rol))
+        }
 
         binding.spinnerRol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -59,22 +88,6 @@ class CreateUserFragment : Fragment() {
 
         binding.backButton.setOnClickListener {
             UserManagerController.instance!!.goToMain()
-        }
-
-        binding.btnRegisterUser.setOnClickListener {
-            val userName = binding.username.text.toString()
-            val password = binding.password.text.toString()
-            val confirmPassword = binding.confirmPassword.text.toString()
-
-            if (userName.isNotEmpty() &&
-                password.isNotEmpty() &&
-                confirmPassword.isNotEmpty() &&
-                password == confirmPassword &&
-                selectedRol.isNotEmpty()) {
-                Toast.makeText(requireContext(), "Usuario registrado", Toast.LENGTH_LONG).show()
-            }else{
-                Toast.makeText(requireContext(), "Los datos ingresados son incorrectos", Toast.LENGTH_LONG).show()
-            }
         }
 
         return binding.root

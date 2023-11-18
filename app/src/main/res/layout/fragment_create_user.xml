@@ -187,6 +187,17 @@
             android:text="REGISTRAR USUARIO"
             android:textColor="@color/white" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_modify_user"
+            android:layout_width="327dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="50dp"
+            android:text="MODIFICAR USUARIO"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

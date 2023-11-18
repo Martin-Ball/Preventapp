@@ -19,13 +19,14 @@ class UserManagerActivity : AppCompatActivity(), UserManagerInterface.View {
         binding = ActivityUserManagerBinding.inflate(layoutInflater);
         setContentView(binding.root)
         UserManagerController.instance!!.setContext(this)
-        showFragment(CreateUserFragment.instance!!)
+        if(intent.getBooleanExtra("createUser", true)){
+            showFragment(CreateUserFragment.instance!!)
+        }else{
+            showFragment(UserListFragment.instance!!)
+        }
     }
 
     override fun goToMain() {
-        val intent = Intent(this, MainAdminActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
         finish()
     }
 

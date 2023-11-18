@@ -1,6 +1,7 @@
 package com.martin.preventapp.controller.admin.interfaces
 
 import androidx.fragment.app.Fragment
+import com.martin.preventapp.view.entities.User
 
 interface UserManagerInterface {
     interface View {
@@ -12,5 +13,7 @@ interface UserManagerInterface {
         fun setContext(view: UserManagerInterface.View)
         fun goToMain()
         fun showFragment(fragment: Fragment)
+        fun showUser(user: User)
+        fun getUserToModify(): User?
     }
 }
