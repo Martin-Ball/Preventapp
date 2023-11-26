@@ -51,6 +51,10 @@ class DetailUserFragment : Fragment() {
             UserManagerController.instance!!.showFragment(CreateUserFragment.instance!!)
         }
 
+        binding.btnPermissionsUser.setOnClickListener {
+            UserManagerController.instance!!.showFragment(UserPermissionsFragment.instance!!)
+        }
+
         binding.btnDeleteUser.setOnClickListener {
             val alertDialogBuilder = AlertDialog.Builder(requireContext())
 
