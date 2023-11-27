@@ -21,12 +21,11 @@ class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        showSignInFragment()
         LoginController.instance!!.setView(this)
         LoginController.instance!!.setContext(this)
     }
 
-    private fun showSignInFragment(){
+    override fun showSignInFragment(){
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, LoginFragment.instance!!)
             .addToBackStack(null)

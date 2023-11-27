@@ -1,13 +1,14 @@
 package com.martin.preventapp.controller.login
 
 import android.app.Activity
+import android.content.Context
 import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.model.loginModel.LoginModel
 import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class LoginController : LoginInterfaces.Controller {
     @JvmField
-    var context: Activity? = null
+    var context: Context? = null
     @JvmField
     var view: LoginInterfaces.View? = null
 
@@ -29,6 +30,8 @@ class LoginController : LoginInterfaces.Controller {
 
     override fun setContext(_context: Activity?) {
         this.context = _context
+
+        validateToken()
     }
 
     override fun goToMain(mainType: String) {
@@ -43,7 +46,11 @@ class LoginController : LoginInterfaces.Controller {
         LoginModel.instance!!.login(username, password)
     }
 
-    override fun validateToken(token: String) {
-        //LoginModel.instance!!.login()
+    override fun validateToken() {
+        LoginModel.instance!!.token()
+    }
+
+    override fun goToLogin() {
+        view!!.showSignInFragment()
     }
 }

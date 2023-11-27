@@ -7,18 +7,21 @@ interface LoginInterfaces {
         fun goToActivitySeller()
         fun goToActivityAdmin()
         fun goToActivityDelivery()
+        fun showSignInFragment()
     }
 
     interface Controller {
         fun setView(_view : View?)
         fun setContext(_context : Activity?)
         fun goToMain(mainType: String)
+        fun goToLogin()
 
         fun login(username: String, password: String)
-        fun validateToken(token: String)
+        fun validateToken()
     }
 
     interface Model {
         fun login(username: String, password: String)
+        fun token()
     }
 }
