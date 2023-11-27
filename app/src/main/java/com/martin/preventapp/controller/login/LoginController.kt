@@ -2,6 +2,7 @@ package com.martin.preventapp.controller.login
 
 import android.app.Activity
 import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
+import com.martin.preventapp.model.loginModel.LoginModel
 import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class LoginController : LoginInterfaces.Controller {
@@ -30,11 +31,19 @@ class LoginController : LoginInterfaces.Controller {
         this.context = _context
     }
 
-    override fun login(userName: String) {
-        when (userName) {
-            "1" -> view!!.goToActivitySeller()
-            "2" -> view!!.goToActivityAdmin()
-            "3" -> view!!.goToActivityDelivery()
+    override fun goToMain(mainType: String) {
+        when (mainType) {
+            "Preventista" -> view!!.goToActivitySeller()
+            "Administrador" -> view!!.goToActivityAdmin()
+            "Repartidor" -> view!!.goToActivityDelivery()
         }
+    }
+
+    override fun login(username: String, password: String) {
+        LoginModel.instance!!.login(username, password)
+    }
+
+    override fun validateToken(token: String) {
+        //LoginModel.instance!!.login()
     }
 }

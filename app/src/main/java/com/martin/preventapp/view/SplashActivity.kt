@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.databinding.ActivitySplashBinding
 import com.martin.preventapp.view.fragments.login.LoginActivity
 

@@ -12,10 +12,13 @@ interface LoginInterfaces {
     interface Controller {
         fun setView(_view : View?)
         fun setContext(_context : Activity?)
-        fun login(userName: String)
+        fun goToMain(mainType: String)
+
+        fun login(username: String, password: String)
+        fun validateToken(token: String)
     }
 
     interface Model {
-
+        fun login(username: String, password: String)
     }
 }
