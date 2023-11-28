@@ -11,6 +11,8 @@ class LoginController : LoginInterfaces.Controller {
     var context: Context? = null
     @JvmField
     var view: LoginInterfaces.View? = null
+    @JvmField
+    var viewSplash: LoginInterfaces.ViewSplash? = null
 
     companion object {
         private var loginController: LoginController? = null
@@ -24,22 +26,37 @@ class LoginController : LoginInterfaces.Controller {
             }
     }
 
-    override fun setView(_view: LoginInterfaces.View?) {
-        this.view = _view
+    override fun setView(view: LoginInterfaces.View?) {
+        this.view = view
+        goToLogin()
     }
 
-    override fun setContext(_context: Activity?) {
-        this.context = _context
+    override fun setViewSplash(view: LoginInterfaces.ViewSplash?) {
+        this.viewSplash = view
+    }
 
-        validateToken()
+    override fun setContext(context: Activity?) {
+        this.context = context
     }
 
     override fun goToMain(mainType: String) {
-        when (mainType) {
-            "Preventista" -> view!!.goToActivitySeller()
-            "Administrador" -> view!!.goToActivityAdmin()
-            "Repartidor" -> view!!.goToActivityDelivery()
+        if(view != null) {
+            when (mainType) {
+                "Preventista" -> view!!.goToActivitySeller()
+                "Administrador" -> view!!.goToActivityAdmin()
+                "Repartidor" -> view!!.goToActivityDelivery()
+            }
+        }else{
+            when (mainType) {
+                "Preventista" -> viewSplash!!.goToActivitySeller()
+                "Administrador" -> viewSplash!!.goToActivityAdmin()
+                "Repartidor" -> viewSplash!!.goToActivityDelivery()
+            }
         }
+    }
+
+    override fun goToRegister() {
+        view!!.goToRegister()
     }
 
     override fun login(username: String, password: String) {
@@ -50,7 +67,23 @@ class LoginController : LoginInterfaces.Controller {
         LoginModel.instance!!.token()
     }
 
+    override fun setViewReturn(isLogin: Boolean, group: String) {
+        if(isLogin){
+            viewSplash!!.intent()
+        }else{
+            goToMain(group)
+        }
+    }
+
     override fun goToLogin() {
         view!!.showSignInFragment()
+    }
+
+    override fun register(username: String, password: String) {
+        LoginModel.instance!!.register(username, password)
+    }
+
+    override fun showToast(text: String) {
+        view!!.showToast(text)
     }
 }

@@ -5,17 +5,14 @@ import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Request.LoginRequest
-import com.martin.preventapp.model.entities.Response.GroupType
+import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Response.LoginResponse
+import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
-import com.martin.preventapp.model.entities.Response.User
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
+import kotlin.Exception
 
 class LoginModel : LoginInterfaces.Model {
     private val context = LoginController.instance!!.context!!
@@ -43,17 +40,19 @@ class LoginModel : LoginInterfaces.Model {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse != null) {
+                    if (loginResponse != null && response.errorBody() != null) {
                         Application.saveTokenShared(context, loginResponse.token)
                         Application.saveUserShared(context, loginResponse.user.nombreUsuario)
                         Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)
                         Log.e("TOKEN: ", Application.getTokenShared(context) ?: "")
                         LoginController.instance!!.goToMain(loginResponse.groupType.nombreGrupo)
                     } else {
-                        Log.e("Login error: ", "Response body is null")
+                        response.errorBody()?.string()?.let { LoginController.instance!!.showToast(it) }
                     }
-                } else {
-                    Log.e("Login error: ", response.errorBody().toString())
+                }  else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { LoginController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
                 }
             }
 
@@ -71,8 +70,10 @@ class LoginModel : LoginInterfaces.Model {
         try{
             token = Application.getTokenShared(context).toString()
             group = Application.getGroupUserShared(context).toString()
+
+            if(token == "null") throw Exception()
         }catch (e: Exception){
-            LoginController.instance!!.goToLogin()
+            LoginController.instance!!.setViewReturn(true)
             return
         }
 
@@ -85,15 +86,48 @@ class LoginModel : LoginInterfaces.Model {
                     val loginResponse = response.body()
                     if (loginResponse != null && loginResponse.valid) {
                         Application.saveTokenShared(context, loginResponse.token)
-                        LoginController.instance!!.goToMain(group)
+                        LoginController.instance!!.setViewReturn(false, group)
                     }
                 } else {
-                    LoginController.instance!!.goToLogin()
+                    LoginController.instance!!.setViewReturn(true)
                 }
             }
 
             override fun onFailure(call: Call<TokenResponse>, t: Throwable) {
-                LoginController.instance!!.goToLogin()
+                LoginController.instance!!.setViewReturn(true)
+            }
+        })
+    }
+
+    override fun register(username: String, password: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.registerUser(
+            RegisterRequest(username, password)
+        )
+
+        call.enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    if (loginResponse != null && response.errorBody() != null) {
+                        Application.saveTokenShared(context, loginResponse.token)
+                        Application.saveUserShared(context, loginResponse.user.nombreUsuario)
+                        Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)
+                        Log.e("TOKEN: ", Application.getTokenShared(context) ?: "")
+                        LoginController.instance!!.goToMain(loginResponse.groupType.nombreGrupo)
+                    } else {
+                        LoginController.instance!!.showToast(response.body().toString())
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { LoginController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
             }
         })
     }

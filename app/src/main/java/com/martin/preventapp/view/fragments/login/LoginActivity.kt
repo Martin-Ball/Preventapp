@@ -3,6 +3,7 @@ package com.martin.preventapp.view.fragments.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.controller.login.LoginController
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
 
     override fun showSignInFragment(){
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, LoginFragment.instance!!)
+            .replace(R.id.fragment_container, LoginFragment.instance!!)
             .addToBackStack(null)
             .commit()
     }
@@ -45,5 +46,16 @@ class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
     override fun goToActivityDelivery() {
         /*startActivity(Intent(this, ))
         finish()*/
+    }
+
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
+
+    override fun goToRegister() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, RegisterFragment.instance!!)
+            .addToBackStack(null)
+            .commit()
     }
 }

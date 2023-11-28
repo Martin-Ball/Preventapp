@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.martin.preventapp.databinding.FragmentProfileBinding
+import com.martin.preventapp.model.Application
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
 import com.martin.preventapp.view.fragments.login.LoginActivity
 
@@ -38,6 +39,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.logout.setOnClickListener {
+            Application.clearTokenShared(requireContext())
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             requireActivity().finish()
         }

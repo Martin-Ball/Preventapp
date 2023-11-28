@@ -30,10 +30,6 @@ class LoginFragment : Fragment() {
             }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +45,10 @@ class LoginFragment : Fragment() {
             val userName = binding.username.text.toString()
             val password = binding.password.text.toString()
             LoginController.instance!!.login(userName, password)
+        }
+
+        binding.register.setOnClickListener {
+            LoginController.instance!!.goToRegister()
         }
     }
 }

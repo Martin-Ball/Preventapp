@@ -45,6 +45,16 @@ class Application {
             return sharedPreferences.getString(SHARED_TOKEN, null)
         }
 
+        fun clearTokenShared(context: Context) {
+            val sharedPreferences = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove(SHARED_TOKEN)
+            editor.apply()
+
+            clearUserShared(context)
+            clearGroupUserShared(context)
+        }
+
         fun saveUserShared(context: Context, value: String) {
             val sharedPreferences = context.getSharedPreferences(SHARED_USER, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
@@ -57,6 +67,13 @@ class Application {
             return sharedPreferences.getString(SHARED_USER, null)
         }
 
+        fun clearUserShared(context: Context) {
+            val sharedPreferences = context.getSharedPreferences(SHARED_USER, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove(SHARED_USER)
+            editor.apply()
+        }
+
         fun saveGroupUserShared(context: Context, value: String) {
             val sharedPreferences = context.getSharedPreferences(SHARED_GROUP, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
@@ -67,6 +84,13 @@ class Application {
         fun getGroupUserShared(context: Context): String? {
             val sharedPreferences = context.getSharedPreferences(SHARED_GROUP, Context.MODE_PRIVATE)
             return sharedPreferences.getString(SHARED_GROUP, null)
+        }
+
+        fun clearGroupUserShared(context: Context) {
+            val sharedPreferences = context.getSharedPreferences(SHARED_GROUP, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove(SHARED_GROUP)
+            editor.apply()
         }
     }
 }
