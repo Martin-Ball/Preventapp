@@ -1,10 +1,13 @@
 package com.martin.preventapp.model
 
 import android.content.Context
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Retrofit
+
 
 class Application {
     companion object {
@@ -19,21 +22,22 @@ class Application {
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build()
 
-            val json = kotlinx.serialization.json.Json {
+            val json = Json {
                 ignoreUnknownKeys = true
                 isLenient = true
             }
 
+            val contentType = "application/json".toMediaType()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(json.asConverterFactory(contentType))
                 .client(client)
                 .build()
 
             return retrofit.create(ApiService::class.java)
         }
 
-        fun saveTokenShared(context: Context, value: String) {
+            fun saveTokenShared(context: Context, value: String) {
             val sharedPreferences = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(SHARED_TOKEN, value)

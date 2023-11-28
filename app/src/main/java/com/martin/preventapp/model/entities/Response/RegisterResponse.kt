@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegisterResponse(
-    @SerialName("user")
+    @SerialName("newUser")
     val user: User,
-    @SerialName("groupType")
+    @SerialName("group")
     val groupType: GroupType,
-    @SerialName("permissions")
+    @SerialName("permissionsForGroup")
     val permissions: List<Permission>,
     @SerialName("token")
     val token: String

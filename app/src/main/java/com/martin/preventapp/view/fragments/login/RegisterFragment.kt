@@ -12,8 +12,6 @@ import com.martin.preventapp.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
     @JvmField
-    var context: Activity? = null
-    @JvmField
     var view: View? = null
 
     private var _binding: FragmentRegisterBinding? = null
@@ -56,7 +54,7 @@ class RegisterFragment : Fragment() {
             if(password == confirmPassword){
                 LoginController.instance!!.register(username, password)
             }else{
-                Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
             }
         }
     }

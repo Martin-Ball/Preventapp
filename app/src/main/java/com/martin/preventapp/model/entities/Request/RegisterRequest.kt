@@ -10,5 +10,5 @@ class RegisterRequest (
     @SerialName("password")
     val password: String,
     @SerialName("type")
-    val type: String? = "Administrador"
+    val type: String
 )

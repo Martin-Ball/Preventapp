@@ -103,14 +103,14 @@ class LoginModel : LoginInterfaces.Model {
         val apiService = Application.getApiService()
 
         val call = apiService.registerUser(
-            RegisterRequest(username, password)
+            RegisterRequest(username = username, password = password, type= "Administrador")
         )
 
         call.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse != null && response.errorBody() != null) {
+                    if (loginResponse != null) {
                         Application.saveTokenShared(context, loginResponse.token)
                         Application.saveUserShared(context, loginResponse.user.nombreUsuario)
                         Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)
