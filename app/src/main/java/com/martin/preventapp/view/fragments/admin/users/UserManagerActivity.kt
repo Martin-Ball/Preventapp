@@ -3,6 +3,7 @@ package com.martin.preventapp.view.fragments.admin.users
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
@@ -35,5 +36,9 @@ class UserManagerActivity : AppCompatActivity(), UserManagerInterface.View {
         transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
+    }
+
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 }

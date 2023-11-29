@@ -7,6 +7,7 @@ interface UserManagerInterface {
     interface View {
         fun goToMain()
         fun showFragment(fragment: Fragment)
+        fun showToast(text: String)
     }
 
     interface Controller {
@@ -14,6 +15,12 @@ interface UserManagerInterface {
         fun goToMain()
         fun showFragment(fragment: Fragment)
         fun showUser(user: User)
+        fun showToast(text: String)
         fun getUserToModify(): User?
+        fun createUser(username:String, password:String, type:String)
+    }
+
+    interface Model {
+        fun createUser(username:String, password:String, type:String)
     }
 }

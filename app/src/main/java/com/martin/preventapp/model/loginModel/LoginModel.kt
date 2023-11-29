@@ -40,7 +40,7 @@ class LoginModel : LoginInterfaces.Model {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse != null && response.errorBody() != null) {
+                    if (loginResponse != null) {
                         Application.saveTokenShared(context, loginResponse.token)
                         Application.saveUserShared(context, loginResponse.user.nombreUsuario)
                         Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)

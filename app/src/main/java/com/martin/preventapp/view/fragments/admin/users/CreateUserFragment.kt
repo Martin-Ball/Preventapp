@@ -86,6 +86,18 @@ class CreateUserFragment : Fragment() {
             }
         }
 
+        binding.btnRegisterUser.setOnClickListener {
+            val userName = binding.username.text.toString()
+            val password = binding.password.text.toString()
+            val confirmPassword = binding.confirmPassword.text.toString()
+
+            if(password == confirmPassword){
+                UserManagerController.instance!!.createUser(userName, password, selectedRol)
+            }else{
+                UserManagerController.instance!!.showToast("Las contraseñas no coinciden")
+            }
+        }
+
         binding.backButton.setOnClickListener {
             UserManagerController.instance!!.goToMain()
         }
