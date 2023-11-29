@@ -10,5 +10,7 @@ class RegisterRequest (
     @SerialName("password")
     val password: String,
     @SerialName("type")
-    val type: String
+    val type: String,
+    @SerialName("usernameAdmin")
+    val usernameAdmin: String
 )

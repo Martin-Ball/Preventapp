@@ -103,7 +103,7 @@ class LoginModel : LoginInterfaces.Model {
         val apiService = Application.getApiService()
 
         val call = apiService.registerUser(
-            RegisterRequest(username = username, password = password, type= "Administrador")
+            RegisterRequest(username = username, password = password, type= "Administrador", "")
         )
 
         call.enqueue(object : Callback<RegisterResponse> {

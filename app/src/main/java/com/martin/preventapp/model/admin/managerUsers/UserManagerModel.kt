@@ -29,7 +29,7 @@ class UserManagerModel : UserManagerInterface.Model {
         val apiService = Application.getApiService()
 
         val call = apiService.registerUser(
-            RegisterRequest(username = username, password = password, type= type)
+            RegisterRequest(username = username, password = password, type= type, Application.getUserShared(LoginController.instance!!.context!!) ?: "")
         )
 
         call.enqueue(object : Callback<RegisterResponse> {
