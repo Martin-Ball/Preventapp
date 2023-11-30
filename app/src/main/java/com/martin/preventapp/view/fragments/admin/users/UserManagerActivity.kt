@@ -26,7 +26,6 @@ class UserManagerActivity : AppCompatActivity(), UserManagerInterface.View {
         if(intent.getBooleanExtra("createUser", true)){
             showFragment(CreateUserFragment.instance!!)
         }else{
-            UserManagerController.instance!!.getUsers()
             showFragment(UserListFragment.instance!!)
         }
     }
