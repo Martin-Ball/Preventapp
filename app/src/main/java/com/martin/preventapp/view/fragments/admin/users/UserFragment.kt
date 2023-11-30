@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.FragmentUserBinding
 import com.martin.preventapp.view.fragments.admin.list.ListSelectionActivity
 

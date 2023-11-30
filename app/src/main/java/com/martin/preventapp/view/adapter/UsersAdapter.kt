@@ -9,17 +9,18 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.users.UserManagerController
+import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.entities.User
 
 class UsersAdapter(
     private val context: Context,
-    private val items: List<User>
+    private val items: List<UserModel>
 ): BaseAdapter()  {
     override fun getCount(): Int {
         return items.size
     }
 
-    override fun getItem(position: Int): User {
+    override fun getItem(position: Int): UserModel {
         return items[position]
     }
 
@@ -42,8 +43,8 @@ class UsersAdapter(
 
         val item = getItem(position)
 
-        viewHolder.userName.text = item.userName
-        viewHolder.rol.text = item.rol
+        viewHolder.userName.text = item.username
+        viewHolder.rol.text = item.groupName
         viewHolder.actionButton.setOnClickListener {
             UserManagerController.instance!!.showUser(item)
         }

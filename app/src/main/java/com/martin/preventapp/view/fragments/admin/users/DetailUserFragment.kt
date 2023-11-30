@@ -44,8 +44,8 @@ class DetailUserFragment : Fragment() {
 
         val user = UserManagerController.instance!!.getUserToModify()
 
-        binding.tvUser.text = user?.userName
-        binding.tvType.text = user?.rol
+        binding.tvUser.text = user?.username
+        binding.tvType.text = user?.groupName
 
         binding.btnModifyUser.setOnClickListener {
             UserManagerController.instance!!.showFragment(CreateUserFragment.instance!!)

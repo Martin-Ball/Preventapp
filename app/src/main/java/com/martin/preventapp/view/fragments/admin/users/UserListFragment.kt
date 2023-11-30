@@ -9,6 +9,7 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.FragmentCreateUserBinding
 import com.martin.preventapp.databinding.FragmentUserListBinding
+import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.UsersAdapter
 import com.martin.preventapp.view.entities.Client
@@ -20,6 +21,8 @@ class UserListFragment : Fragment() {
 
     private var _binding: FragmentUserListBinding? = null
     private val binding get() = _binding!!
+
+    private var users:List<UserModel> = mutableListOf()
 
     companion object {
         private var userListFragment: UserListFragment? = null
@@ -38,23 +41,21 @@ class UserListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserListBinding.inflate(inflater)
+        UserManagerController.instance!!.getUsers()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf(
-            User("Preventista 1", "preventista1@gmail.com", "Preventista"),
-            User("Preventista 2", "preventista2@gmail.com", "Preventista"),
-            User("Repartidor 1", "repartidor1@gmail.com", "Repartidor")
-        )
-
-        val adapter = UsersAdapter(requireContext(), items)
-        binding.usersList.adapter = adapter
-
         binding.backButton.setOnClickListener {
             UserManagerController.instance!!.goToMain()
         }
     }
+
+    fun setUsers(users: List<UserModel>){
+        val adapter = UsersAdapter(requireContext(), users)
+        binding.usersList.adapter = adapter
+    }
+
 }

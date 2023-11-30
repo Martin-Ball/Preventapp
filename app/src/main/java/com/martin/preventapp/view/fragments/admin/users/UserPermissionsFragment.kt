@@ -38,15 +38,12 @@ class UserPermissionsFragment : Fragment() {
     ): View {
         _binding = FragmentUserPermissionsBinding.inflate(inflater)
 
-        val itemList = listOf(
-            Permission("Permiso 1", true),
-            Permission("Permiso 2", false),
-            Permission("Permiso 3", true),
-            Permission("Permiso 4", false),
-        )
+        val adapter = UserManagerController.instance!!.getUserToModify()?.permissions?.let {
+            PermissionsAdapter(requireContext(), R.layout.item_checkbox_permissions,
+                it
+            )
+        }
 
-        // Adaptador para el ListView
-        val adapter = PermissionsAdapter(requireContext(), R.layout.item_checkbox_permissions, itemList)
         binding.listPermissionsCheckbox.adapter = adapter
 
         binding.backButton.setOnClickListener {
@@ -54,7 +51,7 @@ class UserPermissionsFragment : Fragment() {
         }
 
         binding.btnModifyPermissions.setOnClickListener {
-            Toast.makeText(requireContext(), adapter.getUpdatedPermissionsList().toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), adapter?.getUpdatedPermissionsList().toString(), Toast.LENGTH_LONG).show()
         }
 
         return binding.root

@@ -19,10 +19,14 @@ class UserManagerActivity : AppCompatActivity(), UserManagerInterface.View {
         super.onCreate(savedInstanceState)
         binding = ActivityUserManagerBinding.inflate(layoutInflater);
         setContentView(binding.root)
+
         UserManagerController.instance!!.setContext(this)
+        UserManagerController.instance!!.setView(this)
+
         if(intent.getBooleanExtra("createUser", true)){
             showFragment(CreateUserFragment.instance!!)
         }else{
+            UserManagerController.instance!!.getUsers()
             showFragment(UserListFragment.instance!!)
         }
     }

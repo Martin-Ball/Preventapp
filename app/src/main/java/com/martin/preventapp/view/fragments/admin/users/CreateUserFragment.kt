@@ -67,13 +67,13 @@ class CreateUserFragment : Fragment() {
                 }
             }
         }else{
-            binding.username.setText(user.email)
+            binding.username.setText(user.username)
             binding.username.isEnabled = false
             binding.btnRegisterUser.isVisible = false
             binding.btnModifyUser.isVisible = true
 
-            selectedRol = roles[roles.indexOf(user.rol)]
-            binding.spinnerRol.setSelection(roles.indexOf(user.rol))
+            selectedRol = roles[roles.indexOf(user.groupName)]
+            binding.spinnerRol.setSelection(roles.indexOf(user.groupName))
         }
 
         binding.spinnerRol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
