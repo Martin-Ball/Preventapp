@@ -1,17 +1,20 @@
 package com.martin.preventapp.model
 
 import com.martin.preventapp.model.entities.Request.LoginRequest
+import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -31,10 +34,14 @@ interface ApiService {
         @Body requestBody: RegisterRequest
     ): Call<RegisterResponse>
 
-
     @GET("users/getUsers")
     fun getUsers(
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<UsersResponse>
+    @PATCH("users/updatePermissions")
+    fun updatePermissionsState(
+        @Header("x-token") token: String,
+        @Body permissions: PermissionsUpdate
+    ): Call<ResponseBody>
 }

@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import com.martin.preventapp.R
-import com.martin.preventapp.model.entities.Response.PermissionModel
-import com.martin.preventapp.view.entities.Permission
+import com.martin.preventapp.model.entities.Request.PermissionModel
 
 class PermissionsAdapter(
     context: Context,

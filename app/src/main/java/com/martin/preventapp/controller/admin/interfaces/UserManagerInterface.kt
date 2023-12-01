@@ -2,8 +2,8 @@ package com.martin.preventapp.controller.admin.interfaces
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import com.martin.preventapp.model.entities.Request.PermissionModel
 import com.martin.preventapp.model.entities.UserModel
-import com.martin.preventapp.view.entities.User
 
 interface UserManagerInterface {
     interface View {
@@ -23,10 +23,12 @@ interface UserManagerInterface {
         fun createUser(username:String, password:String, type:String)
         fun getUsers()
         fun setUsers(users: List<UserModel>)
+        fun updatePermissionsState(permissions: List<PermissionModel>)
     }
 
     interface Model {
         fun createUser(username:String, password:String, type:String)
         fun getUsers()
+        fun updatePermissionsState(permissions: List<PermissionModel>)
     }
 }

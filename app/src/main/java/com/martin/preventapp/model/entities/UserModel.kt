@@ -1,8 +1,7 @@
 package com.martin.preventapp.model.entities
 
-import com.martin.preventapp.model.entities.Response.Permission
-import com.martin.preventapp.model.entities.Response.PermissionModel
-import kotlinx.serialization.SerialName
+import com.martin.preventapp.model.entities.Request.PermissionModel
+
 
 data class UserModel (
     val idUser: Int,

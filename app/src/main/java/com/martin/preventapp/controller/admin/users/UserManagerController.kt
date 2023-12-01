@@ -3,11 +3,9 @@ package com.martin.preventapp.controller.admin.users
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.controller.admin.interfaces.UserManagerInterface
-import com.martin.preventapp.controller.admin.orders.NewOrdersController
-import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.model.admin.managerUsers.UserManagerModel
+import com.martin.preventapp.model.entities.Request.PermissionModel
 import com.martin.preventapp.model.entities.UserModel
-import com.martin.preventapp.view.entities.User
 import com.martin.preventapp.view.fragments.admin.users.DetailUserFragment
 import com.martin.preventapp.view.fragments.admin.users.UserListFragment
 
@@ -71,5 +69,9 @@ class UserManagerController : UserManagerInterface.Controller {
 
     override fun createUser(username: String, password: String, type: String) {
         UserManagerModel.instance!!.createUser(username, password, type)
+    }
+
+    override fun updatePermissionsState(permissions: List<PermissionModel>) {
+        UserManagerModel.instance!!.updatePermissionsState(permissions)
     }
 }

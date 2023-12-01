@@ -51,7 +51,12 @@ class UserPermissionsFragment : Fragment() {
         }
 
         binding.btnModifyPermissions.setOnClickListener {
-            Toast.makeText(requireContext(), adapter?.getUpdatedPermissionsList().toString(), Toast.LENGTH_LONG).show()
+            val list = adapter?.getUpdatedPermissionsList()
+            if(!list.isNullOrEmpty()) {
+                UserManagerController.instance!!.updatePermissionsState(list)
+            }else{
+                UserManagerController.instance!!.showToast("Error al obtener la lista")
+            }
         }
 
         return binding.root

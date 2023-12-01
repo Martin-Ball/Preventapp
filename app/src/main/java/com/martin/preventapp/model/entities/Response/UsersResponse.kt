@@ -1,5 +1,6 @@
 package com.martin.preventapp.model.entities.Response
 
+import com.martin.preventapp.model.entities.Request.PermissionModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,10 +24,3 @@ data class UserModelResponse (
     val permissions: List<PermissionModel>
 )
 
-@Serializable
-data class PermissionModel(
-    @SerialName("nombrePermiso")
-    val permissionName: String,
-    @SerialName("estado")
-    var state: Int
-)

@@ -5,10 +5,13 @@ import com.martin.preventapp.controller.admin.interfaces.UserManagerInterface
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.model.Application
+import com.martin.preventapp.model.entities.Request.PermissionModel
+import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import com.martin.preventapp.model.entities.UserModel
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -86,6 +89,34 @@ class UserManagerModel : UserManagerInterface.Model {
             }
 
             override fun onFailure(call: Call<UsersResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun updatePermissionsState(permissions: List<PermissionModel>) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.updatePermissionsState(
+            Application.getTokenShared(UserManagerController.instance!!.context!!) ?: "",
+            PermissionsUpdate(Application.getUserShared(UserManagerController.instance!!.context!!) ?: "", permissions)
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    if (loginResponse != null) {
+                        UserManagerController.instance!!.showToast("Permisos actualizados correctamente")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })
