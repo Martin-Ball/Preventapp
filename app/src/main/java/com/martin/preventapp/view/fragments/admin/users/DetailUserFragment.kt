@@ -66,15 +66,13 @@ class DetailUserFragment : Fragment() {
             }
 
             alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
-                Toast.makeText(requireContext(), "Usuario eliminado", Toast.LENGTH_LONG).show()
+                UserManagerController.instance!!.deleteUser(user!!.username)
                 dialog.dismiss()
             }
 
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
         }
-
-
 
         binding.backButton.setOnClickListener {
             UserManagerController.instance!!.goToMain()

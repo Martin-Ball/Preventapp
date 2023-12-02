@@ -6,6 +6,7 @@ import com.martin.preventapp.controller.admin.interfaces.UserManagerInterface
 import com.martin.preventapp.model.admin.managerUsers.UserManagerModel
 import com.martin.preventapp.model.entities.Request.PermissionModel
 import com.martin.preventapp.model.entities.UserModel
+import com.martin.preventapp.model.entities.UserToModify
 import com.martin.preventapp.view.fragments.admin.users.DetailUserFragment
 import com.martin.preventapp.view.fragments.admin.users.UserListFragment
 
@@ -73,5 +74,13 @@ class UserManagerController : UserManagerInterface.Controller {
 
     override fun updatePermissionsState(permissions: List<PermissionModel>) {
         UserManagerModel.instance!!.updatePermissionsState(permissions)
+    }
+
+    override fun updateUser(userModified: UserToModify) {
+        UserManagerModel.instance!!.updateUser(userModified)
+    }
+
+    override fun deleteUser(username: String) {
+        UserManagerModel.instance!!.deleteUser(username)
     }
 }

@@ -13,6 +13,7 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.FragmentCreateUserBinding
 import com.martin.preventapp.databinding.FragmentUserBinding
+import com.martin.preventapp.model.entities.UserToModify
 
 class CreateUserFragment : Fragment() {
     private var _binding: FragmentCreateUserBinding? = null
@@ -40,7 +41,7 @@ class CreateUserFragment : Fragment() {
 
         val user = UserManagerController.instance!!.getUserToModify()
 
-        val roles = arrayOf("Preventista", "Repartidor")
+        val roles = arrayOf("Administrador", "Preventista", "Repartidor")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, roles)
 
@@ -95,6 +96,22 @@ class CreateUserFragment : Fragment() {
                 UserManagerController.instance!!.createUser(userName, password, selectedRol)
             }else{
                 UserManagerController.instance!!.showToast("Las contraseñas no coinciden")
+            }
+        }
+
+        if(binding.btnModifyUser.isVisible){
+            binding.btnModifyUser.setOnClickListener {
+                val userName = binding.username.text.toString()
+                val password = binding.password.text.toString()
+                val confirmPassword = binding.confirmPassword.text.toString()
+
+                if(password == confirmPassword){
+                    UserManagerController.instance!!.updateUser(UserToModify(
+                        userName, password, selectedRol
+                    ))
+                }else{
+                    UserManagerController.instance!!.showToast("Las contraseñas no coinciden")
+                }
             }
         }
 

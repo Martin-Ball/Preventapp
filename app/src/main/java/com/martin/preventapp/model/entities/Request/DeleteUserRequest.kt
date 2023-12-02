@@ -4,9 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PermissionModel(
-    @SerialName("nombrePermiso")
-    val permissionName: String,
-    @SerialName("estado")
-    var state: Int?
+data class DeleteUserRequest(
+    @SerialName("username")
+    val username: String
 )
