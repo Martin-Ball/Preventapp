@@ -9,6 +9,7 @@ import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
+import com.martin.preventapp.view.entities.Permission
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,9 +44,13 @@ class LoginModel : LoginInterfaces.Model {
                     if (loginResponse != null) {
                         Application.saveTokenShared(context, loginResponse.token)
                         Application.saveUserShared(context, loginResponse.user.nombreUsuario)
-                        Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)
+                        Application.saveGroupUserShared(context, loginResponse.groupType[0].nombreGrupo)
+                        val permissions = loginResponse.permissions.map {
+                            Permission(it.nombrePermiso, it.estado == 1)
+                        }
+                        Application.savePermissionsUserShared(context, permissions)
                         Log.e("TOKEN: ", Application.getTokenShared(context) ?: "")
-                        LoginController.instance!!.goToMain(loginResponse.groupType.nombreGrupo)
+                        LoginController.instance!!.goToMain(loginResponse.groupType[0].nombreGrupo)
                     } else {
                         response.errorBody()?.string()?.let { LoginController.instance!!.showToast(it) }
                     }
@@ -114,6 +119,10 @@ class LoginModel : LoginInterfaces.Model {
                         Application.saveTokenShared(context, loginResponse.token)
                         Application.saveUserShared(context, loginResponse.user.nombreUsuario)
                         Application.saveGroupUserShared(context, loginResponse.groupType.nombreGrupo)
+                        val permissions = loginResponse.permissions.map {
+                            Permission(it.nombrePermiso, it.estado == 1)
+                        }
+                        Application.savePermissionsUserShared(context, permissions)
                         Log.e("TOKEN: ", Application.getTokenShared(context) ?: "")
                         LoginController.instance!!.goToMain(loginResponse.groupType.nombreGrupo)
                     } else {

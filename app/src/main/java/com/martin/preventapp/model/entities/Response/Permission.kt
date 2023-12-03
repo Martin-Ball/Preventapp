@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Permission(
-    @SerialName("idPermiso")
-    val idPermiso: Int,
     @SerialName("nombrePermiso")
-    val nombrePermiso: String
+    val nombrePermiso: String,
+    @SerialName("estado")
+    val estado: Int
 )

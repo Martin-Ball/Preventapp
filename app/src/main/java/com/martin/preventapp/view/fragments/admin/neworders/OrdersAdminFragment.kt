@@ -18,6 +18,8 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     private var _binding: FragmentOrdersAdminBinding? = null
     private val binding get() = _binding!!
 
+    private var isEnabled: Boolean = true
+
     companion object {
         private var ordersAdminFragment: OrdersAdminFragment? = null
         @JvmStatic
@@ -41,13 +43,31 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = NewOrdersController.instance!!.getNewOrders()
+        if (arguments != null) {
+            isEnabled = requireArguments().getBoolean("isEnabled", true)
+        }
 
-        val adapter = NewOrdersAdapter(requireContext(), items)
-        binding.orderList.adapter = adapter
+        if(isEnabled) {
+            val items = NewOrdersController.instance!!.getNewOrders()
 
-        binding.btnConfirmOrders.setOnClickListener {
-            requireActivity().startActivity(Intent(requireContext(), ConfirmedOrdersActivity::class.java))
+            val adapter = NewOrdersAdapter(requireContext(), items)
+            binding.orderList.adapter = adapter
+
+            binding.btnConfirmOrders.setOnClickListener {
+                requireActivity().startActivity(
+                    Intent(
+                        requireContext(),
+                        ConfirmedOrdersActivity::class.java
+                    )
+                )
+            }
+        }else{
+            binding.tvNewClient.visibility = View.GONE
+            binding.orderList.visibility = View.GONE
+            binding.btnConfirmOrders.visibility = View.GONE
+            binding.btnExport.visibility = View.GONE
+
+            binding.tvEnabledAction.visibility = View.VISIBLE
         }
 
     }

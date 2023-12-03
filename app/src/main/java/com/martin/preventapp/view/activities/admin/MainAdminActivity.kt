@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
+import com.martin.preventapp.model.Application
+import com.martin.preventapp.view.entities.Permission
 import com.martin.preventapp.view.fragments.admin.list.ListFragment
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
@@ -24,10 +26,12 @@ class MainAdminActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navigation_orders -> {
                     ConfirmedOrdersFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
+
                     showFragment(OrdersAdminFragment.instance!!)
                     true
                 }
                 R.id.navigation_list -> {
+
                     showFragment(ListFragment.instance!!)
                     true
                 }

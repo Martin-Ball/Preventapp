@@ -1,7 +1,10 @@
 package com.martin.preventapp.model
 
 import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.martin.preventapp.view.entities.Permission
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -16,6 +19,7 @@ class Application {
         private const val SHARED_TOKEN = "TOKEN"
         private const val SHARED_USER = "USER"
         private const val SHARED_GROUP = "GROUP"
+        private const val SHARED_PERMISSIONS = "PERMISSIONS"
 
         fun getApiService(): ApiService {
             val client = OkHttpClient.Builder()
@@ -57,6 +61,7 @@ class Application {
 
             clearUserShared(context)
             clearGroupUserShared(context)
+            clearPermissionsShared(context)
         }
 
         fun saveUserShared(context: Context, value: String) {
@@ -96,5 +101,35 @@ class Application {
             editor.remove(SHARED_GROUP)
             editor.apply()
         }
+        fun savePermissionsUserShared(context: Context, permissionsList: List<Permission>) {
+            val gson = Gson()
+            val permissionsJson = gson.toJson(permissionsList)
+
+            val sharedPreferences = context.getSharedPreferences(SHARED_PERMISSIONS, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString(SHARED_PERMISSIONS, permissionsJson)
+            editor.apply()
+        }
+
+        fun getPermissionsUserShared(context: Context): List<Permission>? {
+            val sharedPreferences = context.getSharedPreferences(SHARED_PERMISSIONS, Context.MODE_PRIVATE)
+            val permissionsJson = sharedPreferences.getString(SHARED_PERMISSIONS, null)
+
+            if (permissionsJson != null) {
+                val type = object : TypeToken<List<Permission>>() {}.type
+                return Gson().fromJson(permissionsJson, type)
+            }
+
+            return null
+        }
+
+        fun clearPermissionsShared(context: Context) {
+            val sharedPreferences = context.getSharedPreferences(SHARED_PERMISSIONS, Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove(SHARED_PERMISSIONS)
+            editor.apply()
+        }
+
+
     }
 }

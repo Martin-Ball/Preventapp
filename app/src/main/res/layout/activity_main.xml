@@ -31,7 +31,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <LinearLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
@@ -41,6 +40,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_enabled_action"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="Accion no habilitada para el usuario"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:visibility="visible"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

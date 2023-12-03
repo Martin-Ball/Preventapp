@@ -8,7 +8,7 @@ data class LoginResponse(
     @SerialName("user")
     val user: User,
     @SerialName("groupType")
-    val groupType: GroupType,
+    val groupType: List<GroupType>,
     @SerialName("permissions")
     val permissions: List<Permission>,
     @SerialName("token")
