@@ -2,12 +2,14 @@ package com.martin.preventapp.view.fragments.admin.list
 
 import ProductListAdapter
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.interfaces.ListControllerInterface
 import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.databinding.ActivityListSelectionBinding
@@ -17,11 +19,13 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import java.util.Calendar
 
 class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View {
 
     private lateinit var binding: ActivityListSelectionBinding
     private val productsList: MutableList<Product> = mutableListOf()
+    private var selectedDate: String = ""
 
     private val launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -51,7 +55,7 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
         binding.btnCreateList.setOnClickListener {
             val listName = binding.etListName.text.toString()
             if(listName.isNotEmpty()){
-                ListController.instance!!.createList(ListModelEntity(listName, productsList))
+                ListController.instance!!.createList(ListModelEntity(listName, productsList, selectedDate))
             }else{
                 Toast.makeText(this, "Escriba un nombre de lista", Toast.LENGTH_LONG).show()
             }
@@ -59,6 +63,10 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
 
         binding.backButton.setOnClickListener {
             finish()
+        }
+
+        binding.btnOpenDatePicker.setOnClickListener {
+            showDatePicker()
         }
     }
 
@@ -93,5 +101,23 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
 
     override fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            R.style.DialogTheme,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+            },
+            year, month, day
+        )
+
+        datePickerDialog.show()
     }
 }

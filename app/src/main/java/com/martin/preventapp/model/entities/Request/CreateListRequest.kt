@@ -10,5 +10,7 @@ class CreateListRequest (
     @SerialName("usuario")
     val username: String,
     @SerialName("productos")
-    val productsList: List<ProductRequest>
+    val productsList: List<ProductRequest>,
+    @SerialName("fechaVigencia")
+    val validityDate: String
 )

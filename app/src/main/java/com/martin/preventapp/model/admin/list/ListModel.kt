@@ -38,7 +38,9 @@ class ListModel : ListControllerInterface.Model {
                 Application.getUserShared(ListController.instance!!.context!!) ?: "",
                 list.listProducts.map{
                     ProductRequest(it.productName, it.brand, it.presentation, it.unit, it.price)
-                })
+                },
+                list.dateValidity
+            )
         )
 
         call.enqueue(object : Callback<ResponseBody> {
