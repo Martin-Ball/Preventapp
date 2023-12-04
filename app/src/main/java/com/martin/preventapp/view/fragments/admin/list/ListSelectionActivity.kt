@@ -54,10 +54,10 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
                 binding.btnCreateList.visibility = View.GONE
                 binding.etListName.isEnabled = false
 
-                val productsAdapter = ProductListAdapter(this, ListController.instance!!.getList().listProducts)
+                val productsAdapter = ProductListAdapter(this, ListController.instance!!.getListPrices().listProducts)
                 binding.productList.adapter = productsAdapter
 
-                binding.etListName.setText(ListController.instance!!.getList().listName)
+                binding.etListName.setText(ListController.instance!!.getListPrices().listName)
             }
         }else{
             openFilePicker()
@@ -78,7 +78,7 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
         binding.btnCreateList.setOnClickListener {
             val listName = binding.etListName.text.toString()
             if(listName.isNotEmpty()){
-                ListController.instance!!.createList(ListModelEntity(listName, productsList, selectedDate))
+                ListController.instance!!.createListPrices(ListModelEntity(listName, productsList, selectedDate))
             }else{
                 Toast.makeText(this, "Escriba un nombre de lista", Toast.LENGTH_LONG).show()
             }

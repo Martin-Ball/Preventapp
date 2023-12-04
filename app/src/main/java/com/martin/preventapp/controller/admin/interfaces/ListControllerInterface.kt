@@ -1,7 +1,9 @@
 package com.martin.preventapp.controller.admin.interfaces
 
 import android.content.Context
+import com.martin.preventapp.model.entities.ClientListModelEntity
 import com.martin.preventapp.model.entities.ListModelEntity
+import com.martin.preventapp.view.entities.Client
 
 interface ListControllerInterface {
     interface View {
@@ -11,15 +13,22 @@ interface ListControllerInterface {
     interface Controller {
         fun setView(view: View)
         fun setContext(context: Context)
-        fun createList(list: ListModelEntity)
         fun showToast(text: String)
-        fun downloadList()
-        fun showList(list: ListModelEntity)
-        fun getList(): ListModelEntity
+        fun createListPrices(list: ListModelEntity)
+        fun downloadListPrices()
+        fun showListPrices(list: ListModelEntity)
+        fun getListPrices(): ListModelEntity
+
+        fun createListClient(list: List<Client>)
+        fun showClientList(list: ClientListModelEntity)
+        fun downloadClientList()
+        fun getListClient() : ClientListModelEntity
     }
 
     interface Model {
-        fun createList(list: ListModelEntity)
-        fun getList()
+        fun createListPrices(list: ListModelEntity)
+        fun getListPrices()
+        fun createListClient(list: List<Client>)
+        fun getListClient()
     }
 }

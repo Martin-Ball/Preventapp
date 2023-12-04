@@ -45,11 +45,11 @@ class ListFragment : Fragment() {
         }
 
         binding.btnViewList.setOnClickListener {
-            ListController.instance!!.downloadList()
+            ListController.instance!!.downloadListPrices()
         }
 
         binding.btnViewClients.setOnClickListener {
-
+            ListController.instance!!.downloadClientList()
         }
     }
 
@@ -57,6 +57,14 @@ class ListFragment : Fragment() {
         val bundle = Bundle()
         bundle.putBoolean("isView", true)
         val intent = Intent(requireContext(), ListSelectionActivity::class.java)
+        intent.putExtras(bundle)
+        requireActivity().startActivity(intent)
+    }
+
+    fun showListClient(){
+        val bundle = Bundle()
+        bundle.putBoolean("isView", true)
+        val intent = Intent(requireContext(), ClientListActivity::class.java)
         intent.putExtras(bundle)
         requireActivity().startActivity(intent)
     }

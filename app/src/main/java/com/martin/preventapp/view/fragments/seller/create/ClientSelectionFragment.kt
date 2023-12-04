@@ -44,7 +44,10 @@ class ClientSelectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val clientList = listOf(
-            Client("Cliente 1",), Client("Cliente 2"), Client("Cliente 3"), Client("Cliente 4"))
+            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
+            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
+            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
+            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"))
 
         val clientNames = clientList.map { it.name }
 

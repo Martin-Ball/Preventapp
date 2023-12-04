@@ -3,7 +3,9 @@ package com.martin.preventapp.controller.admin.lists
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.ListControllerInterface
 import com.martin.preventapp.model.admin.list.ListModel
+import com.martin.preventapp.model.entities.ClientListModelEntity
 import com.martin.preventapp.model.entities.ListModelEntity
+import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.fragments.admin.list.ListFragment
 
 class ListController : ListControllerInterface.Controller {
@@ -14,6 +16,7 @@ class ListController : ListControllerInterface.Controller {
     var view: ListControllerInterface.View? = null
 
     private lateinit var listPrices: ListModelEntity
+    private lateinit var listClient: ClientListModelEntity
 
     companion object {
         private var listController: ListController? = null
@@ -35,21 +38,38 @@ class ListController : ListControllerInterface.Controller {
         this.context = context
     }
 
-    override fun createList(list: ListModelEntity) {
-        ListModel.instance!!.createList(list)
+    override fun createListPrices(list: ListModelEntity) {
+        ListModel.instance!!.createListPrices(list)
     }
 
-    override fun downloadList() {
-        ListModel.instance!!.getList()
+    override fun downloadListPrices() {
+        ListModel.instance!!.getListPrices()
     }
 
-    override fun showList(list: ListModelEntity) {
+    override fun showListPrices(list: ListModelEntity) {
         listPrices = list
         ListFragment.instance!!.showList()
     }
 
-    override fun getList(): ListModelEntity {
+    override fun getListPrices(): ListModelEntity {
         return listPrices
+    }
+
+    override fun createListClient(list: List<Client>) {
+        ListModel.instance!!.createListClient(list)
+    }
+
+    override fun showClientList(list: ClientListModelEntity) {
+        listClient = list
+        ListFragment.instance!!.showListClient()
+    }
+
+    override fun downloadClientList() {
+        ListModel.instance!!.getListClient()
+    }
+
+    override fun getListClient(): ClientListModelEntity {
+        return listClient
     }
 
     override fun showToast(text: String) {

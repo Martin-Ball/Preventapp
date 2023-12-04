@@ -4,10 +4,13 @@ import ClientAdapter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.martin.preventapp.controller.admin.interfaces.ListControllerInterface
+import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.databinding.ActivityClientListBinding
 import com.martin.preventapp.view.entities.Client
 import org.apache.poi.ss.usermodel.Row
@@ -15,9 +18,11 @@ import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
-class ClientListActivity : AppCompatActivity() {
+class ClientListActivity : AppCompatActivity(), ListControllerInterface.View {
 
     private lateinit var binding: ActivityClientListBinding
+
+    private lateinit var clientList: List<Client>
 
     private val launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -32,7 +37,28 @@ class ClientListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityClientListBinding.inflate(layoutInflater);
         setContentView(binding.root)
-        openFilePicker()
+
+        ListController.instance!!.setContext(this)
+        ListController.instance!!.setView(this)
+
+        val intent = intent
+        if (intent != null && intent.extras != null) {
+            val bundle = intent.extras!!
+            val isView = bundle.getBoolean("isView", false)
+
+            if(isView){
+                binding.btnCreateClients.visibility = View.GONE
+
+                val productsAdapter = ClientAdapter(this, ListController.instance!!.getListClient().clientList)
+                binding.clientList.adapter = productsAdapter
+            }
+        }else{
+            openFilePicker()
+        }
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun openFilePicker() {
@@ -41,6 +67,10 @@ class ClientListActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_OPENABLE)
 
         launcher.launch(intent)
+
+        binding.btnCreateClients.setOnClickListener {
+            ListController.instance!!.createListClient(clientList)
+        }
 
         binding.backButton.setOnClickListener {
             finish()
@@ -53,17 +83,21 @@ class ClientListActivity : AppCompatActivity() {
             val workbook: Workbook = XSSFWorkbook(inputStream)
             val sheet: Sheet = workbook.getSheetAt(0)
 
-            val clientsList: MutableList<Client> = mutableListOf()
+            val clientsListXls: MutableList<Client> = mutableListOf()
 
             for (i in 0 until sheet.physicalNumberOfRows) {
                 val row: Row = sheet.getRow(i)
                 val clientName: String = row.getCell(0).stringCellValue
+                val address: String = row.getCell(1).stringCellValue
+                val deliveryHour: String = row.getCell(2).stringCellValue
 
-                val client = Client(clientName)
-                clientsList.add(client)
+                val client = Client(clientName, address, deliveryHour)
+                clientsListXls.add(client)
             }
 
-            val productsAdapter = ClientAdapter(this, clientsList)
+            clientList = clientsListXls
+
+            val productsAdapter = ClientAdapter(this, clientList)
             binding.clientList.adapter = productsAdapter
 
             inputStream?.close()
@@ -71,5 +105,9 @@ class ClientListActivity : AppCompatActivity() {
             Toast.makeText(this, "Error al leer el archivo Excel", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
+    }
+
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 }

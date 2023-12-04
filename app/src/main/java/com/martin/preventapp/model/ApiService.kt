@@ -1,11 +1,13 @@
 package com.martin.preventapp.model
 
+import com.martin.preventapp.model.entities.Request.CreateClientListRequest
 import com.martin.preventapp.model.entities.Request.CreateListRequest
 import com.martin.preventapp.model.entities.Request.DeleteUserRequest
 import com.martin.preventapp.model.entities.Request.LoginRequest
 import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
+import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.ProductResponse
@@ -72,4 +74,16 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<ListResponse>
+
+    @POST("clientsList/newList")
+    fun createListClient(
+        @Header("x-token") token: String,
+        @Body newList: CreateClientListRequest
+    ): Call<ResponseBody>
+
+    @GET("clientsList/getList")
+    fun getListClient(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<ListClientResponse>
 }

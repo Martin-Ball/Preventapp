@@ -40,6 +40,8 @@ class ClientAdapter(context: Context, private val clientList: List<Client>) : Ba
         }
 
         viewHolder.clientName.text = filteredClientList[position].name
+        viewHolder.address.text = "Direccion: ${filteredClientList[position].address}"
+        viewHolder.deliveryHour.text = "Horario: ${filteredClientList[position].deliveryHour}"
 
         return view
     }
@@ -51,5 +53,7 @@ class ClientAdapter(context: Context, private val clientList: List<Client>) : Ba
 
     private class ViewHolder(view: View) {
         val clientName: TextView = view.findViewById(R.id.clientName)
+        val address: TextView = view.findViewById(R.id.address)
+        val deliveryHour: TextView = view.findViewById(R.id.delivery_hour)
     }
 }
