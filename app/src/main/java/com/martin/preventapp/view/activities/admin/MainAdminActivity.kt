@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
 import com.martin.preventapp.model.Application
@@ -31,7 +32,7 @@ class MainAdminActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_list -> {
-
+                    ListController.instance!!.setContext(this)
                     showFragment(ListFragment.instance!!)
                     true
                 }

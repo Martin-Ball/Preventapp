@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,9 +41,31 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
         super.onCreate(savedInstanceState)
         binding = ActivityListSelectionBinding.inflate(layoutInflater);
         setContentView(binding.root)
-        openFilePicker()
         ListController.instance!!.setContext(this)
         ListController.instance!!.setView(this)
+
+        val intent = intent
+        if (intent != null && intent.extras != null) {
+            val bundle = intent.extras!!
+            val isView = bundle.getBoolean("isView", false)
+
+            if(isView){
+                binding.btnOpenDatePicker.visibility = View.GONE
+                binding.btnCreateList.visibility = View.GONE
+                binding.etListName.isEnabled = false
+
+                val productsAdapter = ProductListAdapter(this, ListController.instance!!.getList().listProducts)
+                binding.productList.adapter = productsAdapter
+
+                binding.etListName.setText(ListController.instance!!.getList().listName)
+            }
+        }else{
+            openFilePicker()
+        }
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun openFilePicker() {
@@ -59,10 +82,6 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
             }else{
                 Toast.makeText(this, "Escriba un nombre de lista", Toast.LENGTH_LONG).show()
             }
-        }
-
-        binding.backButton.setOnClickListener {
-            finish()
         }
 
         binding.btnOpenDatePicker.setOnClickListener {

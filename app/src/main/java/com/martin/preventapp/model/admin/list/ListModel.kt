@@ -9,10 +9,14 @@ import com.martin.preventapp.model.entities.ListModelEntity
 import com.martin.preventapp.model.entities.Request.CreateListRequest
 import com.martin.preventapp.model.entities.Request.DeleteUserRequest
 import com.martin.preventapp.model.entities.Request.ProductRequest
+import com.martin.preventapp.model.entities.Response.ListResponse
+import com.martin.preventapp.model.entities.Response.ProductResponse
+import com.martin.preventapp.view.entities.Product
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 class ListModel : ListControllerInterface.Model {
 
@@ -58,6 +62,45 @@ class ListModel : ListControllerInterface.Model {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun getList() {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getList(
+            Application.getTokenShared(ListController.instance!!.context!!) ?: "",
+            Application.getUserShared(ListController.instance!!.context!!) ?: ""
+        )
+
+        call.enqueue(object : Callback<ListResponse> {
+            override fun onResponse(call: Call<ListResponse>, response: Response<ListResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        ListController.instance!!.showList(
+                            ListModelEntity(
+                                responseList.listName,
+                                responseList.listProducts.map { Product(
+                                    it.productName,
+                                    it.brand,
+                                    it.presentation,
+                                    it.unit,
+                                    it.price
+                                ) },
+                                responseList.validityDate)
+                        )
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ListResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })

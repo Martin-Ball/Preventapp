@@ -6,11 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.databinding.FragmentListBinding
-import com.martin.preventapp.databinding.FragmentOrdersAdminBinding
-import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersActivity
-import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
 
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
@@ -48,12 +45,20 @@ class ListFragment : Fragment() {
         }
 
         binding.btnViewList.setOnClickListener {
-
+            ListController.instance!!.downloadList()
         }
 
         binding.btnViewClients.setOnClickListener {
 
         }
+    }
+
+    fun showList(){
+        val bundle = Bundle()
+        bundle.putBoolean("isView", true)
+        val intent = Intent(requireContext(), ListSelectionActivity::class.java)
+        intent.putExtras(bundle)
+        requireActivity().startActivity(intent)
     }
 
 }

@@ -13,9 +13,13 @@ interface ListControllerInterface {
         fun setContext(context: Context)
         fun createList(list: ListModelEntity)
         fun showToast(text: String)
+        fun downloadList()
+        fun showList(list: ListModelEntity)
+        fun getList(): ListModelEntity
     }
 
     interface Model {
         fun createList(list: ListModelEntity)
+        fun getList()
     }
 }
