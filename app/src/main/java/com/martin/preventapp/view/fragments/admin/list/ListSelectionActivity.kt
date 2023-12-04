@@ -8,16 +8,20 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.martin.preventapp.controller.admin.interfaces.ListControllerInterface
+import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.databinding.ActivityListSelectionBinding
+import com.martin.preventapp.model.entities.ListModelEntity
 import com.martin.preventapp.view.entities.Product
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 
-class ListSelectionActivity : AppCompatActivity() {
+class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View {
 
     private lateinit var binding: ActivityListSelectionBinding
+    private val productsList: MutableList<Product> = mutableListOf()
 
     private val launcher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -33,6 +37,8 @@ class ListSelectionActivity : AppCompatActivity() {
         binding = ActivityListSelectionBinding.inflate(layoutInflater);
         setContentView(binding.root)
         openFilePicker()
+        ListController.instance!!.setContext(this)
+        ListController.instance!!.setView(this)
     }
 
     private fun openFilePicker() {
@@ -41,6 +47,15 @@ class ListSelectionActivity : AppCompatActivity() {
         intent.addCategory(Intent.CATEGORY_OPENABLE)
 
         launcher.launch(intent)
+
+        binding.btnCreateList.setOnClickListener {
+            val listName = binding.etListName.text.toString()
+            if(listName.isNotEmpty()){
+                ListController.instance!!.createList(ListModelEntity(listName, productsList))
+            }else{
+                Toast.makeText(this, "Escriba un nombre de lista", Toast.LENGTH_LONG).show()
+            }
+        }
 
         binding.backButton.setOnClickListener {
             finish()
@@ -53,14 +68,16 @@ class ListSelectionActivity : AppCompatActivity() {
             val workbook: Workbook = XSSFWorkbook(inputStream)
             val sheet: Sheet = workbook.getSheetAt(0)
 
-            val productsList: MutableList<Product> = mutableListOf()
-
             for (i in 0 until sheet.physicalNumberOfRows) {
                 val row: Row = sheet.getRow(i)
                 val productName: String = row.getCell(0).stringCellValue
-                val productPrice: Double = row.getCell(1).numericCellValue
+                val brand: String = row.getCell(1).stringCellValue
+                val presentation: String = row.getCell(2).stringCellValue
+                val unit: String = row.getCell(3).stringCellValue
+                val productPrice: Double = row.getCell(4).numericCellValue
 
-                val producto = Product(productName, productPrice)
+
+                val producto = Product(productName, brand, presentation, unit, productPrice)
                 productsList.add(producto)
             }
 
@@ -74,4 +91,7 @@ class ListSelectionActivity : AppCompatActivity() {
         }
     }
 
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
 }

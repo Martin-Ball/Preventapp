@@ -37,7 +37,7 @@ class ProductResumeAdapter(private val context: Context, private val productList
         }
 
         val product = getItem(position)
-        viewHolder.productName.text = product.title
+        viewHolder.productName.text = product.productName
         viewHolder.productPrice.text = product.price.toString()
 
         return view

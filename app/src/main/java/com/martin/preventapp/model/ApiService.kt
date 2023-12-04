@@ -1,5 +1,6 @@
 package com.martin.preventapp.model
 
+import com.martin.preventapp.model.entities.Request.CreateListRequest
 import com.martin.preventapp.model.entities.Request.DeleteUserRequest
 import com.martin.preventapp.model.entities.Request.LoginRequest
 import com.martin.preventapp.model.entities.Request.PermissionsUpdate
@@ -56,5 +57,11 @@ interface ApiService {
     fun deleteUser(
         @Header("x-token") token: String,
         @Body deleteUserRequest: DeleteUserRequest
+    ): Call<ResponseBody>
+
+    @POST("pricesList/newList")
+    fun createList(
+        @Header("x-token") token: String,
+        @Body newList: CreateListRequest
     ): Call<ResponseBody>
 }

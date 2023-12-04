@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.martin.preventapp.R
-import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
 
 class ProductListAdapter(context: Context, private val products: List<Product>) : BaseAdapter() {
@@ -38,14 +37,14 @@ class ProductListAdapter(context: Context, private val products: List<Product>) 
             viewHolder = view.tag as ViewHolder
         }
 
-        viewHolder.textViewName.text = filteredProducts[position].title
+        viewHolder.textViewName.text = filteredProducts[position].productName
         viewHolder.textViewPrice.text = "$${filteredProducts[position].price}"
 
         return view
     }
 
     fun filter(query: String) {
-        filteredProducts = products.filter { it.title.contains(query, ignoreCase = true) }
+        filteredProducts = products.filter { it.productName.contains(query, ignoreCase = true) }
         notifyDataSetChanged()
     }
 

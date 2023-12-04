@@ -54,13 +54,13 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
         val itemList: MutableList<ItemAmount> = mutableListOf()
 
-        val products = listOf(Product("Queso", 1212.11),
-            Product("Bondiola", 1212.11),
-            Product("Jamon", 1212.11),
-            Product("Mayonesa", 1212.11),
-            Product("Vino", 1212.11),
-            Product("Salame", 1212.11),
-            Product("Vacio", 1212.11))
+        val products = listOf(Product("Queso", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Bondiola", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Jamon", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Mayonesa", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Vino", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Salame", "La paulina", "Unidad", "Unidad", 1212.11),
+            Product("Vacio", "La paulina", "Unidad", "Unidad", 1212.11))
 
         val productsAdapter = ProductListAdapter(requireContext(), products)
         binding.productList.adapter = productsAdapter
@@ -89,8 +89,13 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
         binding.productList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = productsAdapter.getItem(position)
-            if(!adapter.checkIfExist(selectedItem.title)) {
-                adapter.addItem(ItemAmount(selectedItem.title, selectedItem.price))
+            if(!adapter.checkIfExist(selectedItem.productName)) {
+                adapter.addItem(ItemAmount(
+                    selectedItem.productName,
+                    selectedItem.brand,
+                    selectedItem.presentation,
+                    selectedItem.unit,
+                    selectedItem.price))
             }
         }
 

@@ -32,7 +32,7 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
     }
 
     fun checkIfExist(itemTitle: String): Boolean {
-        return itemList.any { it.title == itemTitle }
+        return itemList.any { it.name == itemTitle }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -43,7 +43,7 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
         private val deleteButton: ImageButton = itemView.findViewById(R.id.btn_delete)
 
         fun bind(item: ItemAmount) {
-            titleTextView.text = item.title
+            titleTextView.text = item.name
             addButton.setOnClickListener {
                 quantityEditText.setText((item.quantity + 1).toString())
                 item.quantity ++
