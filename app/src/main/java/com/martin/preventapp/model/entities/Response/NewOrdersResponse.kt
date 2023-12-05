@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 data class NewOrdersResponse(
     @SerialName("idPedido")
     val idOrder: Int,
+    @SerialName("fecha")
+    val date: String,
     @SerialName("cliente")
     val client: ClientResponse,
     @SerialName("preventista")

@@ -48,6 +48,7 @@ class NewOrdersModel : NewOrderInterface.Model {
                             responseList.map {
                                 NewOrder(
                                     it.idOrder,
+                                    it.date,
                                     it.products.map { product ->
                                         Product(
                                             product.productName,

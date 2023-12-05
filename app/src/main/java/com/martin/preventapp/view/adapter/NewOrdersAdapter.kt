@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
@@ -13,6 +14,22 @@ import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 
 class NewOrdersAdapter (private val context: Context, private val items: List<NewOrder>) : BaseAdapter() {
+    private val selectedPositions = mutableSetOf<Int>()
+
+    private fun toggleItemSelection(position: Int) {
+        if (selectedPositions.contains(position)) {
+            selectedPositions.remove(position)
+        } else {
+            selectedPositions.add(position)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun clearSelection() {
+        selectedPositions.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getCount(): Int {
         return items.size
     }
@@ -23,6 +40,10 @@ class NewOrdersAdapter (private val context: Context, private val items: List<Ne
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    fun getSelectedItems(): List<NewOrder> {
+        return selectedPositions.map { items[it] }
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -42,9 +63,14 @@ class NewOrdersAdapter (private val context: Context, private val items: List<Ne
 
         viewHolder.client.text = item.client.name
         viewHolder.seller.text = item.seller
+        viewHolder.date.text = item.date
         viewHolder.actionButton.setOnClickListener {
             NewOrdersController.instance!!.setItemToDetail(item, true, position)
             NewOrdersController.instance!!.showFragmentDetail()
+        }
+
+        viewHolder.checkBox.setOnClickListener {
+            toggleItemSelection(position)
         }
 
         return view
@@ -53,6 +79,8 @@ class NewOrdersAdapter (private val context: Context, private val items: List<Ne
     private class ViewHolder(view: View) {
         val client: TextView = view.findViewById(R.id.client)
         val seller: TextView = view.findViewById(R.id.seller)
+        val date: TextView = view.findViewById(R.id.date)
         val actionButton: ImageButton = view.findViewById(R.id.actionButton)
+        val checkBox: CheckBox = view.findViewById(R.id.checkBox)
     }
 }

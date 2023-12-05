@@ -52,13 +52,13 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+            ), "2023-12-04", Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem(listOf(
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+            ), "2023-12-04", Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             )
 
         val adapter = OrderAdapter(requireContext(), items, listener)
