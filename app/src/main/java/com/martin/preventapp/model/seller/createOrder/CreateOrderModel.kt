@@ -9,18 +9,22 @@ import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.ClientListModelEntity
 import com.martin.preventapp.model.entities.ListModelEntity
 import com.martin.preventapp.model.entities.OrderModel
+import com.martin.preventapp.model.entities.Request.CreateOrderRequest
+import com.martin.preventapp.model.entities.Request.ProductOrderRequest
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.entities.ProductOrder
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CreateOrderModel : CreateOrderInterface.Model {
 
-    private var itemList: MutableList<Product> = mutableListOf()
+    private var itemList: MutableList<ProductOrder> = mutableListOf()
     private var clientSelected : String = ""
     private lateinit var order : OrderModel
 
@@ -39,7 +43,7 @@ class CreateOrderModel : CreateOrderInterface.Model {
 
     override fun productsOrder(listItems: List<ItemAmount>) {
         listItems.forEach { product ->
-            this.itemList.add(Product(product.name, product.brand, product.presentation, product.quantityUnit, product.price))
+            this.itemList.add(ProductOrder(product.name, product.brand, product.presentation, product.quantityUnit, product.price, product.quantity))
         }
     }
 
@@ -52,15 +56,45 @@ class CreateOrderModel : CreateOrderInterface.Model {
     }
 
     override fun sendOrder(order: OrderModel) {
-        this.order = order
+        val apiService = Application.getApiService()
+
+        val call = apiService.createOrder(
+            Application.getTokenShared(CreateOrderController.instance!!.context!!) ?: "",
+            CreateOrderRequest(
+                order.client,
+                Application.getUserShared(CreateOrderController.instance!!.context!!) ?: "",
+                order.notes,
+                order.products.map { ProductOrderRequest(it.productName, it.amount, it.price) }
+            )
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        CreateOrderController.instance!!.showToast("Pedido enviado!")
+                        CreateOrderController.instance!!.goToMain()
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { CreateOrderController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
     }
 
     override fun getListClient() {
         val apiService = Application.getApiService()
 
         val call = apiService.getListClient(
-            Application.getTokenShared(ListController.instance!!.context!!) ?: "",
-            Application.getUserShared(ListController.instance!!.context!!) ?: ""
+            Application.getTokenShared(CreateOrderController.instance!!.context!!) ?: "",
+            Application.getUserShared(CreateOrderController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ListClientResponse> {
@@ -68,19 +102,16 @@ class CreateOrderModel : CreateOrderInterface.Model {
                 if (response.isSuccessful) {
                     val responseList = response.body()
                     if (responseList != null) {
-                        ListController.instance!!.showClientList(
-                            ClientListModelEntity(
-                                responseList.username,
-                                responseList.listClient.map { Client(
-                                    it.name,
-                                    it.address,
-                                    it.deliveryHour
-                                ) }
-                            )
+                        CreateOrderController.instance!!.showClients(
+                            responseList.listClient.map { Client(
+                                it.name,
+                                it.address,
+                                it.deliveryHour
+                            ) }
                         )
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { ListController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let { CreateOrderController.instance!!.showToast(it) }
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }

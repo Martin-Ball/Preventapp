@@ -49,11 +49,8 @@ class ResumeFragment : Fragment() {
         binding.listProducts.adapter = productsAdapter
 
         binding.sendOrder.setOnClickListener {
-            order.notes = binding.etNotes.toString()
+            order.notes = binding.etNotes.text.toString()
             CreateOrderController.instance?.sendOrder(order)
-            Toast.makeText(requireContext(), "PEDIDO ENVIADO: \nCLIENTE: ${order.client} \n" +
-                    "PRODUCTOS: ${order.products} \n" +
-                    "NOTAS: ${order.notes}", Toast.LENGTH_LONG).show()
         }
 
         binding.backButton.setOnClickListener {

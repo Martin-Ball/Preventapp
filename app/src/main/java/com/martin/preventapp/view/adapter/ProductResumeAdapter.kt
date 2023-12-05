@@ -8,14 +8,15 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.martin.preventapp.R
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.entities.ProductOrder
 
-class ProductResumeAdapter(private val context: Context, private val productList: List<Product>) : BaseAdapter() {
+class ProductResumeAdapter(private val context: Context, private val productList: List<ProductOrder>) : BaseAdapter() {
 
     override fun getCount(): Int {
         return productList.size
     }
 
-    override fun getItem(position: Int): Product {
+    override fun getItem(position: Int): ProductOrder {
         return productList[position]
     }
 
@@ -38,7 +39,9 @@ class ProductResumeAdapter(private val context: Context, private val productList
 
         val product = getItem(position)
         viewHolder.productName.text = product.productName
-        viewHolder.productPrice.text = product.price.toString()
+        viewHolder.productPrice.text = "$${product.price.toString()}"
+        viewHolder.productBrand.text = "Marca: ${product.brand}"
+        viewHolder.productUnit.text = "Cantidad: ${product.amount}"
 
         return view
     }
@@ -46,5 +49,7 @@ class ProductResumeAdapter(private val context: Context, private val productList
     private class ViewHolder(view: View) {
         val productName: TextView = view.findViewById(R.id.name_product)
         val productPrice: TextView = view.findViewById(R.id.price_product)
+        val productBrand: TextView = view.findViewById(R.id.brand_product)
+        val productUnit: TextView = view.findViewById(R.id.unit_product)
     }
 }

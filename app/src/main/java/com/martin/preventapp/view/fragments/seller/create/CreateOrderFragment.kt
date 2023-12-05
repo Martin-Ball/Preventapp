@@ -55,8 +55,9 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         CreateOrderController.instance!!.getListProducts()
 
         binding.nextStepOrder.setOnClickListener {
-            if(itemList.isEmpty()){
-                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG).show()
+            val itemsAmount = itemList.find { it.quantity == 0 }
+            if(itemList.isEmpty() || itemsAmount != null){
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS Y CANTIDADES", Toast.LENGTH_LONG).show()
             }else{
                 CreateOrderController.instance?.goToStepClient(itemList)
             }

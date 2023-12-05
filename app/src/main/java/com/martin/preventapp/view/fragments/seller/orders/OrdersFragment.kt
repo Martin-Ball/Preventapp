@@ -21,6 +21,7 @@ import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.entities.ProductOrder
 import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
 import com.martin.preventapp.view.fragments.seller.recommended.RecommendedProductFragment
 import java.util.Calendar
@@ -57,36 +58,36 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
         val items = listOf(
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
             ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
             ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
             ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
             ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             )
 

@@ -10,10 +10,11 @@ import android.widget.AdapterView
 import android.widget.SearchView
 import android.widget.Toast
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
+import com.martin.preventapp.controller.seller.interfaces.CreateOrderInterface
 import com.martin.preventapp.databinding.FragmentClientSelectionBinding
 import com.martin.preventapp.view.entities.Client
 
-class ClientSelectionFragment : Fragment() {
+class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelectionView {
 
     private var _binding: FragmentClientSelectionBinding? = null
     private val binding get() = _binding!!
@@ -43,15 +44,22 @@ class ClientSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val clientList = listOf(
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"))
+        binding.nextStepClient.setOnClickListener {
+            if(clientSelected == ""){
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR UN CLIENTE", Toast.LENGTH_LONG).show()
+            }else{
+                CreateOrderController.instance?.setClientSelected(clientSelected)
+            }
+        }
 
-        val clientNames = clientList.map { it.name }
+        binding.backButton.setOnClickListener {
+            requireActivity().finish()
+        }
+    }
 
-        val clientAdapter = ClientAdapter(requireContext(), clientList)
+    override fun showClients(list: List<Client>) {
+        val clientNames = list.map { it.name }
+        val clientAdapter = ClientAdapter(requireContext(), list)
         binding.clientList.adapter = clientAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -74,18 +82,6 @@ class ClientSelectionFragment : Fragment() {
         binding.clientList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             clientSelected = clientAdapter.getItem(position).toString()
             binding.tvClient.text = "Cliente seleccionado: $clientSelected"
-        }
-
-        binding.nextStepClient.setOnClickListener {
-            if(clientSelected == ""){
-                Toast.makeText(requireContext(), "DEBE SELECCIONAR UN CLIENTE", Toast.LENGTH_LONG).show()
-            }else{
-                CreateOrderController.instance?.setClientSelected(clientSelected)
-            }
-        }
-
-        binding.backButton.setOnClickListener {
-            requireActivity().finish()
         }
     }
 }

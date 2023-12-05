@@ -4,6 +4,7 @@ import android.content.Context
 import com.martin.preventapp.controller.seller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.seller.createOrder.CreateOrderModel
 import com.martin.preventapp.model.entities.OrderModel
+import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.fragments.seller.create.ClientSelectionFragment
@@ -53,6 +54,11 @@ class CreateOrderController : CreateOrderInterface.Controller {
     override fun setViewClient(clientSelectionActivity: CreateOrderInterface.CompleteOrderView) {
         this.viewClient = clientSelectionActivity
         viewClient!!.showFragment(ClientSelectionFragment.instance!!)
+        CreateOrderModel.instance!!.getListClient()
+    }
+
+    override fun showClients(list: List<Client>) {
+        ClientSelectionFragment.instance!!.showClients(list)
     }
 
     override fun setClientSelected(clientSelected: String) {
@@ -66,10 +72,13 @@ class CreateOrderController : CreateOrderInterface.Controller {
 
     override fun sendOrder(order: OrderModel) {
         CreateOrderModel.instance?.sendOrder(order)
-        viewClient!!.goToMain()
     }
 
     override fun showToast(text: String) {
         CreateOrderFragment.instance!!.showToast(text)
+    }
+
+    override fun goToMain() {
+        viewClient!!.goToMain()
     }
 }

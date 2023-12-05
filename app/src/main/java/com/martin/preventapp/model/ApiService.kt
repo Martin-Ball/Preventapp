@@ -2,9 +2,11 @@ package com.martin.preventapp.model
 
 import com.martin.preventapp.model.entities.Request.CreateClientListRequest
 import com.martin.preventapp.model.entities.Request.CreateListRequest
+import com.martin.preventapp.model.entities.Request.CreateOrderRequest
 import com.martin.preventapp.model.entities.Request.DeleteUserRequest
 import com.martin.preventapp.model.entities.Request.LoginRequest
 import com.martin.preventapp.model.entities.Request.PermissionsUpdate
+import com.martin.preventapp.model.entities.Request.ProductOrderRequest
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
 import com.martin.preventapp.model.entities.Response.ListClientResponse
@@ -86,4 +88,10 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<ListClientResponse>
+
+    @POST("orders/newOrder")
+    fun createOrder(
+        @Header("x-token") token: String,
+        @Body productOrder: CreateOrderRequest
+    ): Call<ResponseBody>
 }

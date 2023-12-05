@@ -15,6 +15,7 @@ import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.entities.ProductOrder
 import java.util.Calendar
 
 class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
@@ -47,45 +48,37 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
 
         val items = listOf(
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            ), Client("Cliente 1", "Lavalle 1367", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            ), Client("Cliente 1", "Lavalle 1367", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            ), Client("Cliente 1", "Lavalle 1367", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            ), Client("Cliente 1", "Lavalle 1367", "10 a 15hs"), "Preventista 1", "nota de pedido"),
-            OrderItem("Pedido 1", listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            ), Client("Cliente 1", "Lavalle 1367", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+                ProductOrder("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+                ProductOrder("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
+            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             )
 
         val adapter = OrderAdapter(requireContext(), items, listener)

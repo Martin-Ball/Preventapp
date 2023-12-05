@@ -11,6 +11,7 @@ import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.interfaces.CreateOrderInterface
 import com.martin.preventapp.databinding.ActivityClientSelectionBinding
 import com.martin.preventapp.view.activities.seller.MainSellerActivity
+import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.fragments.seller.orders.DetailOrderFragment
 
 class CompleteOrderActivity : AppCompatActivity(), CreateOrderInterface.CompleteOrderView {
@@ -23,6 +24,7 @@ class CompleteOrderActivity : AppCompatActivity(), CreateOrderInterface.Complete
         setContentView(binding.root)
 
         CreateOrderController.instance!!.setViewClient(this)
+        CreateOrderController.instance!!.setContext(this)
     }
 
     override fun goToMain() {

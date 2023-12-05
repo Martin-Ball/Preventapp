@@ -3,6 +3,7 @@ package com.martin.preventapp.controller.seller.interfaces
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.model.entities.OrderModel
+import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
 
@@ -19,6 +20,10 @@ interface CreateOrderInterface {
         fun goToMain()
     }
 
+    interface ClientSelectionView {
+        fun showClients(list: List<Client>)
+    }
+
     interface Controller {
         //STEP PRODUCTS
         fun getListProducts()
@@ -28,12 +33,15 @@ interface CreateOrderInterface {
         //STEP CLIENT
         fun setViewClient(clientSelectionActivity: CompleteOrderView)
         fun setContext(context: Context)
+        fun showClients(list: List<Client>)
         fun setClientSelected(clientSelected : String)
 
         //STEP RESUME
         fun getOrder() : OrderModel
         fun sendOrder(order: OrderModel)
         fun showToast(text: String)
+
+        fun goToMain()
     }
 
     interface Model {
