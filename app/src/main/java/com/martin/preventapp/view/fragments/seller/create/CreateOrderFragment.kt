@@ -28,6 +28,7 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
     private var _binding: FragmentCreateOrderBinding? = null
     private val binding get() = _binding!!
+    private var itemList: MutableList<ItemAmount> = mutableListOf()
 
     companion object {
         private var createOrderFragment: CreateOrderFragment? = null
@@ -51,18 +52,24 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        CreateOrderController.instance!!.getListProducts()
 
-        val itemList: MutableList<ItemAmount> = mutableListOf()
+        binding.nextStepOrder.setOnClickListener {
+            if(itemList.isEmpty()){
+                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG).show()
+            }else{
+                CreateOrderController.instance?.goToStepClient(itemList)
+            }
 
-        val products = listOf(Product("Queso", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Bondiola", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Jamon", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Mayonesa", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Vino", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Salame", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Vacio", "La paulina", "Unidad", "Unidad", 1212.11))
+        }
+    }
 
-        val productsAdapter = ProductListAdapter(requireContext(), products)
+    override fun showClientActivity(){
+        requireActivity().startActivity(Intent(requireContext(), CompleteOrderActivity::class.java))
+    }
+
+    override fun showListPrices(list: List<Product>) {
+        val productsAdapter = ProductListAdapter(requireContext(), list)
         binding.productList.adapter = productsAdapter
 
 
@@ -98,18 +105,9 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
                     selectedItem.price))
             }
         }
-
-        binding.nextStepOrder.setOnClickListener {
-            if(itemList.isEmpty()){
-                Toast.makeText(requireContext(), "DEBE SELECCIONAR PRODUCTOS", Toast.LENGTH_LONG).show()
-            }else{
-                CreateOrderController.instance?.goToStepClient(itemList)
-            }
-
-        }
     }
 
-    override fun showClientActivity(){
-        requireActivity().startActivity(Intent(requireContext(), CompleteOrderActivity::class.java))
+    override fun showToast(text: String) {
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
     }
 }

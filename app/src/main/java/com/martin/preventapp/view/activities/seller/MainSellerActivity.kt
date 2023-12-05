@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
@@ -33,6 +34,7 @@ class MainSellerActivity : AppCompatActivity() {
                     val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
+                        CreateOrderController.instance!!.setContext(this)
                         showFragment(CreateOrderFragment.instance!!)
                     }else{
                         removeCurrentFragment()
@@ -87,6 +89,7 @@ class MainSellerActivity : AppCompatActivity() {
                     val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
+                        CreateOrderController.instance!!.setContext(this)
                         showFragment(CreateOrderFragment.instance!!)
                     }else{
                         removeCurrentFragment()

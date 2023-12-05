@@ -1,9 +1,11 @@
 package com.martin.preventapp.controller.seller.createOrder
 
+import android.content.Context
 import com.martin.preventapp.controller.seller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.seller.createOrder.CreateOrderModel
 import com.martin.preventapp.model.entities.OrderModel
 import com.martin.preventapp.view.entities.ItemAmount
+import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.fragments.seller.create.ClientSelectionFragment
 import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
@@ -11,7 +13,11 @@ import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
 class CreateOrderController : CreateOrderInterface.Controller {
 
     @JvmField
-    var contextClient: CreateOrderInterface.CompleteOrderView? = null
+    var viewClient: CreateOrderInterface.CompleteOrderView? = null
+    @JvmField
+    var viewProducts: CreateOrderInterface.CompleteOrderView? = null
+    @JvmField
+    var context: Context? = null
 
     companion object {
         private var createOrderController: CreateOrderController? = null
@@ -26,6 +32,18 @@ class CreateOrderController : CreateOrderInterface.Controller {
     }
 
     //STEP PRODUCTS
+    override fun setContext(context: Context) {
+        this.context = context
+    }
+
+    override fun getListProducts() {
+        CreateOrderModel.instance!!.getListProducts()
+    }
+
+    override fun showListPrices(list: List<Product>) {
+        CreateOrderFragment.instance!!.showListPrices(list)
+    }
+
     override fun goToStepClient(listItems: List<ItemAmount>) {
         CreateOrderModel.instance?.productsOrder(listItems)
         CreateOrderFragment.instance?.showClientActivity()
@@ -33,13 +51,13 @@ class CreateOrderController : CreateOrderInterface.Controller {
 
     //STEP CLIENT
     override fun setViewClient(clientSelectionActivity: CreateOrderInterface.CompleteOrderView) {
-        this.contextClient = clientSelectionActivity
-        contextClient!!.showFragment(ClientSelectionFragment.instance!!)
+        this.viewClient = clientSelectionActivity
+        viewClient!!.showFragment(ClientSelectionFragment.instance!!)
     }
 
     override fun setClientSelected(clientSelected: String) {
         CreateOrderModel.instance?.setClientSelected(clientSelected)
-        contextClient!!.showFragment(ResumeFragment.instance!!)
+        viewClient!!.showFragment(ResumeFragment.instance!!)
     }
 
     override fun getOrder(): OrderModel {
@@ -48,6 +66,10 @@ class CreateOrderController : CreateOrderInterface.Controller {
 
     override fun sendOrder(order: OrderModel) {
         CreateOrderModel.instance?.sendOrder(order)
-        contextClient!!.goToMain()
+        viewClient!!.goToMain()
+    }
+
+    override fun showToast(text: String) {
+        CreateOrderFragment.instance!!.showToast(text)
     }
 }

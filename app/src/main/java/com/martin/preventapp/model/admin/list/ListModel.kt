@@ -57,7 +57,7 @@ class ListModel : ListControllerInterface.Model {
                         ListController.instance!!.showToast("Lista creada correctamente")
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let { ListController.instance!!.showToast(it) }
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }
@@ -94,16 +94,20 @@ class ListModel : ListControllerInterface.Model {
                                 ) },
                                 responseList.validityDate)
                         )
+                    }else{
+                        ListController.instance!!.showToast("Error en la respuesta")
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let { ListController.instance!!.showToast(it) }
                 } else{
                     Log.e("Login error: ", response.code().toString())
+                    ListController.instance!!.showToast(response.code().toString())
                 }
             }
 
             override fun onFailure(call: Call<ListResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
+                ListController.instance!!.showToast(t.toString())
             }
         })
     }
@@ -127,7 +131,7 @@ class ListModel : ListControllerInterface.Model {
                         ListController.instance!!.showToast("Lista creada correctamente")
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let { ListController.instance!!.showToast(it) }
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }
@@ -164,7 +168,7 @@ class ListModel : ListControllerInterface.Model {
                         )
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { UserManagerController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let { ListController.instance!!.showToast(it) }
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }

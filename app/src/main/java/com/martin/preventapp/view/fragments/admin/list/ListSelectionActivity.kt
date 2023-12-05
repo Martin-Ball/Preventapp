@@ -78,7 +78,17 @@ class ListSelectionActivity : AppCompatActivity(), ListControllerInterface.View 
         binding.btnCreateList.setOnClickListener {
             val listName = binding.etListName.text.toString()
             if(listName.isNotEmpty()){
-                ListController.instance!!.createListPrices(ListModelEntity(listName, productsList, selectedDate))
+                if(selectedDate.isNotEmpty()) {
+                    ListController.instance!!.createListPrices(
+                        ListModelEntity(
+                            listName,
+                            productsList,
+                            selectedDate
+                        )
+                    )
+                }else{
+                    Toast.makeText(this, "Seleccione una fecha de vigencia", Toast.LENGTH_LONG).show()
+                }
             }else{
                 Toast.makeText(this, "Escriba un nombre de lista", Toast.LENGTH_LONG).show()
             }
