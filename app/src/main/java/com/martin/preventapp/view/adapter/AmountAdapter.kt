@@ -37,6 +37,7 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleTextView: TextView = itemView.findViewById(R.id.textViewTitle)
+        private val tvBrand: TextView = itemView.findViewById(R.id.tv_brand)
         private val addButton: ImageButton = itemView.findViewById(R.id.btn_add)
         private val subtractButton: ImageButton = itemView.findViewById(R.id.btn_less)
         private val quantityEditText: EditText = itemView.findViewById(R.id.editTextQuantity)
@@ -44,6 +45,7 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
 
         fun bind(item: ItemAmount) {
             titleTextView.text = item.name
+            tvBrand.text = "${item.brand}, Cantidad: ${item.quantityUnit}"
             addButton.setOnClickListener {
                 quantityEditText.setText((item.quantity + 1).toString())
                 item.quantity ++

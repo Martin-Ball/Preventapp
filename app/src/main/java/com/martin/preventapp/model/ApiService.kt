@@ -99,4 +99,16 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("usuario") username: String
     ): Call<List<NewOrdersResponse>>
+
+    @POST("orders/sendOrderToDelivery")
+    fun sendOrderToDelivery(
+        @Header("x-token") token: String,
+        @Query("idOrder") idOrder: Int
+    ): Call<ResponseBody>
+
+    @POST("orders/cancelOrder")
+    fun cancelOrder(
+        @Header("x-token") token: String,
+        @Query("idOrder") idOrder: Int
+    ): Call<ResponseBody>
 }

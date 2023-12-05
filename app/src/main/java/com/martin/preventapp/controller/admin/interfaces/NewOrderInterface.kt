@@ -19,12 +19,14 @@ interface NewOrderInterface {
         fun getIsNewOrder(): Boolean
         fun getNewOrders()
         fun confirmOrder()
+        fun cancelOrder()
         fun showOrdersList(list: List<NewOrder>)
         fun showToast(text: String)
     }
 
     interface Model {
         fun getNewOrders()
-        fun confirmOrder(position: Int)
+        fun confirmOrder(id: Int)
+        fun cancelOrder(id: Int)
     }
 }

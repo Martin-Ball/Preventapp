@@ -76,14 +76,14 @@ class DetailNewOrderFragment : Fragment() {
         }
 
         binding.btnSendToDelivery.setOnClickListener {
-            Toast.makeText(requireContext(), "PEDIDO ENVIADO", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), itemToDetail?.idOrder!!.toString(), Toast.LENGTH_LONG).show()
             NewOrdersController.instance!!.confirmOrder()
             requireActivity().onBackPressed()
         }
 
         binding.btnCancelOrder.setOnClickListener {
             Toast.makeText(requireContext(), "PEDIDO CANCELADO", Toast.LENGTH_LONG).show()
-            NewOrdersController.instance!!.confirmOrder()
+            NewOrdersController.instance!!.cancelOrder()
             requireActivity().onBackPressed()
         }
     }

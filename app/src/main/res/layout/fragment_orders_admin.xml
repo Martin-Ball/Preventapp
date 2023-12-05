@@ -40,6 +40,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
+    <TextView
+        android:id="@+id/tv_empty_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:text="No hay pedidos para confirmar"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"

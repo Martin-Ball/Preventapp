@@ -14,7 +14,7 @@ data class ProductResponse(
     @SerialName("cantidad_unidad")
     val unit: String,
     @SerialName("cantidad")
-    val amount: Int?,
+    val amount: Int? = null,
     @SerialName("precio")
     val price: Double
 )

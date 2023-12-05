@@ -57,7 +57,11 @@ class NewOrdersController : NewOrderInterface.Controller {
     }
 
     override fun confirmOrder() {
-        NewOrdersModel.instance!!.confirmOrder(positionItem)
+        NewOrdersModel.instance!!.confirmOrder(itemToDetail?.idOrder!!)
+    }
+
+    override fun cancelOrder() {
+        NewOrdersModel.instance!!.cancelOrder(itemToDetail?.idOrder!!)
     }
 
     override fun showToast(text: String) {

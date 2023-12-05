@@ -12,6 +12,7 @@ import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.ProductOrder
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +47,7 @@ class NewOrdersModel : NewOrderInterface.Model {
                         NewOrdersController.instance!!.showOrdersList(
                             responseList.map {
                                 NewOrder(
+                                    it.idOrder,
                                     it.products.map { product ->
                                         Product(
                                             product.productName,
@@ -80,9 +82,59 @@ class NewOrdersModel : NewOrderInterface.Model {
         })
     }
 
-    override fun confirmOrder(position: Int) {
-        /*if(position != -1){
-            listItem.removeAt(position)
-        }*/
+    override fun confirmOrder(idOrder: Int) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.sendOrderToDelivery(
+            Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
+            idOrder
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        NewOrdersController.instance!!.showToast("Pedido enviado!")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { NewOrdersController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun cancelOrder(id: Int) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.cancelOrder(
+            Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
+            id
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        NewOrdersController.instance!!.showToast("Pedido cancelado")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { NewOrdersController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
     }
 }

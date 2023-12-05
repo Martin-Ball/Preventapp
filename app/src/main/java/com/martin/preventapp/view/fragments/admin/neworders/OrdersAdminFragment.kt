@@ -71,6 +71,12 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     }
 
     override fun showOrdersList(list: List<NewOrder>) {
+        if(list.isEmpty()){
+            binding.tvEmptyOrders.visibility = View.VISIBLE
+        }else{
+            binding.tvEmptyOrders.visibility = View.GONE
+        }
+
         val adapter = NewOrdersAdapter(requireContext(), list)
         binding.orderList.adapter = adapter
 
