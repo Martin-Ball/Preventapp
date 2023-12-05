@@ -42,7 +42,7 @@ class OrderAdapter (private val context: Context,
 
         val item = getItem(position)
 
-        viewHolder.titleTextView.text = item.title
+        viewHolder.titleTextView.text = item.client.name
         viewHolder.actionButton.setOnClickListener {
             listener.onOrderItemClicked(item)
         }

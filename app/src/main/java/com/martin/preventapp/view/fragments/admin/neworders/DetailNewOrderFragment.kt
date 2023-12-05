@@ -11,13 +11,15 @@ import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailNewOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
+import com.martin.preventapp.view.entities.ProductOrder
 
 class DetailNewOrderFragment : Fragment() {
     private var _binding: FragmentDetailNewOrderBinding? = null
     private val binding get() = _binding!!
 
-    private var itemToDetail: OrderItem? = null
+    private var itemToDetail: NewOrder? = null
     private var newOrder: Boolean = false
 
     companion object {
@@ -56,7 +58,14 @@ class DetailNewOrderFragment : Fragment() {
         binding.btnSendToDelivery.isVisible = newOrder
         binding.btnCancelOrder.isVisible = newOrder
 
-        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products)
+        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products.map { ProductOrder(
+            it.productName,
+            it.brand,
+            it.presentation,
+            it.unit,
+            it.price,
+            it.amount ?: 0
+        ) })
         binding.listProducts.adapter = productsAdapter
 
         binding.tvNotes.text = itemToDetail!!.note

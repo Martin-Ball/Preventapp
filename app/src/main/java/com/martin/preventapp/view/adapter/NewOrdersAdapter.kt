@@ -9,14 +9,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 
-class NewOrdersAdapter (private val context: Context, private val items: List<OrderItem>) : BaseAdapter() {
+class NewOrdersAdapter (private val context: Context, private val items: List<NewOrder>) : BaseAdapter() {
     override fun getCount(): Int {
         return items.size
     }
 
-    override fun getItem(position: Int): OrderItem {
+    override fun getItem(position: Int): NewOrder {
         return items[position]
     }
 

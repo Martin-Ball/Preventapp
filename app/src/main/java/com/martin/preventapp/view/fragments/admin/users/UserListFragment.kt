@@ -5,17 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.users.UserManagerController
-import com.martin.preventapp.databinding.FragmentCreateUserBinding
 import com.martin.preventapp.databinding.FragmentUserListBinding
 import com.martin.preventapp.model.entities.UserModel
-import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.UsersAdapter
-import com.martin.preventapp.view.entities.Client
-import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.entities.User
 
 class UserListFragment : Fragment() {
 

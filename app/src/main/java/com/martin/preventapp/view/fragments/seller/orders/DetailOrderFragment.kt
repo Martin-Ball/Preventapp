@@ -12,6 +12,7 @@ import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.OrderItem
+import com.martin.preventapp.view.entities.ProductOrder
 
 class DetailOrderFragment : Fragment() {
 
@@ -52,7 +53,14 @@ class DetailOrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvClient.text = itemToDetail.client.name
-        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail.products)
+        val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products.map { ProductOrder(
+            it.productName,
+            it.brand,
+            it.presentation,
+            it.unit,
+            it.price,
+            it.amount ?: 0
+        ) })
         binding.listProducts.adapter = productsAdapter
 
         binding.tvNotes.text = itemToDetail.note

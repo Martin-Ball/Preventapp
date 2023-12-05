@@ -13,6 +13,8 @@ data class ProductResponse(
     val presentation: String,
     @SerialName("cantidad_unidad")
     val unit: String,
+    @SerialName("cantidad")
+    val amount: Int?,
     @SerialName("precio")
     val price: Double
 )

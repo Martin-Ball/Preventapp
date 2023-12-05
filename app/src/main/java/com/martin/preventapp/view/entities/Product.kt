@@ -5,4 +5,6 @@ data class Product(
     val brand: String,
     val presentation: String,
     val unit: String,
-    val price: Double, )
+    val price: Double,
+    val amount: Int? = null,
+)
