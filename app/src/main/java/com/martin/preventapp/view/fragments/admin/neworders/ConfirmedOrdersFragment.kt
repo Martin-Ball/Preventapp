@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
@@ -70,7 +71,7 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth"
                 binding.dateSelected.text = "Fecha: ${selectedDate}"
-                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate)
+                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, false)
             },
             year, month, day
         )
@@ -84,5 +85,9 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
     fun showOrderDetail(list: List<NewOrder>){
         val adapter = OrderAdapter(requireContext(), list, listener)
         binding.orderList.adapter = adapter
+    }
+
+    fun showToast(text:String){
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
@@ -62,6 +63,7 @@ class MainSellerActivity : AppCompatActivity() {
 
                     if(permissionToSendOrder?.isEnabled != false){
                         OrdersFragment.instance!!.setListener(OrdersController.instance!!)
+                        ConfirmedOrdersController.instance!!.setContext(this)
                         showFragment(OrdersFragment.instance!!)
                     }else{
                         removeCurrentFragment()

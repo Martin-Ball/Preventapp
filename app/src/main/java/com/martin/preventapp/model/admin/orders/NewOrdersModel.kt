@@ -142,13 +142,14 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
         })
     }
 
-    override fun getOrdersByDate(date: String) {
+    override fun getOrdersByDate(date: String, isSeller: Boolean) {
         val apiService = Application.getApiService()
 
         val call = apiService.getOrdersByDate(
-            Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
-            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: "",
-            date
+            Application.getTokenShared(NewOrdersController.instance!!.context ?: ConfirmedOrdersController.instance!!.context!!) ?: "",
+            Application.getUserShared(NewOrdersController.instance!!.context ?: ConfirmedOrdersController.instance!!.context!!) ?: "",
+            date,
+            isSeller
         )
 
         call.enqueue(object : Callback<List<NewOrdersResponse>> {
@@ -156,35 +157,38 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
                 if (response.isSuccessful) {
                     val responseList = response.body()
                     if (responseList != null) {
-                        ConfirmedOrdersController.instance!!.showOrdersByDate(
-                            responseList.map {
-                                NewOrder(
-                                    it.idOrder,
-                                    it.state ?: "",
-                                    it.date,
-                                    it.products.map { product ->
-                                        Product(
-                                            product.productName,
-                                            product.brand,
-                                            product.presentation,
-                                            product.unit,
-                                            product.price,
-                                            product.amount
-                                        )
-                                    },
-                                    Client(
-                                        it.client.name,
-                                        it.client.address,
-                                        it.client.deliveryHour
-                                    ),
-                                    it.sellerName,
-                                    it.note
-                                )
-                            }
-                        )
+                        val listOrders = responseList.map {
+                            NewOrder(
+                                it.idOrder,
+                                it.state ?: "",
+                                it.date,
+                                it.products.map { product ->
+                                    Product(
+                                        product.productName,
+                                        product.brand,
+                                        product.presentation,
+                                        product.unit,
+                                        product.price,
+                                        product.amount
+                                    )
+                                },
+                                Client(
+                                    it.client.name,
+                                    it.client.address,
+                                    it.client.deliveryHour
+                                ),
+                                it.sellerName,
+                                it.note
+                            )
+                        }
+
+                        ConfirmedOrdersController.instance!!.showOrdersByDate(listOrders, isSeller)
+
                     }
                 } else if (response.code() == 400){
-                    response.errorBody()?.string()?.let { NewOrdersController.instance!!.showToast(it) }
+                    response.errorBody()?.string()?.let {
+                        ConfirmedOrdersController.instance!!.showToast(it, isSeller)
+                    }
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }

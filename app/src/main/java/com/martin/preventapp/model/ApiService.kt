@@ -116,6 +116,7 @@ interface ApiService {
     fun getOrdersByDate(
         @Header("x-token") token: String,
         @Query("usuario") username: String,
-        @Query("fecha") date: String
+        @Query("fecha") date: String,
+        @Query("isSeller") isSeller: Boolean
     ): Call<List<NewOrdersResponse>>
 }

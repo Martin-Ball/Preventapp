@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
 import com.martin.preventapp.databinding.FragmentCreateOrderBinding
@@ -26,6 +27,7 @@ import com.martin.preventapp.view.entities.ProductOrder
 import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
 import com.martin.preventapp.view.fragments.seller.recommended.RecommendedProductFragment
 import java.util.Calendar
+import java.util.TimeZone
 
 class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
@@ -57,28 +59,13 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf(
-            NewOrder(1, "Enviado", "2023-05-12",
-                listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
-            )
-
-        val adapter = OrderAdapter(requireContext(), items, listener)
-        binding.orderList.adapter = adapter
-
         binding.btnOpenDatePicker.setOnClickListener {
             showDatePicker()
         }
     }
 
     private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Argentina/Buenos_Aires"))
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -87,15 +74,14 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
             requireContext(),
             R.style.DialogTheme,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth"
                 binding.dateSelected.text = "Fecha: ${selectedDate}"
+                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, true)
             },
             year, month, day
         )
-
         datePickerDialog.show()
     }
-
     override fun showFragmentDetail() {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
@@ -106,5 +92,14 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
     override fun setListener(listener: OrderItemClickListener) {
         this.listener = listener
+    }
+
+    fun showOrderDetail(list: List<NewOrder>){
+        val adapter = OrderAdapter(requireContext(), list, listener)
+        binding.orderList.adapter = adapter
+    }
+
+    fun showToast(text:String){
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
 }

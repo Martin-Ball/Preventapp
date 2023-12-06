@@ -1,16 +1,20 @@
 package com.martin.preventapp.controller.admin.orders
 
+import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.model.admin.orders.NewOrdersModel
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
+import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
 class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemClickListener {
 
     private var itemToDetail : NewOrder? = null
     private var view: ConfirmedOrderInterface.ViewOrders? = null
+    @JvmField
+    var context: Context? = null
 
     companion object {
         private var ordersController: ConfirmedOrdersController? = null
@@ -22,6 +26,10 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
                 }
                 return ordersController
             }
+    }
+
+    override fun setContext(context: Context) {
+        this.context = context
     }
 
     override fun showFragmentDetail(item: NewOrder?) {
@@ -50,11 +58,23 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
         showFragmentDetail(item)
     }
 
-    override fun getOrdersByDate(date: String) {
-        NewOrdersModel.instance!!.getOrdersByDate(date)
+    override fun getOrdersByDate(date: String, isSeller: Boolean) {
+        NewOrdersModel.instance!!.getOrdersByDate(date, isSeller)
     }
 
-    override fun showOrdersByDate(list: List<NewOrder>) {
-        ConfirmedOrdersFragment.instance!!.showOrderDetail(list)
+    override fun showOrdersByDate(list: List<NewOrder>, isSeller: Boolean) {
+        if(isSeller){
+            OrdersFragment.instance!!.showOrderDetail(list)
+        }else{
+            ConfirmedOrdersFragment.instance!!.showOrderDetail(list)
+        }
+    }
+
+    override fun showToast(text: String, isSeller: Boolean) {
+        if(isSeller){
+            OrdersFragment.instance!!.showToast(text)
+        }else{
+            ConfirmedOrdersFragment.instance!!.showToast(text)
+        }
     }
 }
