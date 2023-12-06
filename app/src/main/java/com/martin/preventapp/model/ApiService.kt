@@ -111,4 +111,11 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("idOrder") idOrder: Int
     ): Call<ResponseBody>
+
+    @GET("orders/getOrdersByDate")
+    fun getOrdersByDate(
+        @Header("x-token") token: String,
+        @Query("usuario") username: String,
+        @Query("fecha") date: String
+    ): Call<List<NewOrdersResponse>>
 }

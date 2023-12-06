@@ -2,6 +2,7 @@ package com.martin.preventapp.controller.seller.interfaces
 
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.view.adapter.OrderItemClickListener
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 
 interface OrdersInterface {
@@ -12,7 +13,7 @@ interface OrdersInterface {
 
     interface Controller {
         fun showFragmentDetail()
-        fun setItemToDetail(item: OrderItem?)
-        fun getItemToDetail() : OrderItem?
+        fun setItemToDetail(item: NewOrder?)
+        fun getItemToDetail() : NewOrder?
     }
 }

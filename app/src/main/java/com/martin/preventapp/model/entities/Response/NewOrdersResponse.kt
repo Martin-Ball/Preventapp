@@ -10,6 +10,8 @@ data class NewOrdersResponse(
     val idOrder: Int,
     @SerialName("fecha")
     val date: String,
+    @SerialName("estado")
+    val state: String?,
     @SerialName("cliente")
     val client: ClientResponse,
     @SerialName("preventista")

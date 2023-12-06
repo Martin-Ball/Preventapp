@@ -54,7 +54,10 @@ class DetailNewOrderFragment : Fragment() {
         binding.tvClient.text = itemToDetail!!.client.name
         binding.llSeller.visibility = View.VISIBLE
         binding.tvTitleSeller.visibility = View.VISIBLE
+        binding.tvTitleState.visibility = View.VISIBLE
+        binding.llState.visibility = View.VISIBLE
         binding.tvSeller.text = itemToDetail!!.seller
+        binding.tvState.text = itemToDetail!!.state
         binding.btnSendToDelivery.isVisible = newOrder
         binding.btnCancelOrder.isVisible = newOrder
 

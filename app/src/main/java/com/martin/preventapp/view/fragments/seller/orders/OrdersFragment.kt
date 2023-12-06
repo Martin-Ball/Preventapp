@@ -19,6 +19,7 @@ import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.ProductOrder
@@ -57,14 +58,15 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         super.onViewCreated(view, savedInstanceState)
 
         val items = listOf(
-            OrderItem(listOf(
+            NewOrder(1, "Enviado", "2023-05-12",
+                listOf(
                 Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
                 Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), "2023-12-04", Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
+            ), Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
             )
 
         val adapter = OrderAdapter(requireContext(), items, listener)

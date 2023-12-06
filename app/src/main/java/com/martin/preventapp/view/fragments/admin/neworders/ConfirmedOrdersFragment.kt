@@ -13,10 +13,13 @@ import com.martin.preventapp.databinding.FragmentConfirmedOrdersBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.ProductOrder
 import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
     private var _binding: FragmentConfirmedOrdersBinding? = null
@@ -46,24 +49,6 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf(
-            OrderItem(listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), "2023-12-04", Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
-            OrderItem(listOf(
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-                Product("Producto 1", "La paulina", "Unidad", "Unidad", 1212.11, 5),
-            ), "2023-12-04", Client("Cliente 1", "Lavalle 1333", "10 a 15hs"), "Preventista 1", "nota de pedido"),
-            )
-
-        val adapter = OrderAdapter(requireContext(), items, listener)
-        binding.orderList.adapter = adapter
-
         binding.btnOpenDatePicker.setOnClickListener {
             showDatePicker()
         }
@@ -74,7 +59,7 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
     }
 
     private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Argentina/Buenos_Aires"))
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -83,12 +68,12 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
             requireContext(),
             R.style.DialogTheme,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth"
                 binding.dateSelected.text = "Fecha: ${selectedDate}"
+                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate)
             },
             year, month, day
         )
-
         datePickerDialog.show()
     }
 
@@ -96,4 +81,8 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
         this.listener = listener
     }
 
+    fun showOrderDetail(list: List<NewOrder>){
+        val adapter = OrderAdapter(requireContext(), list, listener)
+        binding.orderList.adapter = adapter
+    }
 }

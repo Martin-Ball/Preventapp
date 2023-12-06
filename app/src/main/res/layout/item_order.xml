@@ -16,7 +16,27 @@
         android:paddingVertical="10dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/client"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="asdads"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/seller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="asdads"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="asdads"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="asdads"

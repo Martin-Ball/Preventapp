@@ -10,16 +10,17 @@ import android.widget.TextView
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
 import com.martin.preventapp.controller.seller.orders.OrdersController
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 
 class OrderAdapter (private val context: Context,
-                    private val items: List<OrderItem>,
+                    private val items: List<NewOrder>,
                     private val listener: OrderItemClickListener) : BaseAdapter() {
     override fun getCount(): Int {
         return items.size
     }
 
-    override fun getItem(position: Int): OrderItem {
+    override fun getItem(position: Int): NewOrder {
         return items[position]
     }
 
@@ -42,7 +43,10 @@ class OrderAdapter (private val context: Context,
 
         val item = getItem(position)
 
-        viewHolder.titleTextView.text = item.client.name
+        viewHolder.tvClient.text = item.client.name
+        viewHolder.tvSeller.text = item.seller
+        viewHolder.tvDate.text = "Estado: ${item.date}"
+        viewHolder.tvState.text = "Estado: ${item.state}"
         viewHolder.actionButton.setOnClickListener {
             listener.onOrderItemClicked(item)
         }
@@ -51,11 +55,14 @@ class OrderAdapter (private val context: Context,
     }
 
     private class ViewHolder(view: View) {
-        val titleTextView: TextView = view.findViewById(R.id.title)
+        val tvClient: TextView = view.findViewById(R.id.client)
+        val tvSeller: TextView = view.findViewById(R.id.seller)
+        val tvDate: TextView = view.findViewById(R.id.date)
+        val tvState: TextView = view.findViewById(R.id.state)
         val actionButton: ImageButton = view.findViewById(R.id.actionButton)
     }
 }
 
 interface OrderItemClickListener {
-    fun onOrderItemClicked(item: OrderItem)
+    fun onOrderItemClicked(item: NewOrder)
 }

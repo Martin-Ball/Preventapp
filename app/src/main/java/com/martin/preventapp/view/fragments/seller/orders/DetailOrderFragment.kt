@@ -11,6 +11,7 @@ import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
+import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.ProductOrder
 
@@ -19,7 +20,7 @@ class DetailOrderFragment : Fragment() {
     private var _binding: FragmentDetailOrderBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var itemToDetail:OrderItem
+    private lateinit var itemToDetail: NewOrder
 
     companion object {
         private var detailOrderFragment: DetailOrderFragment? = null

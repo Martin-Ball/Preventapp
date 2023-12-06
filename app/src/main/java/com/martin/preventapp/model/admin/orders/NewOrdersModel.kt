@@ -1,7 +1,9 @@
 package com.martin.preventapp.model.admin.orders
 
 import android.util.Log
+import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
@@ -17,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class NewOrdersModel : NewOrderInterface.Model {
+class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
 
     companion object {
         private var newOrderModel: NewOrdersModel? = null
@@ -49,6 +51,7 @@ class NewOrdersModel : NewOrderInterface.Model {
                                 NewOrder(
                                     it.idOrder,
                                     it.date,
+                                    it.state ?: "",
                                     it.products.map { product ->
                                         Product(
                                             product.productName,
@@ -134,6 +137,60 @@ class NewOrdersModel : NewOrderInterface.Model {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun getOrdersByDate(date: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getOrdersByDate(
+            Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: "",
+            date
+        )
+
+        call.enqueue(object : Callback<List<NewOrdersResponse>> {
+            override fun onResponse(call: Call<List<NewOrdersResponse>>, response: Response<List<NewOrdersResponse>>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        ConfirmedOrdersController.instance!!.showOrdersByDate(
+                            responseList.map {
+                                NewOrder(
+                                    it.idOrder,
+                                    it.state ?: "",
+                                    it.date,
+                                    it.products.map { product ->
+                                        Product(
+                                            product.productName,
+                                            product.brand,
+                                            product.presentation,
+                                            product.unit,
+                                            product.price,
+                                            product.amount
+                                        )
+                                    },
+                                    Client(
+                                        it.client.name,
+                                        it.client.address,
+                                        it.client.deliveryHour
+                                    ),
+                                    it.sellerName,
+                                    it.note
+                                )
+                            }
+                        )
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { NewOrdersController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<List<NewOrdersResponse>>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })
