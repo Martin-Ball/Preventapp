@@ -20,6 +20,8 @@ class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelection
     private val binding get() = _binding!!
 
     private var clientSelected : String = ""
+    private lateinit var listClient: List<Client>
+    private lateinit var clientAdapter: ClientAdapter
 
     companion object {
         private var clientSelectionFragment: ClientSelectionFragment? = null
@@ -31,6 +33,13 @@ class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelection
                 }
                 return clientSelectionFragment
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(::listClient.isInitialized){
+            showClients(listClient)
+        }
     }
 
     override fun onCreateView(
@@ -59,7 +68,8 @@ class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelection
 
     override fun showClients(list: List<Client>) {
         val clientNames = list.map { it.name }
-        val clientAdapter = ClientAdapter(requireContext(), list)
+        listClient = list
+        clientAdapter = ClientAdapter(requireContext(), list)
         binding.clientList.adapter = clientAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

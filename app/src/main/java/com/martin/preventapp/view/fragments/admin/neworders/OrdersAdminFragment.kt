@@ -147,7 +147,9 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
 
             headerRow.createCell(0).setCellValue("Nombre")
             headerRow.createCell(1).setCellValue("Marca")
-            headerRow.createCell(2).setCellValue("Precio")
+            headerRow.createCell(2).setCellValue("Unidad")
+            headerRow.createCell(3).setCellValue("Cantidad")
+            headerRow.createCell(4).setCellValue("Precio")
 
             var length = 0
 
@@ -155,6 +157,8 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
                 val row = sheet.createRow(index + 6)
                 row.createCell(0).setCellValue(product.productName)
                 row.createCell(1).setCellValue(product.brand)
+                row.createCell(2).setCellValue(product.unit)
+                row.createCell(2).setCellValue(product.amount.toString())
                 row.createCell(2).setCellValue("$${product.price}")
                 length = product.productName.length
             }

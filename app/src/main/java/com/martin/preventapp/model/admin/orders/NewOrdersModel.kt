@@ -50,8 +50,8 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
                             responseList.map {
                                 NewOrder(
                                     it.idOrder,
-                                    it.date,
                                     it.state ?: "",
+                                    it.date,
                                     it.products.map { product ->
                                         Product(
                                             product.productName,

@@ -80,5 +80,6 @@ class CreateOrderController : CreateOrderInterface.Controller {
 
     override fun goToMain() {
         viewClient!!.goToMain()
+        CreateOrderFragment.instance!!.clearItems()
     }
 }

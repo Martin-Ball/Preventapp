@@ -29,6 +29,7 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
     private var _binding: FragmentCreateOrderBinding? = null
     private val binding get() = _binding!!
     private var itemList: MutableList<ItemAmount> = mutableListOf()
+    private lateinit var adapter: AmountAdapter
 
     companion object {
         private var createOrderFragment: CreateOrderFragment? = null
@@ -74,7 +75,7 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
         binding.productList.adapter = productsAdapter
 
 
-        val adapter = AmountAdapter(itemList)
+        adapter = AmountAdapter(itemList)
         binding.rvAmount.adapter = adapter
         binding.rvAmount.layoutManager = LinearLayoutManager(requireContext())
 
@@ -110,5 +111,9 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
 
     override fun showToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
+    }
+
+    fun clearItems() {
+        adapter.clearItems()
     }
 }

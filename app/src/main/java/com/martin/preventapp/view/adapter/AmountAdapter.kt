@@ -26,6 +26,11 @@ class AmountAdapter(private val itemList: MutableList<ItemAmount>) : RecyclerVie
         return itemList.size
     }
 
+    fun clearItems() {
+        itemList.clear()
+        notifyDataSetChanged()
+    }
+
     fun addItem(item: ItemAmount) {
         itemList.add(item)
         notifyItemInserted(itemList.size - 1)
