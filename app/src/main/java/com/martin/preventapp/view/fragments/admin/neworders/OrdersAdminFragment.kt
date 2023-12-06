@@ -158,8 +158,8 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
                 row.createCell(0).setCellValue(product.productName)
                 row.createCell(1).setCellValue(product.brand)
                 row.createCell(2).setCellValue(product.unit)
-                row.createCell(2).setCellValue(product.amount.toString())
-                row.createCell(2).setCellValue("$${product.price}")
+                row.createCell(3).setCellValue(product.amount.toString())
+                row.createCell(4).setCellValue("$${product.price}")
                 length = product.productName.length
             }
 

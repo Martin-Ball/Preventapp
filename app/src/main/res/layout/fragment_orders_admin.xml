@@ -78,7 +78,7 @@
         android:layout_gravity="center"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
-        android:text="VER PEDIDOS"
+        android:text="BUSCAR PEDIDOS POR FECHA"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
