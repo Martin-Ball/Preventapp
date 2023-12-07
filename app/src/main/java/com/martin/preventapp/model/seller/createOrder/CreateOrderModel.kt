@@ -2,12 +2,9 @@ package com.martin.preventapp.model.seller.createOrder
 
 import android.util.Log
 import com.martin.preventapp.controller.admin.lists.ListController
-import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.interfaces.CreateOrderInterface
 import com.martin.preventapp.model.Application
-import com.martin.preventapp.model.entities.ClientListModelEntity
-import com.martin.preventapp.model.entities.ListModelEntity
 import com.martin.preventapp.model.entities.OrderModel
 import com.martin.preventapp.model.entities.Request.CreateOrderRequest
 import com.martin.preventapp.model.entities.Request.ProductOrderRequest

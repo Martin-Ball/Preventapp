@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
+import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.databinding.ActivityConfirmedOrdersBinding
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
 
@@ -30,7 +31,7 @@ class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.Vie
 
     override fun showFragmentDetail() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.completed_order_container, DetailNewOrderFragment.instance!!)
+            .replace(R.id.completed_order_container, DetailNewOrderFragment(NewOrdersController.instance!!))
             .addToBackStack(null)
             .commit()
     }

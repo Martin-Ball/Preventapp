@@ -8,8 +8,6 @@ import com.martin.preventapp.controller.admin.lists.ListController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
-import com.martin.preventapp.model.Application
-import com.martin.preventapp.view.entities.Permission
 import com.martin.preventapp.view.fragments.admin.list.ListFragment
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment

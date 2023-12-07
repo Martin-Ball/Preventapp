@@ -5,15 +5,11 @@ import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
-import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
-import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.entities.ProductOrder
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,12 +29,13 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
             }
     }
 
-    override fun getNewOrders() {
+    override fun getNewOrders(isAdmin: Boolean) {
         val apiService = Application.getApiService()
 
         val call = apiService.getNewOrders(
             Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
-            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: "",
+            isAdmin
         )
 
         call.enqueue(object : Callback<List<NewOrdersResponse>> {

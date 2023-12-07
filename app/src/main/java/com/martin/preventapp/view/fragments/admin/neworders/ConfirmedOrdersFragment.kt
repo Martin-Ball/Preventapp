@@ -8,18 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.martin.preventapp.R
-import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
+import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.databinding.FragmentConfirmedOrdersBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
-import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.entities.ProductOrder
 import java.util.Calendar
-import java.util.Locale
 import java.util.TimeZone
 
 class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {

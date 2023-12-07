@@ -16,9 +16,6 @@ import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.databinding.FragmentOrdersAdminBinding
 import com.martin.preventapp.view.adapter.NewOrdersAdapter
 import com.martin.preventapp.view.entities.NewOrder
-import org.apache.poi.ss.usermodel.CellStyle
-import org.apache.poi.ss.usermodel.FillPatternType
-import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
 import java.io.FileOutputStream
@@ -56,41 +53,28 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments != null) {
-            isEnabled = requireArguments().getBoolean("isEnabled", true)
-        }
+        NewOrdersController.instance!!.getNewOrders(true)
 
-        if(isEnabled) {
-            NewOrdersController.instance!!.getNewOrders()
-
-            binding.btnExport.setOnClickListener {
-                try {
-                    if(adapter.getSelectedItems().isEmpty()){
-                        Toast.makeText(
-                            requireContext(),
-                            "Debe seleccionar pedidos para exportar",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }else {
-                        generateExcelFile(adapter.getSelectedItems())
-                        Toast.makeText(
-                            requireContext(),
-                            "Archivo Excel generado exitosamente.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        adapter.clearSelection()
-                    }
-                } catch (e: IOException) {
-                    println("Error al generar el archivo Excel: ${e.message}")
+        binding.btnExport.setOnClickListener {
+            try {
+                if(adapter.getSelectedItems().isEmpty()){
+                    Toast.makeText(
+                        requireContext(),
+                        "Debe seleccionar pedidos para exportar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else {
+                    generateExcelFile(adapter.getSelectedItems())
+                    Toast.makeText(
+                        requireContext(),
+                        "Archivo Excel generado exitosamente.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    adapter.clearSelection()
                 }
+            } catch (e: IOException) {
+                println("Error al generar el archivo Excel: ${e.message}")
             }
-        }else{
-            binding.tvNewClient.visibility = View.GONE
-            binding.orderList.visibility = View.GONE
-            binding.btnConfirmOrders.visibility = View.GONE
-            binding.btnExport.visibility = View.GONE
-
-            binding.tvEnabledAction.visibility = View.VISIBLE
         }
 
     }
@@ -99,7 +83,7 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         transaction.addToBackStack(null)
-        transaction.replace(R.id.main_container, DetailNewOrderFragment .instance!!)
+        transaction.replace(R.id.main_container, DetailNewOrderFragment(NewOrdersController.instance!!))
         transaction.commit()
     }
 
@@ -111,7 +95,7 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
             binding.tvEmptyOrders.visibility = View.GONE
         }
 
-        adapter = NewOrdersAdapter(requireContext(), list)
+        adapter = NewOrdersAdapter(requireContext(), list, true, NewOrdersController.instance!!)
         binding.orderList.adapter = adapter
 
         binding.btnConfirmOrders.setOnClickListener {

@@ -11,21 +11,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
-import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
-import com.martin.preventapp.databinding.FragmentCreateOrderBinding
 import com.martin.preventapp.databinding.FragmentOrdersBinding
-import com.martin.preventapp.databinding.FragmentResumeBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
-import com.martin.preventapp.view.adapter.ProductResumeAdapter
-import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
-import com.martin.preventapp.view.entities.Product
-import com.martin.preventapp.view.entities.ProductOrder
-import com.martin.preventapp.view.fragments.seller.create.ResumeFragment
-import com.martin.preventapp.view.fragments.seller.recommended.RecommendedProductFragment
 import java.util.Calendar
 import java.util.TimeZone
 

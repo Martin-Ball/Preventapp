@@ -2,10 +2,10 @@ package com.martin.preventapp.controller.admin.orders
 
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
+import com.martin.preventapp.controller.admin.interfaces.OrderDetail
 import com.martin.preventapp.model.admin.orders.NewOrdersModel
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
@@ -33,7 +33,7 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
     }
 
     override fun showFragmentDetail(item: NewOrder?) {
-        NewOrdersController.instance!!.setItemToDetail(NewOrder(0, item?.state!!, item.date, item.products, item.client, item.seller, item.note), false, null)
+        NewOrdersController.instance!!.setItemToDetail(NewOrder(0, item?.state!!, item.date, item.products, item.client, item.seller, item.note), false, null, false)
         view!!.showFragmentDetail()
     }
 

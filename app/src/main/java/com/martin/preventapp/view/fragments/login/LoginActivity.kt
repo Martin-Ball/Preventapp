@@ -10,6 +10,7 @@ import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.R
 import com.martin.preventapp.databinding.ActivityLoginBinding
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
+import com.martin.preventapp.view.activities.delivery.MainDeliveryActivity
 import com.martin.preventapp.view.activities.seller.MainSellerActivity
 
 class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
@@ -44,8 +45,8 @@ class LoginActivity : AppCompatActivity(), LoginInterfaces.View {
     }
 
     override fun goToActivityDelivery() {
-        /*startActivity(Intent(this, ))
-        finish()*/
+        startActivity(Intent(this, MainDeliveryActivity::class.java))
+        finish()
     }
 
     override fun showToast(text: String) {

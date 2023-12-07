@@ -10,6 +10,7 @@ import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.controller.seller.interfaces.LoginInterfaces
 import com.martin.preventapp.databinding.ActivitySplashBinding
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
+import com.martin.preventapp.view.activities.delivery.MainDeliveryActivity
 import com.martin.preventapp.view.activities.seller.MainSellerActivity
 import com.martin.preventapp.view.fragments.login.LoginActivity
 
@@ -53,7 +54,9 @@ class SplashActivity : AppCompatActivity(), LoginInterfaces.ViewSplash {
     }
 
     override fun goToActivityDelivery() {
-        /*startActivity(Intent(this, ))
-        finish()*/
+        Handler().postDelayed({
+            startActivity(Intent(this, MainDeliveryActivity::class.java))
+            finish()
+        }, 2000)
     }
 }

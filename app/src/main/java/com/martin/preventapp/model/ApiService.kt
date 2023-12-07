@@ -97,7 +97,8 @@ interface ApiService {
     @GET("orders/getNewOrders")
     fun getNewOrders(
         @Header("x-token") token: String,
-        @Query("usuario") username: String
+        @Query("usuario") username: String,
+        @Query("isAdmin") isAdmin: Boolean
     ): Call<List<NewOrdersResponse>>
 
     @POST("orders/sendOrderToDelivery")
@@ -119,4 +120,16 @@ interface ApiService {
         @Query("fecha") date: String,
         @Query("isSeller") isSeller: Boolean
     ): Call<List<NewOrdersResponse>>
+
+    @POST("orders/orderDelivered")
+    fun orderDelivered(
+        @Header("x-token") token: String,
+        @Query("idOrder") idOrder: Int
+    ): Call<ResponseBody>
+
+    @POST("orders/notDeliverOrder")
+    fun notDeliverOrder(
+        @Header("x-token") token: String,
+        @Query("idOrder") idOrder: Int
+    ): Call<ResponseBody>
 }

@@ -1,6 +1,5 @@
 package com.martin.preventapp.view.fragments.admin.users
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -10,7 +9,6 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.interfaces.UserManagerInterface
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.ActivityUserManagerBinding
-import com.martin.preventapp.view.activities.admin.MainAdminActivity
 
 class UserManagerActivity : AppCompatActivity(), UserManagerInterface.View {
     private lateinit var binding: ActivityUserManagerBinding

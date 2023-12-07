@@ -3,7 +3,6 @@ package com.martin.preventapp.model.admin.list
 import android.util.Log
 import com.martin.preventapp.controller.admin.interfaces.ListControllerInterface
 import com.martin.preventapp.controller.admin.lists.ListController
-import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.ClientListModelEntity
 import com.martin.preventapp.model.entities.ListModelEntity

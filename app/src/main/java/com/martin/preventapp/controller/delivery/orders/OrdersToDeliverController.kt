@@ -1,30 +1,31 @@
-package com.martin.preventapp.controller.admin.orders
+package com.martin.preventapp.controller.delivery.orders
 
 import android.content.Context
-import com.martin.preventapp.controller.admin.interfaces.NewOrderInterface
 import com.martin.preventapp.controller.admin.interfaces.OrderDetail
-import com.martin.preventapp.model.admin.orders.NewOrdersModel
+import com.martin.preventapp.controller.delivery.interfaces.OrdersToDeliverInterface
+import com.martin.preventapp.model.entities.delivery.OrdersToDeliverModel
+import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
+import com.martin.preventapp.view.fragments.delivery.OrdersDeliveryFragment
 
-class NewOrdersController : NewOrderInterface.Controller, OrderDetail {
+class OrdersToDeliverController: OrdersToDeliverInterface.Controller, OrderDetail {
     private var itemToDetail : NewOrder? = null
     private var newOrder: Boolean = false
     private var positionItem: Int = -1
-    private var isAdmin: Boolean = true
+    private var isAdmin: Boolean = false
 
     @JvmField
     var context: Context? = null
 
     companion object {
-        private var newOrdersController: NewOrdersController? = null
+        private var ordersToDeliver: OrdersToDeliverController? = null
         @JvmStatic
-        val instance: NewOrdersController?
+        val instance: OrdersToDeliverController?
             get() {
-                if (newOrdersController == null) {
-                    newOrdersController = NewOrdersController()
+                if (ordersToDeliver == null) {
+                    ordersToDeliver = OrdersToDeliverController()
                 }
-                return newOrdersController
+                return ordersToDeliver
             }
     }
 
@@ -32,46 +33,48 @@ class NewOrdersController : NewOrderInterface.Controller, OrderDetail {
         this.context = context
     }
 
+    override fun getNewOrders(isAdmin: Boolean) {
+        OrdersToDeliverModel.instance!!.getNewOrders(isAdmin)
+    }
+
     override fun showFragmentDetail() {
-        OrdersAdminFragment.instance!!.showFragmentDetail()
+        OrdersDeliveryFragment.instance!!.showFragmentDetail()
     }
 
     override fun getItemToDetail(): NewOrder? {
         return itemToDetail
     }
+
     override fun getIsNewOrder(): Boolean {
         return newOrder
-    }
-    override fun getNewOrders(isAdmin: Boolean){
-        return NewOrdersModel.instance!!.getNewOrders(isAdmin)
     }
 
     override fun getIsAdmin(): Boolean {
         return isAdmin
     }
 
-    override fun showOrdersList(list: List<NewOrder>) {
-        OrdersAdminFragment.instance!!.showOrdersList(list)
-    }
-
     override fun confirmOrder() {
-        NewOrdersModel.instance!!.confirmOrder(itemToDetail?.idOrder!!)
+        //
     }
 
     override fun cancelOrder() {
-        NewOrdersModel.instance!!.cancelOrder(itemToDetail?.idOrder!!)
+        //
     }
 
     override fun notDeliverOrder() {
-        //
+        OrdersToDeliverModel.instance!!.notDeliverOrder(itemToDetail?.idOrder!!)
     }
 
     override fun orderDelivered() {
-        //
+        OrdersToDeliverModel.instance!!.orderDelivered(itemToDetail?.idOrder!!)
+    }
+
+    override fun showOrdersList(list: List<NewOrder>) {
+        OrdersDeliveryFragment.instance!!.showOrdersList(list)
     }
 
     override fun showToast(text: String) {
-        OrdersAdminFragment.instance!!.showToast(text)
+        OrdersDeliveryFragment.instance!!.showToast(text)
     }
 
     override fun setItemToDetail(

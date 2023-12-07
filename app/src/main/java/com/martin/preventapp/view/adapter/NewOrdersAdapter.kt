@@ -9,11 +9,17 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.interfaces.OrderDetail
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
+import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverController
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
 
-class NewOrdersAdapter (private val context: Context, private val items: List<NewOrder>) : BaseAdapter() {
+class NewOrdersAdapter (
+    private val context: Context,
+    private val items: List<NewOrder>,
+    private val isAdmin: Boolean,
+    private val orderController: OrderDetail
+) : BaseAdapter() {
     private val selectedPositions = mutableSetOf<Int>()
 
     private fun toggleItemSelection(position: Int) {
@@ -65,8 +71,8 @@ class NewOrdersAdapter (private val context: Context, private val items: List<Ne
         viewHolder.seller.text = item.seller
         viewHolder.date.text = item.date
         viewHolder.actionButton.setOnClickListener {
-            NewOrdersController.instance!!.setItemToDetail(item, true, position)
-            NewOrdersController.instance!!.showFragmentDetail()
+            orderController.setItemToDetail(item, true, position, isAdmin)
+            orderController.showFragmentDetail()
         }
 
         viewHolder.checkBox.setOnClickListener {

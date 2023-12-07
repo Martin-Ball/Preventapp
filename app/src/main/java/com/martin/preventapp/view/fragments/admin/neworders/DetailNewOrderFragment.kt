@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.martin.preventapp.controller.admin.interfaces.OrderDetail
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.seller.orders.OrdersController
 import com.martin.preventapp.databinding.FragmentDetailNewOrderBinding
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.NewOrder
-import com.martin.preventapp.view.entities.OrderItem
 import com.martin.preventapp.view.entities.ProductOrder
 
-class DetailNewOrderFragment : Fragment() {
+class DetailNewOrderFragment(private val orderController: OrderDetail? = null) : Fragment() {
     private var _binding: FragmentDetailNewOrderBinding? = null
     private val binding get() = _binding!!
 
@@ -25,19 +25,18 @@ class DetailNewOrderFragment : Fragment() {
     companion object {
         private var detailNewOrderFragment: DetailNewOrderFragment? = null
         @JvmStatic
-        val instance: DetailNewOrderFragment?
-            get() {
-                if (detailNewOrderFragment == null) {
-                    detailNewOrderFragment = DetailNewOrderFragment()
-                }
-                return detailNewOrderFragment
+        fun getInstance(orderController: OrderDetail? = null): DetailNewOrderFragment {
+            if (detailNewOrderFragment == null) {
+                detailNewOrderFragment = DetailNewOrderFragment(orderController)
             }
+            return detailNewOrderFragment!!
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        itemToDetail = NewOrdersController.instance!!.getItemToDetail()
-        newOrder = NewOrdersController.instance!!.getIsNewOrder()
+        itemToDetail = orderController!!.getItemToDetail()
+        newOrder = orderController.getIsNewOrder()
     }
 
     override fun onCreateView(
@@ -61,6 +60,20 @@ class DetailNewOrderFragment : Fragment() {
         binding.btnSendToDelivery.isVisible = newOrder
         binding.btnCancelOrder.isVisible = newOrder
 
+        if(orderController!!.getIsAdmin()){
+            binding.btnOrderDelivered.visibility = View.VISIBLE
+            binding.btnNotDeliver.visibility = View.VISIBLE
+            binding.btnOrderDelivered.setOnClickListener {
+                orderController.orderDelivered()
+                requireActivity().onBackPressed()
+            }
+
+            binding.btnNotDeliver.setOnClickListener {
+                orderController.notDeliverOrder()
+                requireActivity().onBackPressed()
+            }
+        }
+
         val productsAdapter = ProductResumeAdapter(requireContext(), itemToDetail!!.products.map { ProductOrder(
             it.productName,
             it.brand,
@@ -71,22 +84,22 @@ class DetailNewOrderFragment : Fragment() {
         ) })
         binding.listProducts.adapter = productsAdapter
 
-        binding.tvNotes.text = itemToDetail!!.note
+        binding.tvNote.text = itemToDetail!!.note
 
         binding.backButton.setOnClickListener {
-            OrdersController.instance!!.setItemToDetail(null)
+            orderController.setItemToDetail(null, false, 0, false)
             requireActivity().onBackPressed()
         }
 
         binding.btnSendToDelivery.setOnClickListener {
             Toast.makeText(requireContext(), itemToDetail?.idOrder!!.toString(), Toast.LENGTH_LONG).show()
-            NewOrdersController.instance!!.confirmOrder()
+            orderController.confirmOrder()
             requireActivity().onBackPressed()
         }
 
         binding.btnCancelOrder.setOnClickListener {
             Toast.makeText(requireContext(), "PEDIDO CANCELADO", Toast.LENGTH_LONG).show()
-            NewOrdersController.instance!!.cancelOrder()
+            orderController.cancelOrder()
             requireActivity().onBackPressed()
         }
     }
