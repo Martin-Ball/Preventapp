@@ -12,6 +12,7 @@ import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
+import com.martin.preventapp.model.entities.Response.ProfileResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
@@ -45,6 +46,12 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<UsersResponse>
+
+    @GET("users/getProfile")
+    fun getProfile(
+        @Header("x-token") token: String,
+        @Query("nombreUsuario") username: String
+    ): Call<ProfileResponse>
 
     @PATCH("users/updatePermissions")
     fun updatePermissionsState(

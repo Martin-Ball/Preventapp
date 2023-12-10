@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.ProfileController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.orders.OrdersController
@@ -78,6 +79,7 @@ class MainSellerActivity : AppCompatActivity() {
                     val permissionToSendOrder = permissions.find { it.name == "Perfil" }
 
                     if(permissionToSendOrder?.isEnabled != false){
+                        ProfileController.instance!!.setContext(this)
                         showFragment(ProfileFragment.instance!!)
                     }else{
                         removeCurrentFragment()

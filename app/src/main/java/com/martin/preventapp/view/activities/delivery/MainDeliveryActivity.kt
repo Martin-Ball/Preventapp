@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.ProfileController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverController
@@ -47,6 +48,7 @@ class MainDeliveryActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
+                    ProfileController.instance!!.setContext(this)
                     showFragment(ProfileFragment.instance!!)
                     true
                 }
