@@ -51,11 +51,21 @@ class RegisterFragment : Fragment() {
             val username = binding.username.text.toString()
             val password = binding.password.text.toString()
             val confirmPassword = binding.confirmPassword.text.toString()
-            if(password == confirmPassword){
+
+            if(isValidEmail(username) && password == confirmPassword){
                 LoginController.instance!!.register(username, password)
             }else{
-                Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
+                if(!isValidEmail(username)){
+                    Toast.makeText(requireContext(), "Correo electrónico no válido", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(requireContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
+                }
             }
         }
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
     }
 }

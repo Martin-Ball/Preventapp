@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.martin.preventapp.controller.login.LoginController
 import com.martin.preventapp.databinding.FragmentLoginBinding
 
@@ -44,11 +45,21 @@ class LoginFragment : Fragment() {
         binding.login.setOnClickListener{
             val userName = binding.username.text.toString()
             val password = binding.password.text.toString()
-            LoginController.instance!!.login(userName, password)
+
+            if (isValidEmail(userName)) {
+                LoginController.instance!!.login(userName, password)
+            } else {
+                Toast.makeText(requireContext(), "Correo electrónico no válido", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.register.setOnClickListener {
             LoginController.instance!!.goToRegister()
         }
+    }
+
+    fun isValidEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
     }
 }
