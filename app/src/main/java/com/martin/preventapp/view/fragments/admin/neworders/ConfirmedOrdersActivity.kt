@@ -9,6 +9,8 @@ import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.databinding.ActivityConfirmedOrdersBinding
 import com.martin.preventapp.view.activities.admin.MainAdminActivity
+import com.martin.preventapp.view.activities.delivery.MainDeliveryActivity
+import com.martin.preventapp.view.fragments.delivery.OrdersDeliveredFragment
 
 class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.ViewOrders {
 
@@ -24,7 +26,7 @@ class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.Vie
 
     override fun showFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.completed_order_container, ConfirmedOrdersFragment.instance!!)
+            .replace(R.id.completed_order_container, OrdersDeliveredFragment.instance!!)
             .addToBackStack(null)
             .commit()
     }
@@ -37,7 +39,7 @@ class ConfirmedOrdersActivity : AppCompatActivity(), ConfirmedOrderInterface.Vie
     }
 
     override fun goToMain() {
-        val intent = Intent(this, MainAdminActivity::class.java)
+        val intent = Intent(this, MainDeliveryActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
         finish()

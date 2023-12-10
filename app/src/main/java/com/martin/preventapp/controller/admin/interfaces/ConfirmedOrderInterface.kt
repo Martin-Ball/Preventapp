@@ -22,15 +22,15 @@ interface ConfirmedOrderInterface {
         fun showFragmentDetail(item: NewOrder?)
         fun setItemToDetail(item: NewOrder?)
         fun getItemToDetail() : NewOrder?
-        fun getOrdersByDate(date: String, isSeller: Boolean)
-        fun showOrdersByDate(list: List<NewOrder>, isSeller: Boolean)
+        fun getOrdersByDate(date: String, groupType: Int)
+        fun showOrdersByDate(list: List<NewOrder>, groupType: Int)
         fun goToMain()
-        fun showToast(text:String, isSeller: Boolean)
+        fun showToast(text:String, groupType: Int)
 
         fun setView(view: ConfirmedOrderInterface.ViewOrders)
     }
 
     interface Model {
-        fun getOrdersByDate(date: String, isSeller: Boolean)
+        fun getOrdersByDate(date: String, groupType: Int)
     }
 }

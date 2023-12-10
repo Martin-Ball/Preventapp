@@ -13,6 +13,7 @@ import com.martin.preventapp.model.Application
 import com.martin.preventapp.view.entities.Permission
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
+import com.martin.preventapp.view.fragments.delivery.OrdersDeliveredFragment
 import com.martin.preventapp.view.fragments.delivery.OrdersDeliveryFragment
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
 
@@ -35,7 +36,7 @@ class MainDeliveryActivity : AppCompatActivity() {
                     val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
-                        //OrdersDeliveryFragment.instance!!.setListener(OrdersToDeliverController.instance!!)
+                        OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
                         OrdersToDeliverController.instance!!.setContext(this)
                         showFragment(OrdersDeliveryFragment.instance!!)
                     }else{

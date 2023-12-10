@@ -7,6 +7,7 @@ import com.martin.preventapp.model.admin.orders.NewOrdersModel
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
+import com.martin.preventapp.view.fragments.delivery.OrdersDeliveredFragment
 import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 
 class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemClickListener {
@@ -58,23 +59,23 @@ class ConfirmedOrdersController : ConfirmedOrderInterface.Controller, OrderItemC
         showFragmentDetail(item)
     }
 
-    override fun getOrdersByDate(date: String, isSeller: Boolean) {
-        NewOrdersModel.instance!!.getOrdersByDate(date, isSeller)
+    override fun getOrdersByDate(date: String, groupType: Int) {
+        NewOrdersModel.instance!!.getOrdersByDate(date, groupType)
     }
 
-    override fun showOrdersByDate(list: List<NewOrder>, isSeller: Boolean) {
-        if(isSeller){
-            OrdersFragment.instance!!.showOrderDetail(list)
-        }else{
-            ConfirmedOrdersFragment.instance!!.showOrderDetail(list)
+    override fun showOrdersByDate(list: List<NewOrder>, groupType: Int) {
+        when(groupType){
+            1 -> ConfirmedOrdersFragment.instance!!.showOrderDetail(list)
+            2 -> OrdersDeliveredFragment.instance!!.showOrderDetail(list)
+            3 -> OrdersFragment.instance!!.showOrderDetail(list)
         }
     }
 
-    override fun showToast(text: String, isSeller: Boolean) {
-        if(isSeller){
-            OrdersFragment.instance!!.showToast(text)
-        }else{
-            ConfirmedOrdersFragment.instance!!.showToast(text)
+    override fun showToast(text: String, groupType: Int) {
+        when(groupType){
+            1 -> ConfirmedOrdersFragment.instance!!.showToast(text)
+            2 -> OrdersDeliveredFragment.instance!!.showToast(text)
+            3 -> OrdersFragment.instance!!.showToast(text)
         }
     }
 }

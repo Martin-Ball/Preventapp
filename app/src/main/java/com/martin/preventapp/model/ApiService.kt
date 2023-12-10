@@ -118,7 +118,7 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("usuario") username: String,
         @Query("fecha") date: String,
-        @Query("isSeller") isSeller: Boolean
+        @Query("groupType") groupType: Int
     ): Call<List<NewOrdersResponse>>
 
     @POST("orders/orderDelivered")

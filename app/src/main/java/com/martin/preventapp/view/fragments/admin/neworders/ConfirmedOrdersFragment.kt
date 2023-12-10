@@ -66,7 +66,7 @@ class ConfirmedOrdersFragment : Fragment(), ConfirmedOrderInterface.listener {
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth"
                 binding.dateSelected.text = "Fecha: ${selectedDate}"
-                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, false)
+                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, 1)
             },
             year, month, day
         )

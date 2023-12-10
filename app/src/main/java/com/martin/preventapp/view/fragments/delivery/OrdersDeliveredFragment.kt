@@ -1,4 +1,4 @@
-package com.martin.preventapp.view.fragments.seller.orders
+package com.martin.preventapp.view.fragments.delivery
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -7,32 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.interfaces.ConfirmedOrderInterface
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
-import com.martin.preventapp.controller.seller.interfaces.OrdersInterface
-import com.martin.preventapp.databinding.FragmentOrdersBinding
+import com.martin.preventapp.databinding.FragmentConfirmedOrdersBinding
+import com.martin.preventapp.databinding.FragmentOrdersDeliveredBinding
 import com.martin.preventapp.view.adapter.OrderAdapter
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
 import java.util.Calendar
 import java.util.TimeZone
 
-class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
-
-    private var _binding: FragmentOrdersBinding? = null
+class OrdersDeliveredFragment : Fragment(), ConfirmedOrderInterface.listener {
+    private var _binding: FragmentOrdersDeliveredBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var listener: OrderItemClickListener
 
     companion object {
-        private var ordersFragment: OrdersFragment? = null
+        private var ordersFragment: OrdersDeliveredFragment? = null
         @JvmStatic
-        val instance: OrdersFragment?
+        val instance: OrdersDeliveredFragment?
             get() {
                 if (ordersFragment == null) {
-                    ordersFragment = OrdersFragment()
+                    ordersFragment = OrdersDeliveredFragment()
                 }
                 return ordersFragment
             }
@@ -42,7 +39,7 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentOrdersBinding.inflate(inflater)
+        _binding = FragmentOrdersDeliveredBinding.inflate(inflater)
         return binding.root
     }
 
@@ -51,6 +48,10 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
 
         binding.btnOpenDatePicker.setOnClickListener {
             showDatePicker()
+        }
+
+        binding.backButton.setOnClickListener {
+            ConfirmedOrdersController.instance!!.goToMain()
         }
     }
 
@@ -66,18 +67,11 @@ class OrdersFragment : Fragment(), OrdersInterface.ViewOrders {
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth"
                 binding.dateSelected.text = "Fecha: ${selectedDate}"
-                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, 3)
+                ConfirmedOrdersController.instance!!.getOrdersByDate(selectedDate, 2)
             },
             year, month, day
         )
         datePickerDialog.show()
-    }
-    override fun showFragmentDetail() {
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
-        transaction.replace(R.id.main_container, DetailOrderFragment.instance!!)
-        transaction.commit()
     }
 
     override fun setListener(listener: OrderItemClickListener) {

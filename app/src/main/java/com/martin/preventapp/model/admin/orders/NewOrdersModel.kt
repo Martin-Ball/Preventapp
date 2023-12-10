@@ -10,6 +10,9 @@ import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
+import com.martin.preventapp.view.fragments.delivery.OrdersDeliveredFragment
+import com.martin.preventapp.view.fragments.seller.orders.OrdersFragment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -139,14 +142,21 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
         })
     }
 
-    override fun getOrdersByDate(date: String, isSeller: Boolean) {
+    override fun getOrdersByDate(date: String, groupType: Int) {
         val apiService = Application.getApiService()
 
+        val context = when(groupType){
+            1 -> ConfirmedOrdersFragment.instance!!.context
+            2 -> OrdersDeliveredFragment.instance!!.context
+            3 -> OrdersFragment.instance!!.context
+            else -> return
+        }
+
         val call = apiService.getOrdersByDate(
-            Application.getTokenShared(NewOrdersController.instance!!.context ?: ConfirmedOrdersController.instance!!.context!!) ?: "",
-            Application.getUserShared(NewOrdersController.instance!!.context ?: ConfirmedOrdersController.instance!!.context!!) ?: "",
+            Application.getTokenShared(context!!) ?: "",
+            Application.getUserShared(context) ?: "",
             date,
-            isSeller
+            groupType
         )
 
         call.enqueue(object : Callback<List<NewOrdersResponse>> {
@@ -179,12 +189,12 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
                             )
                         }
 
-                        ConfirmedOrdersController.instance!!.showOrdersByDate(listOrders, isSeller)
+                        ConfirmedOrdersController.instance!!.showOrdersByDate(listOrders, groupType)
 
                     }
                 } else if (response.code() == 400){
                     response.errorBody()?.string()?.let {
-                        ConfirmedOrdersController.instance!!.showToast(it, isSeller)
+                        ConfirmedOrdersController.instance!!.showToast(it, groupType)
                     }
                 } else{
                     Log.e("Login error: ", response.code().toString())
