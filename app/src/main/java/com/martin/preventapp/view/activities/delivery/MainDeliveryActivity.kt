@@ -51,7 +51,18 @@ class MainDeliveryActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    showFragment(ProfileFragment.instance!!)
+                    binding.tvEnabledAction.visibility = View.GONE
+                    val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
+
+                    if(permissionToSendOrder?.isEnabled != false){
+                        OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
+                        OrdersToDeliverController.instance!!.setContext(this)
+                        showFragment(OrdersDeliveryFragment.instance!!)
+                    }else{
+                        removeCurrentFragment()
+                        binding.tvEnabledAction.visibility = View.VISIBLE
+                    }
+
                     true
                 }
             }

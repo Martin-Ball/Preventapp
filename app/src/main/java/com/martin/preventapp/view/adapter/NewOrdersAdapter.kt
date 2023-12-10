@@ -74,9 +74,13 @@ class NewOrdersAdapter (
             orderController.setItemToDetail(item, true, position, isAdmin)
             orderController.showFragmentDetail()
         }
-
-        viewHolder.checkBox.setOnClickListener {
-            toggleItemSelection(position)
+        if(!orderController.getIsAdmin()){
+            viewHolder.checkBox.visibility = View.GONE
+        }else{
+            viewHolder.checkBox.visibility = View.VISIBLE
+            viewHolder.checkBox.setOnClickListener {
+                toggleItemSelection(position)
+            }
         }
 
         return view
