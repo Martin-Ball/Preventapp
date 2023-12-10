@@ -10,6 +10,8 @@ import com.martin.preventapp.model.entities.Request.CreateOrderRequest
 import com.martin.preventapp.model.entities.Request.ProductOrderRequest
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
+import com.martin.preventapp.model.seller.mementoOrder.OrderMementoCareTaker
+import com.martin.preventapp.model.seller.mementoOrder.OrderMementoOriginator
 import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
@@ -24,6 +26,8 @@ class CreateOrderModel : CreateOrderInterface.Model {
     private var itemList: MutableList<ProductOrder> = mutableListOf()
     private var clientSelected : String = ""
     private lateinit var order : OrderModel
+    private val originator = OrderMementoOriginator()
+    private val caretaker = OrderMementoCareTaker()
 
     companion object {
         private var createOrderModel: CreateOrderModel? = null
@@ -42,10 +46,14 @@ class CreateOrderModel : CreateOrderInterface.Model {
         listItems.forEach { product ->
             this.itemList.add(ProductOrder(product.name, product.brand, product.presentation, product.quantityUnit, product.price, product.quantity))
         }
+
+        saveState()
     }
 
     override fun setClientSelected(clientSelected: String) {
         this.clientSelected = clientSelected
+
+        saveState()
     }
 
     override fun getOrder(): OrderModel {
@@ -158,5 +166,18 @@ class CreateOrderModel : CreateOrderInterface.Model {
                 CreateOrderController.instance!!.showToast(t.toString())
             }
         })
+    }
+
+    fun saveState() {
+        caretaker.saveState(originator.createMemento())
+    }
+
+    fun restoreState(index: Int) {
+        val memento = caretaker.restoreState(index)
+        originator.restoreMemento(memento)
+    }
+
+    fun getMementoSize(): Int{
+        return caretaker.getMementoCount()
     }
 }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.FragmentResumeBinding
+import com.martin.preventapp.model.seller.createOrder.CreateOrderModel
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.ItemAmount
 
@@ -54,6 +55,8 @@ class ResumeFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
+            binding.etNotes.setText("")
+            CreateOrderController.instance!!.restoreState()
             requireActivity().onBackPressed()
         }
     }

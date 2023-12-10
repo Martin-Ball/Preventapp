@@ -39,6 +39,7 @@ class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelection
         super.onResume()
         if(::listClient.isInitialized){
             showClients(listClient)
+            binding.tvClient.text = "Cliente seleccionado: $clientSelected"
         }
     }
 
@@ -62,6 +63,7 @@ class ClientSelectionFragment : Fragment(), CreateOrderInterface.ClientSelection
         }
 
         binding.backButton.setOnClickListener {
+            CreateOrderController.instance!!.restoreState()
             requireActivity().finish()
         }
     }

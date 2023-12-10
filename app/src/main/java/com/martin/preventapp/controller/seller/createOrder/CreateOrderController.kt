@@ -82,4 +82,10 @@ class CreateOrderController : CreateOrderInterface.Controller {
         viewClient!!.goToMain()
         CreateOrderFragment.instance!!.clearItems()
     }
+
+    fun restoreState(){
+        if (CreateOrderModel.instance!!.getMementoSize() >= 2) {
+            CreateOrderModel.instance!!.restoreState(CreateOrderModel.instance!!.getMementoSize() - 2)
+        }
+    }
 }

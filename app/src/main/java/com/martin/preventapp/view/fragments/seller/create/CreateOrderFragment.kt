@@ -62,7 +62,6 @@ class CreateOrderFragment : Fragment(), CreateOrderInterface.View {
             }else{
                 CreateOrderController.instance?.goToStepClient(itemList)
             }
-
         }
     }
 
