@@ -34,43 +34,70 @@ class MainSellerActivity : AppCompatActivity() {
            when (menuItem.itemId) {
                 R.id.navigation_list -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Enviar pedido" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Enviar pedido", ignoreCase = true) ||
+                                it.name.equals("Crear pedido", ignoreCase = true) ||
+                                it.name.equals("Agregar nota", ignoreCase = true) ||
+                                it.name.equals("Cargar productos", ignoreCase = true) ||
+                                it.name.equals("Asignar cantidades", ignoreCase = true) ||
+                                it.name.equals("Seleccionar cliente", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         CreateOrderController.instance!!.setContext(this)
                         showFragment(CreateOrderFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
 
                     true
                 }
                 R.id.navigation_recommended -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Recomendar Productos" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Recomendar productos", ignoreCase = true) ||
+                                it.name.equals("Generar reporte", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         RecommendedController.instance!!.setContext(this)
                         showFragment(RecommendedFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
 
                     true
                 }
                 R.id.navigation_orders -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Ver Pedidos" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Ver pedidos", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         OrdersFragment.instance!!.setListener(OrdersController.instance!!)
                         ConfirmedOrdersController.instance!!.setContext(this)
                         showFragment(OrdersFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
 
 
@@ -85,14 +112,26 @@ class MainSellerActivity : AppCompatActivity() {
                 }
                 else -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Enviar pedido", ignoreCase = true) ||
+                                it.name.equals("Crear pedido", ignoreCase = true) ||
+                                it.name.equals("Agregar nota", ignoreCase = true) ||
+                                it.name.equals("Cargar productos", ignoreCase = true) ||
+                                it.name.equals("Asignar cantidades", ignoreCase = true) ||
+                                it.name.equals("Seleccionar cliente", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         CreateOrderController.instance!!.setContext(this)
                         showFragment(CreateOrderFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
                     true
                 }

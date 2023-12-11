@@ -9,6 +9,7 @@ import com.martin.preventapp.controller.ProfileController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverController
+import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.ActivityMainDeliveryBinding
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.view.entities.Permission
@@ -16,6 +17,7 @@ import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragm
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
 import com.martin.preventapp.view.fragments.delivery.OrdersDeliveredFragment
 import com.martin.preventapp.view.fragments.delivery.OrdersDeliveryFragment
+import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.view.fragments.seller.profile.ProfileFragment
 
 class MainDeliveryActivity : AppCompatActivity() {
@@ -34,15 +36,24 @@ class MainDeliveryActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navigation_orders -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Entregar Pedido" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Ubicacion del cliente", ignoreCase = true) ||
+                                it.name.equals("Rechazar Pedido", ignoreCase = true) ||
+                                it.name.equals("Ver pedidos", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
                         OrdersToDeliverController.instance!!.setContext(this)
                         showFragment(OrdersDeliveryFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
 
                     true
@@ -54,15 +65,24 @@ class MainDeliveryActivity : AppCompatActivity() {
                 }
                 else -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Entregar Pedido" }
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Ubicacion del cliente", ignoreCase = true) ||
+                                it.name.equals("Rechazar Pedido", ignoreCase = true) ||
+                                it.name.equals("Ver pedidos", ignoreCase = true)
+                    }
 
-                    if(permissionToSendOrder?.isEnabled != false){
+                    if (permissionToSendOrder.all { it.isEnabled }) {
                         OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
                         OrdersToDeliverController.instance!!.setContext(this)
                         showFragment(OrdersDeliveryFragment.instance!!)
-                    }else{
+                    } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
                     }
 
                     true
