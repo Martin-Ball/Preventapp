@@ -97,12 +97,12 @@ class UserManagerModel : UserManagerInterface.Model {
         })
     }
 
-    override fun updatePermissionsState(permissions: List<PermissionModel>) {
+    override fun updatePermissionsState(username: String, permissions: List<PermissionModel>) {
         val apiService = Application.getApiService()
 
         val call = apiService.updatePermissionsState(
             Application.getTokenShared(UserManagerController.instance!!.context!!) ?: "",
-            PermissionsUpdate(Application.getUserShared(UserManagerController.instance!!.context!!) ?: "", permissions)
+            PermissionsUpdate(username, permissions)
         )
 
         call.enqueue(object : Callback<ResponseBody> {

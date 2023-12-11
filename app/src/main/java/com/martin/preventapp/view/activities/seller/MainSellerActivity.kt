@@ -34,7 +34,7 @@ class MainSellerActivity : AppCompatActivity() {
            when (menuItem.itemId) {
                 R.id.navigation_list -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
+                    val permissionToSendOrder = permissions.find { it.name == "Enviar pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
                         CreateOrderController.instance!!.setContext(this)

@@ -109,5 +109,6 @@ class ClientListActivity : AppCompatActivity(), ListControllerInterface.View {
 
     override fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+        finish()
     }
 }

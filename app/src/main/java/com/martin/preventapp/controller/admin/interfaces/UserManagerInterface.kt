@@ -24,7 +24,7 @@ interface UserManagerInterface {
         fun createUser(username:String, password:String, type:String)
         fun getUsers()
         fun setUsers(users: List<UserModel>)
-        fun updatePermissionsState(permissions: List<PermissionModel>)
+        fun updatePermissionsState(username: String, permissions: List<PermissionModel>)
         fun updateUser(userModified: UserToModify)
         fun deleteUser(username: String)
     }
@@ -32,7 +32,7 @@ interface UserManagerInterface {
     interface Model {
         fun createUser(username:String, password:String, type:String)
         fun getUsers()
-        fun updatePermissionsState(permissions: List<PermissionModel>)
+        fun updatePermissionsState(username: String, permissions: List<PermissionModel>)
         fun updateUser(userModified: UserToModify)
         fun deleteUser(username: String)
     }

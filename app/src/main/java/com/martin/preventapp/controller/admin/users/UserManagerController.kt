@@ -72,8 +72,8 @@ class UserManagerController : UserManagerInterface.Controller {
         UserManagerModel.instance!!.createUser(username, password, type)
     }
 
-    override fun updatePermissionsState(permissions: List<PermissionModel>) {
-        UserManagerModel.instance!!.updatePermissionsState(permissions)
+    override fun updatePermissionsState(username: String, permissions: List<PermissionModel>) {
+        UserManagerModel.instance!!.updatePermissionsState(username, permissions)
     }
 
     override fun updateUser(userModified: UserToModify) {

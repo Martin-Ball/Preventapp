@@ -51,6 +51,7 @@ class CreateUserFragment : Fragment() {
 
         if(user == null){
             selectedRol = roles[0]
+            binding.username.isEnabled = true
 
             binding.btnRegisterUser.setOnClickListener {
                 val userName = binding.username.text.toString()
