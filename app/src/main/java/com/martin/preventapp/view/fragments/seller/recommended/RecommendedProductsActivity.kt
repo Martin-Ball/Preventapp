@@ -28,9 +28,6 @@ class RecommendedProductsActivity : AppCompatActivity(), RecommendedInterface.Vi
     }
 
     override fun goToMain() {
-        val intent = Intent(this, MainSellerActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
         finish()
     }
 

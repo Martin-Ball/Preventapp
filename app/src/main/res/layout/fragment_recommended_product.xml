@@ -47,17 +47,6 @@
             android:textColor="@color/white"
             android:textSize="15dp"
             android:paddingBottom="15dp"/>
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_products"
@@ -78,6 +67,29 @@
                 android:textSize="15dp" />
 
         </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_not_purchases"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="El usuario no posee compras"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:visibility="visible" />
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_order"

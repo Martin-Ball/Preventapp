@@ -55,7 +55,18 @@ class RecommendedProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recommendedResponse = RecommendedController.instance!!.getRecommendedResponse()
-        setViewRecommended()
+        if(recommendedResponse.products.isEmpty()){
+            binding.tvNotPurchases.visibility = View.VISIBLE
+            binding.sv.visibility = View.GONE
+        }else{
+            binding.tvNotPurchases.visibility = View.GONE
+            binding.sv.visibility = View.VISIBLE
+            setViewRecommended()
+        }
+
+        binding.backButton.setOnClickListener {
+            RecommendedController.instance!!.goToMain()
+        }
     }
 
     private fun setViewRecommended(){
@@ -69,6 +80,8 @@ class RecommendedProductFragment : Fragment() {
                 it.price
             ) })
         binding.listProducts.adapter = productsAdapter
+
+        binding.tvClient.text = RecommendedController.instance!!.getClientSelected()
 
         createLineChart()
     }
@@ -117,7 +130,7 @@ class RecommendedProductFragment : Fragment() {
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                binding.tvPurchases.text = "El cliente ${RecommendedController.instance?.getClientSelected()} compro en el mes ${e?.x} $ ${e?.y}"
+                binding.tvPurchases.text = "El cliente compro en el mes ${e!!.x.toInt()} $${e.y}"
             }
 
             override fun onNothingSelected() {
@@ -125,10 +138,6 @@ class RecommendedProductFragment : Fragment() {
         })
 
         binding.llChartContainer.addView(lineChart)
-
-        binding.backButton.setOnClickListener {
-            RecommendedController.instance!!.goToMain()
-        }
     }
 
     private fun getMonths(): List<String> {
