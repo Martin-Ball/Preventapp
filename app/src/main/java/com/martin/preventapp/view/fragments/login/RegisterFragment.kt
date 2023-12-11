@@ -54,6 +54,9 @@ class RegisterFragment : Fragment() {
 
             if(isValidEmail(username) && password == confirmPassword){
                 LoginController.instance!!.register(username, password)
+                binding.username.setText("")
+                binding.password.setText("")
+                binding.confirmPassword.setText("")
             }else{
                 if(!isValidEmail(username)){
                     Toast.makeText(requireContext(), "Correo electrónico no válido", Toast.LENGTH_SHORT).show()

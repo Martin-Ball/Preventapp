@@ -48,6 +48,8 @@ class LoginFragment : Fragment() {
 
             if (isValidEmail(userName)) {
                 LoginController.instance!!.login(userName, password)
+                binding.username.setText("")
+                binding.password.setText("")
             } else {
                 Toast.makeText(requireContext(), "Correo electrónico no válido", Toast.LENGTH_SHORT).show()
             }

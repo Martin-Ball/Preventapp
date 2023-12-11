@@ -94,6 +94,10 @@ class CreateUserFragment : Fragment() {
 
             if(password == confirmPassword){
                 UserManagerController.instance!!.createUser(userName, password, selectedRol)
+                UserManagerController.instance!!.goToMain()
+                binding.username.setText("")
+                binding.password.setText("")
+                binding.confirmPassword.setText("")
             }else{
                 UserManagerController.instance!!.showToast("Las contraseñas no coinciden")
             }
