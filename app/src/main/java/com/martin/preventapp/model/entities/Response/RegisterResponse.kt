@@ -9,7 +9,7 @@ data class RegisterResponse(
     val user: User,
     @SerialName("group")
     val groupType: GroupType,
-    @SerialName("permissionsForGroup")
+    @SerialName("userPermissionsResponse")
     val permissions: List<Permission>,
     @SerialName("token")
     val token: String

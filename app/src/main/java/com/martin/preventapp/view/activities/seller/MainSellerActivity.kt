@@ -62,7 +62,7 @@ class MainSellerActivity : AppCompatActivity() {
                 }
                 R.id.navigation_orders -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Orders" }
+                    val permissionToSendOrder = permissions.find { it.name == "Ver Pedidos" }
 
                     if(permissionToSendOrder?.isEnabled != false){
                         OrdersFragment.instance!!.setListener(OrdersController.instance!!)
@@ -78,15 +78,8 @@ class MainSellerActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Perfil" }
-
-                    if(permissionToSendOrder?.isEnabled != false){
-                        ProfileController.instance!!.setContext(this)
-                        showFragment(ProfileFragment.instance!!)
-                    }else{
-                        removeCurrentFragment()
-                        binding.tvEnabledAction.visibility = View.VISIBLE
-                    }
+                    ProfileController.instance!!.setContext(this)
+                    showFragment(ProfileFragment.instance!!)
 
                     true
                 }

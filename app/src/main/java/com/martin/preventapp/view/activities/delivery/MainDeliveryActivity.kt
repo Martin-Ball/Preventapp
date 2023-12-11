@@ -34,7 +34,7 @@ class MainDeliveryActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navigation_orders -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
+                    val permissionToSendOrder = permissions.find { it.name == "Entregar Pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
                         OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
@@ -54,7 +54,7 @@ class MainDeliveryActivity : AppCompatActivity() {
                 }
                 else -> {
                     binding.tvEnabledAction.visibility = View.GONE
-                    val permissionToSendOrder = permissions.find { it.name == "Enviar Pedido" }
+                    val permissionToSendOrder = permissions.find { it.name == "Entregar Pedido" }
 
                     if(permissionToSendOrder?.isEnabled != false){
                         OrdersDeliveredFragment.instance!!.setListener(ConfirmedOrdersController.instance!!)
