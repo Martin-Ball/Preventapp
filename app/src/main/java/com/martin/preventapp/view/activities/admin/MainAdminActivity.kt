@@ -102,8 +102,26 @@ class MainAdminActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
-                    ProfileController.instance!!.setContext(this)
-                    showFragment(ProfileFragment.instance!!)
+
+                    binding.tvEnabledAction.visibility = View.GONE
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Crear backup", ignoreCase = true) ||
+                                it.name.equals("Restaurar Backup", ignoreCase = true)
+                    }
+
+                    if (permissionToSendOrder.all { it.isEnabled }) {
+                        ProfileController.instance!!.setContext(this)
+                        showFragment(ProfileFragment.instance!!)
+                    } else {
+                        removeCurrentFragment()
+                        binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
+                    }
+
                     true
                 }
                 else -> {

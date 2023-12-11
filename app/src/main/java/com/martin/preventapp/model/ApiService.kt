@@ -147,4 +147,14 @@ interface ApiService {
         @Query("client") client: String,
         @Query("username") username: String
     ): Call<RecommendedResponse>
+
+    @POST("backup/createBackup")
+    fun createBackup(
+        @Header("x-token") token: String
+    ): Call<ResponseBody>
+
+    @POST("backup/restoreBackup")
+    fun restoreBackup(
+        @Header("x-token") token: String
+    ): Call<ResponseBody>
 }

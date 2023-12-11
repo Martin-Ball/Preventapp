@@ -5,6 +5,7 @@ import com.martin.preventapp.controller.ProfileController
 import com.martin.preventapp.controller.ProfileInterface
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Response.ProfileResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +47,60 @@ class ProfileModel : ProfileInterface.Model {
             }
 
             override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun createBackup() {
+        val apiService = Application.getApiService()
+
+        val call = apiService.createBackup(
+            Application.getTokenShared(ProfileController.instance!!.context!!) ?: ""
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val profileResponse = response.body()
+                    if (profileResponse != null) {
+                        ProfileController.instance!!.showToast("Backup creado correctamente")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { ProfileController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun restoreBackup() {
+        val apiService = Application.getApiService()
+
+        val call = apiService.restoreBackup(
+            Application.getTokenShared(ProfileController.instance!!.context!!) ?: ""
+        )
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val profileResponse = response.body()
+                    if (profileResponse != null) {
+                        ProfileController.instance!!.showToast("Backup creado correctamente")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { ProfileController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })

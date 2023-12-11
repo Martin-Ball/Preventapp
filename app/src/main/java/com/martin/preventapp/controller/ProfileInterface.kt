@@ -15,9 +15,13 @@ interface ProfileInterface {
         fun getUserInfo()
         fun showUserInfo(info: ProfileResponse)
         fun showToast(text: String)
+        fun createBackup()
+        fun restoreBackup()
     }
 
     interface Model {
         fun getUserInfo()
+        fun createBackup()
+        fun restoreBackup()
     }
 }

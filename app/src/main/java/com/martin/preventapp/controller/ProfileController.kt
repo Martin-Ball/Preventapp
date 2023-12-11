@@ -40,6 +40,14 @@ class ProfileController: ProfileInterface.Controller {
         ProfileFragment.instance!!.showUserInfo(info)
     }
 
+    override fun createBackup() {
+        ProfileModel.instance!!.createBackup()
+    }
+
+    override fun restoreBackup() {
+        ProfileModel.instance!!.restoreBackup()
+    }
+
     override fun showToast(text: String) {
         ProfileFragment.instance!!.showToast(text)
     }

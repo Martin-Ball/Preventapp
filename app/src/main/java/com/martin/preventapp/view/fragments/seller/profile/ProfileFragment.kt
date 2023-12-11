@@ -54,6 +54,22 @@ class ProfileFragment : Fragment(), ProfileInterface.View {
     override fun showUserInfo(info: ProfileResponse) {
         binding.tvClient.text = info.userName
         binding.tvType.text = info.groupName
+
+        if(info.groupName == "Administrador"){
+            binding.createBackup.visibility = View.VISIBLE
+            binding.restoreBackup.visibility = View.VISIBLE
+
+            binding.createBackup.setOnClickListener {
+                ProfileController.instance!!.createBackup()
+            }
+
+            binding.restoreBackup.setOnClickListener {
+                ProfileController.instance!!.restoreBackup()
+            }
+        }else{
+            binding.createBackup.visibility = View.GONE
+            binding.restoreBackup.visibility = View.GONE
+        }
     }
 
     override fun showToast(text: String) {
