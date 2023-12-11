@@ -24,9 +24,11 @@ import com.martin.preventapp.R
 import com.martin.preventapp.controller.seller.recommended.RecommendedController
 import com.martin.preventapp.databinding.FragmentRecommendedBinding
 import com.martin.preventapp.databinding.FragmentRecommendedProductBinding
+import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.view.entities.Product
 
 class RecommendedProductFragment : Fragment() {
+    private lateinit var recommendedResponse: RecommendedResponse
     companion object {
         private var recommendedProductFragment: RecommendedProductFragment? = null
         @JvmStatic
@@ -52,35 +54,31 @@ class RecommendedProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recommendedResponse = RecommendedController.instance!!.getRecommendedResponse()
+        setViewRecommended()
+    }
+
+    private fun setViewRecommended(){
+
+        val productsAdapter = ProductListAdapter(requireContext(),
+            recommendedResponse.products.map { Product(
+                it.productName,
+                it.brand,
+                it.presentation,
+                it.unit,
+                it.price
+            ) })
+        binding.listProducts.adapter = productsAdapter
 
         createLineChart()
-
-        val products = listOf(
-            Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-            Product("Producto 12", "La paulina", "Unidad", "Unidad", 1212.11),
-        )
-
-        val productsAdapter = ProductListAdapter(requireContext(), products)
-        binding.listProducts.adapter = productsAdapter
     }
 
     private fun createLineChart() {
-        val entries = listOf(
-            Entry(0f, 100f),
-            Entry(1f, 150f),
-            Entry(2f, 120f),
-            Entry(3f, 200f),
-            Entry(4f, 180f),
-            Entry(5f, 250f),
-            Entry(6f, 220f),
-            Entry(7f, 300f),
-            Entry(8f, 280f),
-            Entry(9f, 320f),
-            Entry(10f, 290f),
-            Entry(11f, 350f)
-        )
+
+        val entries = (1..12).map { month ->
+            val total = recommendedResponse.monthlyPurchases.firstOrNull { it.mes == month }?.total ?: 0
+            Entry(month.toFloat(), total.toFloat())
+        }
 
         val dataSet = LineDataSet(entries, "Compras mensuales")
 
@@ -96,7 +94,7 @@ class RecommendedProductFragment : Fragment() {
         dataSet.lineWidth = 5f
         dataSet.color = ContextCompat.getColor(requireContext(), R.color.border)
 
-        dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        dataSet.mode = LineDataSet.Mode.LINEAR
 
         lineChart.setDrawGridBackground(false)
         lineChart.setDrawBorders(false)
@@ -120,7 +118,6 @@ class RecommendedProductFragment : Fragment() {
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 binding.tvPurchases.text = "El cliente ${RecommendedController.instance?.getClientSelected()} compro en el mes ${e?.x} $ ${e?.y}"
-                //Toast.makeText(applicationContext, "El cliente" + e?.y, Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected() {
@@ -130,7 +127,7 @@ class RecommendedProductFragment : Fragment() {
         binding.llChartContainer.addView(lineChart)
 
         binding.backButton.setOnClickListener {
-            requireActivity().onBackPressed()
+            RecommendedController.instance!!.goToMain()
         }
     }
 

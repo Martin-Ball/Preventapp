@@ -112,7 +112,7 @@
             android:paddingStart="15dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="Notas del pedido"
+            android:text="Compras mensuales"
             android:textColor="@color/white"
             android:textSize="15dp" />
 

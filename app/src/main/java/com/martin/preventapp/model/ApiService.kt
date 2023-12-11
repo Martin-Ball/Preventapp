@@ -13,6 +13,7 @@ import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.ProfileResponse
+import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
@@ -139,4 +140,11 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("idOrder") idOrder: Int
     ): Call<ResponseBody>
+
+    @GET("recommended/getRecommendedProducts")
+    fun getRecommendedProducts(
+        @Header("x-token") token: String,
+        @Query("client") client: String,
+        @Query("username") username: String
+    ): Call<RecommendedResponse>
 }

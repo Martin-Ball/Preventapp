@@ -9,6 +9,7 @@ import com.martin.preventapp.controller.ProfileController
 import com.martin.preventapp.controller.admin.orders.ConfirmedOrdersController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.controller.seller.orders.OrdersController
+import com.martin.preventapp.controller.seller.recommended.RecommendedController
 import com.martin.preventapp.view.fragments.seller.create.CreateOrderFragment
 import com.martin.preventapp.databinding.ActivityMainBinding
 import com.martin.preventapp.model.Application
@@ -50,6 +51,7 @@ class MainSellerActivity : AppCompatActivity() {
                     val permissionToSendOrder = permissions.find { it.name == "Recomendar Productos" }
 
                     if(permissionToSendOrder?.isEnabled != false){
+                        RecommendedController.instance!!.setContext(this)
                         showFragment(RecommendedFragment.instance!!)
                     }else{
                         removeCurrentFragment()

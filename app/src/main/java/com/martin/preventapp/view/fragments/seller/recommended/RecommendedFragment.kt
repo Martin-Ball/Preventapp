@@ -19,6 +19,7 @@ import com.martin.preventapp.controller.seller.interfaces.RecommendedInterface
 import com.martin.preventapp.controller.seller.recommended.RecommendedController
 import com.martin.preventapp.databinding.FragmentRecommendedBinding
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.fragments.admin.users.UserManagerActivity
 
 class RecommendedFragment : Fragment(), RecommendedInterface.View {
 
@@ -49,15 +50,13 @@ class RecommendedFragment : Fragment(), RecommendedInterface.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        RecommendedController.instance!!.getClientList()
+    }
 
-        val clientList = listOf(Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"),
-            Client("Cliente 1", "Lavalle 1333", "10 a 15hs"))
+    override fun showClientList(list: List<Client>) {
+        val clientNames = list.map { it.name }
 
-        val clientNames = clientList.map { it.name }
-
-        val clientAdapter = ClientAdapter(requireContext(), clientList)
+        val clientAdapter = ClientAdapter(requireContext(), list)
         binding.clientList.adapter = clientAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -86,16 +85,17 @@ class RecommendedFragment : Fragment(), RecommendedInterface.View {
             if(clientSelected == ""){
                 Toast.makeText(requireContext(), "DEBE SELECCIONAR UN CLIENTE", Toast.LENGTH_LONG).show()
             }else{
-                RecommendedController.instance?.setClientSelected(clientSelected)
+                RecommendedController.instance?.getRecommendedProducts(clientSelected)
             }
         }
     }
 
     override fun showRecommendedProducts() {
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
-        transaction.replace(R.id.main_container, RecommendedProductFragment())
-        transaction.commit()
+        val intent = Intent(requireContext(), RecommendedProductsActivity::class.java)
+        requireActivity().startActivity(intent)
+    }
+
+    override fun showToast(text: String) {
+        Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
     }
 }
