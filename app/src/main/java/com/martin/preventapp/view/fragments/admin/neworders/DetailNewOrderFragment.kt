@@ -60,7 +60,7 @@ class DetailNewOrderFragment(private val orderController: OrderDetail? = null) :
         binding.btnSendToDelivery.isVisible = newOrder
         binding.btnCancelOrder.isVisible = newOrder
 
-        if(orderController!!.getIsAdmin()){
+        if(!orderController!!.getIsAdmin()){
             binding.btnOrderDelivered.visibility = View.VISIBLE
             binding.btnNotDeliver.visibility = View.VISIBLE
             binding.btnOrderDelivered.setOnClickListener {

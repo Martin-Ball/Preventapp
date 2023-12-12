@@ -12,4 +12,5 @@ interface OrderDetail {
     fun notDeliverOrder()
     fun orderDelivered()
     fun getIsAdmin(): Boolean
+
 }

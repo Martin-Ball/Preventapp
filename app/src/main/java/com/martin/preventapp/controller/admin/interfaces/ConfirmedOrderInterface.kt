@@ -1,13 +1,14 @@
 package com.martin.preventapp.controller.admin.interfaces
 
 import android.content.Context
+import androidx.fragment.app.Fragment
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
 import com.martin.preventapp.view.entities.OrderItem
 
 interface ConfirmedOrderInterface {
     interface ViewOrders {
-        fun showFragment()
+        fun showFragment(fragment: Fragment)
         fun showFragmentDetail()
         fun goToMain()
 

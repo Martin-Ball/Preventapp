@@ -99,12 +99,11 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
         binding.orderList.adapter = adapter
 
         binding.btnConfirmOrders.setOnClickListener {
-            requireActivity().startActivity(
-                Intent(
-                    requireContext(),
-                    ConfirmedOrdersActivity::class.java
-                )
-            )
+            val intent = Intent(requireContext(), ConfirmedOrdersActivity::class.java)
+
+            intent.putExtra("isAdmin", true)
+
+            requireActivity().startActivity(intent)
         }
     }
 

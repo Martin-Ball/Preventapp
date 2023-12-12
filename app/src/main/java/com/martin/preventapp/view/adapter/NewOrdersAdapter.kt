@@ -74,7 +74,7 @@ class NewOrdersAdapter (
             orderController.setItemToDetail(item, true, position, isAdmin)
             orderController.showFragmentDetail()
         }
-        if(!orderController.getIsAdmin()){
+        if(!isAdmin){
             viewHolder.checkBox.visibility = View.GONE
         }else{
             viewHolder.checkBox.visibility = View.VISIBLE
