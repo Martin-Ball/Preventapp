@@ -52,6 +52,7 @@ class ResumeFragment : Fragment() {
         binding.sendOrder.setOnClickListener {
             order.notes = binding.etNotes.text.toString()
             CreateOrderController.instance?.sendOrder(order)
+            binding.etNotes.setText("")
         }
 
         binding.backButton.setOnClickListener {

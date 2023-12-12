@@ -25,7 +25,6 @@ class CreateOrderModel : CreateOrderInterface.Model {
 
     private var itemList: MutableList<ProductOrder> = mutableListOf()
     private var clientSelected : String = ""
-    private lateinit var order : OrderModel
     private val originator = OrderMementoOriginator()
     private val caretaker = OrderMementoCareTaker()
 
@@ -79,6 +78,9 @@ class CreateOrderModel : CreateOrderInterface.Model {
                     val responseList = response.body()
                     if (responseList != null) {
                         CreateOrderController.instance!!.showToast("Pedido enviado!")
+                        clientSelected = ""
+                        itemList.clear()
+
                         CreateOrderController.instance!!.goToMain()
                     }
                 } else if (response.code() == 400){
