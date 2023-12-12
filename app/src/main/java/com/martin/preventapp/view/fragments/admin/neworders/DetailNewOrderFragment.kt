@@ -92,7 +92,6 @@ class DetailNewOrderFragment(private val orderController: OrderDetail? = null) :
         }
 
         binding.btnSendToDelivery.setOnClickListener {
-            Toast.makeText(requireContext(), itemToDetail?.idOrder!!.toString(), Toast.LENGTH_LONG).show()
             orderController.confirmOrder()
             requireActivity().onBackPressed()
         }

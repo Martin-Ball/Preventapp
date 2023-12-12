@@ -71,7 +71,7 @@ class NewOrdersAdapter (
         viewHolder.seller.text = item.seller
         viewHolder.date.text = item.date
         viewHolder.actionButton.setOnClickListener {
-            orderController.setItemToDetail(item, true, position, isAdmin)
+            orderController.setItemToDetail(item, isAdmin, position, isAdmin)
             orderController.showFragmentDetail()
         }
         if(!isAdmin){
