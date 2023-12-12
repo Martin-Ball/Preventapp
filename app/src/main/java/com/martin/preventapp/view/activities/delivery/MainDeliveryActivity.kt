@@ -59,6 +59,7 @@ class MainDeliveryActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_profile -> {
+                    binding.tvEnabledAction.visibility = View.GONE
                     ProfileController.instance!!.setContext(this)
                     showFragment(ProfileFragment.instance!!)
                     true
