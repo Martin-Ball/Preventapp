@@ -64,7 +64,7 @@ class DetailOrderFragment : Fragment() {
         ) })
         binding.listProducts.adapter = productsAdapter
 
-        binding.tvNotes.text = itemToDetail.note
+        binding.tvNote.text = itemToDetail.note
 
         binding.backButton.setOnClickListener {
             OrdersController.instance!!.setItemToDetail(null)
