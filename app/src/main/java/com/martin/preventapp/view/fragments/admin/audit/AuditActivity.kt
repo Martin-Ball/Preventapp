@@ -10,6 +10,7 @@ import com.martin.preventapp.controller.admin.audit.AuditController
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
 import com.martin.preventapp.databinding.ActivityUserManagerBinding
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.orders.AuditOrdersFragment
 import com.martin.preventapp.view.fragments.admin.audit.price.PriceAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
@@ -31,7 +32,7 @@ class AuditActivity : AppCompatActivity(), AuditInterface.View {
                 "User" -> showFragment(UserListAuditFragment.instance!!)
                 "Price" -> showFragment(PriceAuditFragment.instance!!)
                 "Client" -> showFragment(ClientListAuditFragment.instance!!)
-                "Orders" -> showFragment(UserListAuditFragment.instance!!)
+                "Orders" -> showFragment(AuditOrdersFragment.instance!!)
             }
         }
     }
