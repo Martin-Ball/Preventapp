@@ -4,112 +4,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.seller.orders.OrdersFragment"
+    tools:context=".view.fragments.admin.users.UserFragment"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_title_list"
+        android:id="@+id/tv_title_audit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="Listas"
+        android:text="Auditoria"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp" />
 
     <TextView
-        android:id="@+id/tv_new_list"
+        android:id="@+id/tv_audit_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="10dp"
-        android:text="Cargar lista de precios"
+        android:text="Tipos de auditoria"
         android:textColor="@color/white"
         android:textSize="15dp"/>
 
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_new_list"
+        android:id="@+id/btn_audit_user"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableStart="@drawable/ic_upload"
+        android:drawableStart="@drawable/ic_person"
         android:drawableTint="@color/white"
         android:gravity="center_vertical|center"
         android:paddingHorizontal="20dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
-        android:text="EXAMINAR ARCHIVOS"
+        android:text="AUDITAR USUARIO"
         android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/tv_new_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:text="Cargar lista de clientes"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_new_clients"
+        android:id="@+id/btn_audit_price"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableStart="@drawable/ic_upload"
+        android:drawableStart="@drawable/ic_price"
         android:drawableTint="@color/white"
         android:gravity="center_vertical|center"
         android:paddingHorizontal="20dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
-        android:text="EXAMINAR ARCHIVOS"
+        android:text="AUDITAR PRECIOS"
         android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/tv_view_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:text="Ver lista de precios"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_view_list"
+        android:id="@+id/btn_audit_client"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableStart="@drawable/ic_eye"
+        android:drawableStart="@drawable/ic_person"
         android:drawableTint="@color/white"
         android:gravity="center_vertical|center"
         android:paddingHorizontal="20dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
-        android:text="VER LISTA"
+        android:text="AUDITAR CLIENTE"
         android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/tv_view_client"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:text="Ver lista de clientes"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_view_clients"
+        android:id="@+id/btn_audit_orders"
         android:layout_width="327dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableStart="@drawable/ic_eye"
+        android:drawableStart="@drawable/ic_list"
         android:drawableTint="@color/white"
         android:gravity="center_vertical|center"
         android:paddingHorizontal="20dp"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
-        android:text="VER LISTA"
+        android:text="AUDITAR PEDIDOS"
         android:textColor="@color/white" />
+
 </LinearLayout>

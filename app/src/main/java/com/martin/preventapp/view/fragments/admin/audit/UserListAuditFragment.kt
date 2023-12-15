@@ -1,29 +1,32 @@
-package com.martin.preventapp.view.fragments.admin.users
+package com.martin.preventapp.view.fragments.admin.audit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.martin.preventapp.R
+import com.martin.preventapp.controller.admin.audit.AuditController
 import com.martin.preventapp.controller.admin.users.UserManagerController
+import com.martin.preventapp.databinding.FragmentUserListAuditBinding
 import com.martin.preventapp.databinding.FragmentUserListBinding
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersAdapter
+import com.martin.preventapp.view.fragments.admin.users.UserListFragment
 
-class UserListFragment : Fragment() {
-
-    private var _binding: FragmentUserListBinding? = null
+class UserListAuditFragment : Fragment() {
+    private var _binding: FragmentUserListAuditBinding? = null
     private val binding get() = _binding!!
 
     private var users:List<UserModel> = mutableListOf()
 
     companion object {
-        private var userListFragment: UserListFragment? = null
+        private var userListFragment: UserListAuditFragment? = null
         @JvmStatic
-        val instance: UserListFragment?
+        val instance: UserListAuditFragment?
             get() {
                 if (userListFragment == null) {
-                    userListFragment = UserListFragment()
+                    userListFragment = UserListAuditFragment()
                 }
                 return userListFragment
             }
@@ -33,8 +36,8 @@ class UserListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUserListBinding.inflate(inflater)
-        UserManagerController.instance!!.getUsers()
+        _binding = FragmentUserListAuditBinding.inflate(inflater)
+        AuditController.instance!!.getUsers()
         return binding.root
     }
 
@@ -42,14 +45,13 @@ class UserListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backButton.setOnClickListener {
-            UserManagerController.instance!!.goToMain()
+            AuditController.instance!!.goToMain()
         }
     }
 
     fun setUsers(users: List<UserModel>){
         this.users = users
-        val adapter = UsersAdapter(requireContext(), users, UserManagerController.instance!!)
+        val adapter = UsersAdapter(requireContext(), users, AuditController.instance!!)
         binding.usersList.adapter = adapter
     }
-
 }

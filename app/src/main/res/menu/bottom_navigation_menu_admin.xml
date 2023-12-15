@@ -15,6 +15,11 @@
         android:icon="@drawable/ic_order" />
 
     <item
+        android:id="@+id/navigation_audit"
+        android:title="Auditoria"
+        android:icon="@drawable/ic_audit" />
+
+    <item
         android:id="@+id/navigation_profile"
         android:title="Perfil"
         android:icon="@drawable/ic_person" />

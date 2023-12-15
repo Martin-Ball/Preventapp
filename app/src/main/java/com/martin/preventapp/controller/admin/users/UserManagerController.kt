@@ -7,10 +7,11 @@ import com.martin.preventapp.model.admin.managerUsers.UserManagerModel
 import com.martin.preventapp.model.entities.Request.PermissionModel
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.model.entities.UserToModify
+import com.martin.preventapp.view.adapter.UsersActionInterface
 import com.martin.preventapp.view.fragments.admin.users.DetailUserFragment
 import com.martin.preventapp.view.fragments.admin.users.UserListFragment
 
-class UserManagerController : UserManagerInterface.Controller {
+class UserManagerController : UserManagerInterface.Controller, UsersActionInterface {
 
     @JvmField
     var context: Context? = null
