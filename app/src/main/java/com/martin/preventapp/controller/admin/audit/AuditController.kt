@@ -2,14 +2,14 @@ package com.martin.preventapp.controller.admin.audit
 
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
-import com.martin.preventapp.controller.admin.interfaces.UserManagerInterface
 import com.martin.preventapp.model.admin.audit.AuditModel
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersActionInterface
-import com.martin.preventapp.view.fragments.admin.audit.AuditFragment
-import com.martin.preventapp.view.fragments.admin.audit.AuditUserFragment
-import com.martin.preventapp.view.fragments.admin.audit.UserListAuditFragment
-import com.martin.preventapp.view.fragments.admin.users.DetailUserFragment
+import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
+import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
 class AuditController : AuditInterface.Controller, UsersActionInterface {
     @JvmField
@@ -18,6 +18,7 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
     var view: AuditInterface.View? = null
 
     private var userToModify: UserModel? = null
+    private var clientSelected: String? = null
 
     companion object {
         private var auditController: AuditController? = null
@@ -40,6 +41,8 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
     }
 
     override fun goToMain() {
+        userToModify = null
+        clientSelected = null
         view!!.goToMain()
     }
 
@@ -63,5 +66,23 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun getUserToAudit(): UserModel? {
         return userToModify
+    }
+
+    /**CLIENT AUDIT**/
+    override fun getClients() {
+        AuditModel.instance!!.getClients()
+    }
+
+    override fun showClients(list: List<Client>) {
+        ClientListAuditFragment.instance!!.showClients(list)
+    }
+
+    override fun setClientSelected(client: String) {
+        clientSelected = client
+        view!!.showFragment(AuditClientFragment.instance!!)
+    }
+
+    override fun getClientSelected(): String {
+        return clientSelected ?: ""
     }
 }

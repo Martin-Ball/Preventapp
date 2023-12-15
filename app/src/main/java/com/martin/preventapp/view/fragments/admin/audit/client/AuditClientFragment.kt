@@ -1,4 +1,4 @@
-package com.martin.preventapp.view.fragments.admin.audit
+package com.martin.preventapp.view.fragments.admin.audit.client
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,24 +9,23 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.audit.AuditController
-import com.martin.preventapp.controller.admin.users.UserManagerController
-import com.martin.preventapp.databinding.FragmentAuditUserBinding
+import com.martin.preventapp.databinding.FragmentAuditClientBinding
 
-class AuditUserFragment : Fragment() {
-    private var _binding: FragmentAuditUserBinding? = null
+class AuditClientFragment : Fragment() {
+    private var _binding: FragmentAuditClientBinding? = null
     private val binding get() = _binding!!
     private var itemsToAudit : Array<String> = emptyArray()
     private var itemToAudit: String = ""
 
     companion object {
-        private var auditUserFragment: AuditUserFragment? = null
+        private var auditClientFragment: AuditClientFragment? = null
         @JvmStatic
-        val instance: AuditUserFragment?
+        val instance: AuditClientFragment?
             get() {
-                if (auditUserFragment == null) {
-                    auditUserFragment = AuditUserFragment()
+                if (auditClientFragment == null) {
+                    auditClientFragment = AuditClientFragment()
                 }
-                return auditUserFragment
+                return auditClientFragment
             }
     }
 
@@ -34,20 +33,16 @@ class AuditUserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAuditUserBinding.inflate(inflater)
+        _binding = FragmentAuditClientBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val user = AuditController.instance!!.getUserToAudit()
+        val client = AuditController.instance!!.getClientSelected()
 
-        when(user?.groupName){
-            "Preventista" -> itemsToAudit = arrayOf("Inicios de sesion", "Pedidos", "Volumen de ventas", "Reportes recomendados")
-            "Repartidor" -> itemsToAudit = arrayOf("Inicios de sesion", "Pedidos entregados", "Pedidos no entregados")
-            "Administrador" -> itemsToAudit = arrayOf("Listas subidas", "Pedidos confirmados", "Pedidos rechazados")
-        }
+        itemsToAudit = arrayOf("Pedidos", "Compras")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, itemsToAudit)
 

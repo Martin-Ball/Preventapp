@@ -8,10 +8,10 @@ import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.audit.AuditController
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
-import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.databinding.ActivityUserManagerBinding
-import com.martin.preventapp.view.fragments.admin.users.CreateUserFragment
-import com.martin.preventapp.view.fragments.admin.users.UserListFragment
+import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.price.PriceAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
 class AuditActivity : AppCompatActivity(), AuditInterface.View {
     private lateinit var binding: ActivityUserManagerBinding
@@ -29,8 +29,8 @@ class AuditActivity : AppCompatActivity(), AuditInterface.View {
 
             when(bundle.getString("audit_type", "")){
                 "User" -> showFragment(UserListAuditFragment.instance!!)
-                "Price" -> showFragment(UserListAuditFragment.instance!!)
-                "Client" -> showFragment(UserListAuditFragment.instance!!)
+                "Price" -> showFragment(PriceAuditFragment.instance!!)
+                "Client" -> showFragment(ClientListAuditFragment.instance!!)
                 "Orders" -> showFragment(UserListAuditFragment.instance!!)
             }
         }
