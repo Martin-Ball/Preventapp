@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.audit.AuditController
+import com.martin.preventapp.controller.admin.orders.NewOrdersController
 import com.martin.preventapp.databinding.FragmentAuditOrdersBinding
 import com.martin.preventapp.databinding.FragmentAuditUserBinding
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
+import com.martin.preventapp.view.fragments.admin.neworders.DetailNewOrderFragment
 
 class AuditOrdersFragment : Fragment() {
     private var _binding: FragmentAuditOrdersBinding? = null
@@ -53,6 +57,9 @@ class AuditOrdersFragment : Fragment() {
         binding.spinnerRol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 itemToAudit = itemsToAudit[position]
+                when (itemToAudit) {
+
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -63,5 +70,13 @@ class AuditOrdersFragment : Fragment() {
         binding.backButton.setOnClickListener {
             AuditController.instance!!.goToMain()
         }
+    }
+
+    fun showFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
     }
 }

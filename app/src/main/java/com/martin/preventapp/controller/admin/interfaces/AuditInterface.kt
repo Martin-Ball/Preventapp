@@ -17,10 +17,13 @@ interface AuditInterface {
         fun setContext(context: Context)
         fun goToMain()
         fun showToast(text: String)
+
         /**USER AUDIT**/
         fun getUsers()
         fun showUsers(list: List<UserModel>)
         fun getUserToAudit() : UserModel?
+        fun getLogins(username: String)
+        fun showLogins(list: List<String>)
 
         /**CLIENTS AUDIT**/
         fun getClients()
@@ -32,5 +35,6 @@ interface AuditInterface {
     interface Model {
         fun getUsers()
         fun getClients()
+        fun getLogins(username: String)
     }
 }

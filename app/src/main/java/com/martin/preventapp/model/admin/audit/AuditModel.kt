@@ -7,6 +7,7 @@ import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Response.ListClientResponse
+import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.entities.Client
@@ -93,6 +94,34 @@ class AuditModel : AuditInterface.Model {
             }
 
             override fun onFailure(call: Call<ListClientResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun getLogins(username: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getLogins(
+            Application.getTokenShared(AuditController.instance!!.context!!) ?: "",
+            username
+        )
+
+        call.enqueue(object : Callback<LoginsAuditResponse> {
+            override fun onResponse(call: Call<LoginsAuditResponse>, response: Response<LoginsAuditResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        AuditController.instance!!.showLogins(responseList.logins.map { it.date })
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { AuditController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<LoginsAuditResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })

@@ -9,6 +9,7 @@ import com.martin.preventapp.view.entities.Client
 import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.LoginAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
 class AuditController : AuditInterface.Controller, UsersActionInterface {
@@ -66,6 +67,14 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun getUserToAudit(): UserModel? {
         return userToModify
+    }
+
+    override fun getLogins(username: String) {
+        AuditModel.instance!!.getLogins(username)
+    }
+
+    override fun showLogins(list: List<String>) {
+        AuditUserFragment.instance!!.showFragment(LoginAuditFragment.newInstance(list))
     }
 
     /**CLIENT AUDIT**/

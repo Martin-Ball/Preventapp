@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.martin.preventapp.R
 import com.martin.preventapp.controller.admin.audit.AuditController
+import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverController
 import com.martin.preventapp.databinding.FragmentAuditUserBinding
+import com.martin.preventapp.view.fragments.admin.neworders.DetailNewOrderFragment
 
 class AuditUserFragment : Fragment() {
     private var _binding: FragmentAuditUserBinding? = null
@@ -57,6 +61,14 @@ class AuditUserFragment : Fragment() {
         binding.spinnerRol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 itemToAudit = itemsToAudit[position]
+                when (itemToAudit) {
+                    "Inicios de sesion" -> {
+                        AuditController.instance!!.getLogins(user!!.username)
+                    }
+                    /*"Pedidos" ->
+                    "Volumen de ventas" ->
+                    "Reportes recomendados" ->*/
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -68,4 +80,13 @@ class AuditUserFragment : Fragment() {
             AuditController.instance!!.goToMain()
         }
     }
+
+    fun showFragment(fragment: Fragment) {
+        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+        val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.container_audit_user, fragment)
+        transaction.commit()
+    }
+
 }
