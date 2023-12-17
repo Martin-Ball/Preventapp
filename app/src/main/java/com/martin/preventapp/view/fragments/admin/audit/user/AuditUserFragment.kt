@@ -47,9 +47,9 @@ class AuditUserFragment : Fragment() {
         val user = AuditController.instance!!.getUserToAudit()
 
         when(user?.groupName){
-            "Preventista" -> itemsToAudit = arrayOf("Inicios de sesion", "Volumen de ventas", "Reportes recomendados")
-            "Repartidor" -> itemsToAudit = arrayOf("Inicios de sesion", "Pedidos entregados", "Pedidos no entregados")
-            "Administrador" -> itemsToAudit = arrayOf("Listas subidas", "Pedidos confirmados", "Pedidos rechazados")
+            "Preventista" -> itemsToAudit = arrayOf("Inicios de sesion", "Volumen de ventas", "Reportes recomendados", "Estado de pedido")
+            "Repartidor" -> itemsToAudit = arrayOf("Inicios de sesion", "Estado de pedido")
+            "Administrador" -> itemsToAudit = arrayOf("Listas subidas", "Estado de pedido")
         }
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, itemsToAudit)
@@ -70,6 +70,9 @@ class AuditUserFragment : Fragment() {
                     }
                     "Reportes recomendados" -> {
                         AuditController.instance!!.getRecommendedReports(user!!.username)
+                    }
+                    "Estado de pedido" -> {
+                        AuditController.instance!!.getChangeStateOrder(user!!.username)
                     }
                 }
             }

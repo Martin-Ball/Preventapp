@@ -6,6 +6,7 @@ import com.martin.preventapp.controller.admin.interfaces.AuditInterface
 import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
+import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReportResponse
@@ -186,6 +187,34 @@ class AuditModel : AuditInterface.Model {
             }
 
             override fun onFailure(call: Call<RecommendedReportResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun getChangeStateOrder(username: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getChangeStateOrder(
+            Application.getTokenShared(AuditController.instance!!.context!!) ?: "",
+            username
+        )
+
+        call.enqueue(object : Callback<ChangeStateAuditResponse> {
+            override fun onResponse(call: Call<ChangeStateAuditResponse>, response: Response<ChangeStateAuditResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        AuditController.instance!!.showChangeStateOrder(responseList.auditList)
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { AuditController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ChangeStateAuditResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })

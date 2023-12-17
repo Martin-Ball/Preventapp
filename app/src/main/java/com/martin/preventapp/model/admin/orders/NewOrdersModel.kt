@@ -91,7 +91,8 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
 
         val call = apiService.sendOrderToDelivery(
             Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
-            idOrder
+            idOrder,
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ResponseBody> {
@@ -119,7 +120,8 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
 
         val call = apiService.cancelOrder(
             Application.getTokenShared(NewOrdersController.instance!!.context!!) ?: "",
-            id
+            id,
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ResponseBody> {

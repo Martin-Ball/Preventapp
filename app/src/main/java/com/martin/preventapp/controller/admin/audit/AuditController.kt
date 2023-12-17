@@ -3,6 +3,7 @@ package com.martin.preventapp.controller.admin.audit
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
 import com.martin.preventapp.model.admin.audit.AuditModel
+import com.martin.preventapp.model.entities.Response.AuditItem
 import com.martin.preventapp.model.entities.Response.RecommendedReport
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersActionInterface
@@ -11,6 +12,7 @@ import com.martin.preventapp.view.entities.Turnover
 import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.ChangeStateAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.LoginAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.RecommendedResponseFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.TurnoverAuditFragment
@@ -95,6 +97,14 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun showRecommendedReports(list: List<RecommendedReport>) {
         AuditUserFragment.instance!!.showFragment(RecommendedResponseFragment.newInstance(list))
+    }
+
+    override fun getChangeStateOrder(username: String) {
+        AuditModel.instance!!.getChangeStateOrder(username)
+    }
+
+    override fun showChangeStateOrder(list: List<AuditItem>) {
+        AuditUserFragment.instance!!.showFragment(ChangeStateAuditFragment.newInstance(list))
     }
 
     /**CLIENT AUDIT**/

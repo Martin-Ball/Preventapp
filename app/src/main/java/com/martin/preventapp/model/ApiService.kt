@@ -8,6 +8,7 @@ import com.martin.preventapp.model.entities.Request.LoginRequest
 import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
+import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
@@ -115,13 +116,15 @@ interface ApiService {
     @POST("orders/sendOrderToDelivery")
     fun sendOrderToDelivery(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @POST("orders/cancelOrder")
     fun cancelOrder(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @GET("orders/getOrdersByDate")
@@ -135,13 +138,15 @@ interface ApiService {
     @POST("orders/orderDelivered")
     fun orderDelivered(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @POST("orders/notDeliverOrder")
     fun notDeliverOrder(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @GET("recommended/getRecommendedProducts")
@@ -179,4 +184,10 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<RecommendedReportResponse>
+
+    @GET("audit/getChangeStateUser")
+    fun getChangeStateOrder(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<ChangeStateAuditResponse>
 }
