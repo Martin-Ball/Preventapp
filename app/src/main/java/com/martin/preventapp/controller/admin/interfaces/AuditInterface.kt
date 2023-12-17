@@ -3,9 +3,11 @@ package com.martin.preventapp.controller.admin.interfaces
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.model.entities.Response.AuditItem
+import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReport
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.Turnover
 
 interface AuditInterface {
@@ -33,6 +35,10 @@ interface AuditInterface {
         fun showRecommendedReports(list: List<RecommendedReport>)
         fun getChangeStateOrder(username: String)
         fun showChangeStateOrder(list: List<AuditItem>)
+        fun getProductPrice(username: String, month: String, productName: String)
+        fun showProductPrice(response: ProductsPriceResponse)
+        fun getListProducts()
+        fun showListProducts(list: List<Product>)
 
         /**CLIENTS AUDIT**/
         fun getClients()
@@ -48,5 +54,7 @@ interface AuditInterface {
         fun getTurnover(username: String)
         fun getRecommendedReports(username: String)
         fun getChangeStateOrder(username: String)
+        fun getProductPrice(username: String, month: String, productName: String)
+        fun getListProducts()
     }
 }

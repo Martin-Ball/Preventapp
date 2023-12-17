@@ -14,6 +14,7 @@ import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
+import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
 import com.martin.preventapp.model.entities.Response.ProfileResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReportResponse
 import com.martin.preventapp.model.entities.Response.RecommendedResponse
@@ -190,4 +191,12 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<ChangeStateAuditResponse>
+
+    @GET("audit/getProductsPrice")
+    fun getProductPrice(
+        @Header("x-token") token: String,
+        @Query("username") username: String,
+        @Query("month") month: String,
+        @Query("productName") productName: String,
+    ): Call<ProductsPriceResponse>
 }

@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -23,12 +25,21 @@ import com.martin.preventapp.controller.admin.audit.AuditController
 import com.martin.preventapp.controller.seller.recommended.RecommendedController
 import com.martin.preventapp.databinding.FragmentAuditUserBinding
 import com.martin.preventapp.databinding.FragmentPriceAuditBinding
+import com.martin.preventapp.model.Application
+import com.martin.preventapp.model.entities.Response.ProductData
+import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
+import com.martin.preventapp.view.adapter.AmountAdapter
+import com.martin.preventapp.view.adapter.ProductPriceAuditAdapter
+import com.martin.preventapp.view.entities.ItemAmount
 import com.martin.preventapp.view.entities.Product
+import com.martin.preventapp.view.entities.ProductPriceAudit
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
 
 class PriceAuditFragment : Fragment() {
     private var _binding: FragmentPriceAuditBinding? = null
     private val binding get() = _binding!!
+    private var selectedMonth: String = ""
+    private val months: List<String> = getMonths()
 
 
     companion object {
@@ -54,84 +65,81 @@ class PriceAuditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, getMonths())
+        AuditController.instance!!.getListProducts()
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, months)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerMonth.adapter = adapter
+
+        binding.spinnerMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedMonth = "${position + 1}"
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
 
         binding.backButton.setOnClickListener {
             AuditController.instance!!.goToMain()
         }
     }
 
-    private fun setViewRecommended(){
+    fun showListProducts(list: List<Product>){
+        val productsAdapter = ProductListAdapter(requireContext(), list)
+        binding.productList.adapter = productsAdapter
 
-        /*val productsAdapter = ProductListAdapter(requireContext(),
-            recommendedResponse.products.map { Product(
-                it.productName,
-                it.brand,
-                it.presentation,
-                it.unit,
-                it.price
-            ) })
-        binding.listProducts.adapter = productsAdapter*/
-
-        createLineChart()
-    }
-
-    private fun createLineChart() {
-
-        val entries = (1..12).map { month ->
-            val total = /*recommendedResponse.monthlyPurchases.firstOrNull { it.mes == month }?.total ?:*/ 0
-            Entry(month.toFloat(), total.toFloat())
-        }
-
-        val dataSet = LineDataSet(entries, "Compras mensuales")
-
-        val lineData = LineData(dataSet)
-
-        val lineChart = LineChart(requireContext())
-        lineChart.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
-        )
-        lineChart.data = lineData
-
-        dataSet.lineWidth = 5f
-        dataSet.color = ContextCompat.getColor(requireContext(), R.color.border)
-
-        dataSet.mode = LineDataSet.Mode.LINEAR
-
-        lineChart.setDrawGridBackground(false)
-        lineChart.setDrawBorders(false)
-
-        val xAxis = lineChart.xAxis
-        val yAxisLeft = lineChart.axisLeft
-        val yAxisRight = lineChart.axisRight
-
-
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = IndexAxisValueFormatter(getMonths())
-        xAxis.setDrawAxisLine(false)
-        xAxis.setDrawGridLines(false)
-
-
-        yAxisLeft.setDrawAxisLine(false)
-        yAxisLeft.setDrawLabels(false)
-        yAxisLeft.setDrawGridLines(false)
-        yAxisRight.isEnabled = false
-
-        lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
-            override fun onValueSelected(e: Entry?, h: Highlight?) {
-                binding.tvPurchases.text = "El cliente compro en el mes ${e!!.x.toInt()} $${e.y}"
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchView.clearFocus()
+                if (query != null) {
+                    productsAdapter.filter(query)
+                }
+                return false
             }
 
-            override fun onNothingSelected() {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    productsAdapter.filter(newText)
+                }
+                return false
             }
         })
 
-        binding.llChartContainer.addView(lineChart)
+        binding.productList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val selectedProduct = productsAdapter.getItem(position)
+            AuditController.instance!!.getProductPrice(
+                Application.getUserShared(requireContext()) ?: "",
+                selectedMonth,
+                selectedProduct.productName
+            )
+        }
+    }
+
+    fun showProductsPriceList(list: ProductsPriceResponse){
+        if(list.productsPrice.isEmpty()){
+            binding.llListPriceChange.visibility = View.GONE
+            binding.tvProduct.visibility = View.GONE
+            binding.tvNotProducts.visibility = View.VISIBLE
+        }else{
+            binding.tvNotProducts.visibility = View.GONE
+            binding.llListPriceChange.visibility = View.VISIBLE
+            binding.tvProduct.visibility = View.VISIBLE
+            binding.tvProduct.text = "Aumento del producto ${list.productsPrice[0].productName}"
+            val productsAdapter = ProductPriceAuditAdapter(requireContext(), list.productsPrice[0].data.map {
+                ProductPriceAudit(
+                    it.productName,
+                    it.listName,
+                    it.unitPrice,
+                    it.dateValidity,
+                    it.creationDate
+                )
+            })
+            binding.listChangePrices.adapter = productsAdapter
+        }
     }
 
     private fun getMonths(): List<String> {
