@@ -68,7 +68,9 @@ class AuditUserFragment : Fragment() {
                     "Volumen de ventas" -> {
                         AuditController.instance!!.getTurnover(user!!.username)
                     }
-                    /*"Reportes recomendados" ->*/
+                    "Reportes recomendados" -> {
+                        AuditController.instance!!.getRecommendedReports(user!!.username)
+                    }
                 }
             }
 

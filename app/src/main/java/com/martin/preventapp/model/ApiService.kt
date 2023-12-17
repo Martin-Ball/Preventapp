@@ -14,6 +14,7 @@ import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
 import com.martin.preventapp.model.entities.Response.ProfileResponse
+import com.martin.preventapp.model.entities.Response.RecommendedReportResponse
 import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
@@ -172,4 +173,10 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<TurnoverResponse>
+
+    @GET("audit/getReportsRecommendedUser")
+    fun getRecommendedReports(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<RecommendedReportResponse>
 }

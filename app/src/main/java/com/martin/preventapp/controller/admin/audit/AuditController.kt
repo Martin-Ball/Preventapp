@@ -3,6 +3,7 @@ package com.martin.preventapp.controller.admin.audit
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
 import com.martin.preventapp.model.admin.audit.AuditModel
+import com.martin.preventapp.model.entities.Response.RecommendedReport
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersActionInterface
 import com.martin.preventapp.view.entities.Client
@@ -11,6 +12,7 @@ import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragme
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.LoginAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.RecommendedResponseFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.TurnoverAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
@@ -85,6 +87,14 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun showTurnover(list: List<Turnover>) {
         AuditUserFragment.instance!!.showFragment(TurnoverAuditFragment.newInstance(list))
+    }
+
+    override fun getRecommendedReports(username: String) {
+        AuditModel.instance!!.getRecommendedReports(username)
+    }
+
+    override fun showRecommendedReports(list: List<RecommendedReport>) {
+        AuditUserFragment.instance!!.showFragment(RecommendedResponseFragment.newInstance(list))
     }
 
     /**CLIENT AUDIT**/
