@@ -8,9 +8,11 @@ import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
+import com.martin.preventapp.model.entities.Response.TurnoverResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.Turnover
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -122,6 +124,39 @@ class AuditModel : AuditInterface.Model {
             }
 
             override fun onFailure(call: Call<LoginsAuditResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+            }
+        })
+    }
+
+    override fun getTurnover(username: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getTurnover(
+            Application.getTokenShared(AuditController.instance!!.context!!) ?: "",
+            username
+        )
+
+        call.enqueue(object : Callback<TurnoverResponse> {
+            override fun onResponse(call: Call<TurnoverResponse>, response: Response<TurnoverResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        AuditController.instance!!.showTurnover(responseList.turnover.map {
+                            Turnover(
+                                it.month,
+                                it.salesVolume
+                            )
+                        })
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { AuditController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<TurnoverResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
             }
         })

@@ -47,7 +47,7 @@ class AuditUserFragment : Fragment() {
         val user = AuditController.instance!!.getUserToAudit()
 
         when(user?.groupName){
-            "Preventista" -> itemsToAudit = arrayOf("Inicios de sesion", "Pedidos", "Volumen de ventas", "Reportes recomendados")
+            "Preventista" -> itemsToAudit = arrayOf("Inicios de sesion", "Volumen de ventas", "Reportes recomendados")
             "Repartidor" -> itemsToAudit = arrayOf("Inicios de sesion", "Pedidos entregados", "Pedidos no entregados")
             "Administrador" -> itemsToAudit = arrayOf("Listas subidas", "Pedidos confirmados", "Pedidos rechazados")
         }
@@ -65,9 +65,10 @@ class AuditUserFragment : Fragment() {
                     "Inicios de sesion" -> {
                         AuditController.instance!!.getLogins(user!!.username)
                     }
-                    /*"Pedidos" ->
-                    "Volumen de ventas" ->
-                    "Reportes recomendados" ->*/
+                    "Volumen de ventas" -> {
+                        AuditController.instance!!.getTurnover(user!!.username)
+                    }
+                    /*"Reportes recomendados" ->*/
                 }
             }
 

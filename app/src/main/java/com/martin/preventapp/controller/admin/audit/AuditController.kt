@@ -6,10 +6,12 @@ import com.martin.preventapp.model.admin.audit.AuditModel
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersActionInterface
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.Turnover
 import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.LoginAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.user.TurnoverAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.UserListAuditFragment
 
 class AuditController : AuditInterface.Controller, UsersActionInterface {
@@ -75,6 +77,14 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun showLogins(list: List<String>) {
         AuditUserFragment.instance!!.showFragment(LoginAuditFragment.newInstance(list))
+    }
+
+    override fun getTurnover(username: String) {
+        AuditModel.instance!!.getTurnover(username)
+    }
+
+    override fun showTurnover(list: List<Turnover>) {
+        AuditUserFragment.instance!!.showFragment(TurnoverAuditFragment.newInstance(list))
     }
 
     /**CLIENT AUDIT**/

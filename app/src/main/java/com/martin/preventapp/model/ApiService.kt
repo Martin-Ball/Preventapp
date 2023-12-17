@@ -17,6 +17,7 @@ import com.martin.preventapp.model.entities.Response.ProfileResponse
 import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
+import com.martin.preventapp.model.entities.Response.TurnoverResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -165,4 +166,10 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("username") username: String
     ): Call<LoginsAuditResponse>
+
+    @GET("audit/getTurnoverUser")
+    fun getTurnover(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<TurnoverResponse>
 }

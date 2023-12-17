@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.Turnover
 
 interface AuditInterface {
     interface View {
@@ -24,6 +25,8 @@ interface AuditInterface {
         fun getUserToAudit() : UserModel?
         fun getLogins(username: String)
         fun showLogins(list: List<String>)
+        fun getTurnover(username: String)
+        fun showTurnover(list: List<Turnover>)
 
         /**CLIENTS AUDIT**/
         fun getClients()
@@ -36,5 +39,6 @@ interface AuditInterface {
         fun getUsers()
         fun getClients()
         fun getLogins(username: String)
+        fun getTurnover(username: String)
     }
 }
