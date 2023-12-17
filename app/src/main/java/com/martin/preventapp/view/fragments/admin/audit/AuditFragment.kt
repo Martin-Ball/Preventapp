@@ -58,13 +58,5 @@ class AuditFragment : Fragment() {
             intent.putExtras(bundle)
             requireActivity().startActivity(intent)
         }
-
-        binding.btnAuditOrders.setOnClickListener {
-            val intent = Intent(requireContext(), AuditActivity::class.java)
-            val bundle = Bundle()
-            bundle.putString("audit_type", "Orders")
-            intent.putExtras(bundle)
-            requireActivity().startActivity(intent)
-        }
     }
 }

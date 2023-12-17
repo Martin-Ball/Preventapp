@@ -32,7 +32,6 @@ class AuditActivity : AppCompatActivity(), AuditInterface.View {
                 "User" -> showFragment(UserListAuditFragment.instance!!)
                 "Price" -> showFragment(PriceAuditFragment.instance!!)
                 "Client" -> showFragment(ClientListAuditFragment.instance!!)
-                "Orders" -> showFragment(AuditOrdersFragment.instance!!)
             }
         }
     }

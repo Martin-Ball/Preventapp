@@ -68,18 +68,5 @@
         android:text="AUDITAR CLIENTE"
         android:textColor="@color/white" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_audit_orders"
-        android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:drawableStart="@drawable/ic_list"
-        android:drawableTint="@color/white"
-        android:gravity="center_vertical|center"
-        android:paddingHorizontal="20dp"
-        android:layout_marginVertical="15dp"
-        android:background="@drawable/button_not_pressed"
-        android:text="AUDITAR PEDIDOS"
-        android:textColor="@color/white" />
 
 </LinearLayout>
