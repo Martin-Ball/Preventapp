@@ -9,6 +9,7 @@ import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
 import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
+import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
@@ -199,4 +200,10 @@ interface ApiService {
         @Query("month") month: String,
         @Query("productName") productName: String,
     ): Call<ProductsPriceResponse>
+
+    @GET("audit/getClientPurchases")
+    fun getClientPurchases(
+        @Header("x-token") token: String,
+        @Query("clientName") clientName: String
+    ): Call<ClientPurchasesAuditResponse>
 }

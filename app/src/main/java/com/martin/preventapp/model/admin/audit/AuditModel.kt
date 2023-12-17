@@ -8,6 +8,7 @@ import com.martin.preventapp.controller.admin.users.UserManagerController
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
+import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
@@ -294,4 +295,35 @@ class AuditModel : AuditInterface.Model {
         })
     }
 
+    override fun getClientPurchases(clientName: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getClientPurchases(
+            Application.getTokenShared(AuditController.instance!!.context!!) ?: "",
+            clientName
+        )
+
+        call.enqueue(object : Callback<ClientPurchasesAuditResponse> {
+            override fun onResponse(call: Call<ClientPurchasesAuditResponse>, response: Response<ClientPurchasesAuditResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        AuditController.instance!!.showClientPurchases(responseList)
+                    }else{
+                        AuditController.instance!!.showToast("Error en la respuesta")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { AuditController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                    AuditController.instance!!.showToast(response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ClientPurchasesAuditResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+                AuditController.instance!!.showToast(t.toString())
+            }
+        })
+    }
 }

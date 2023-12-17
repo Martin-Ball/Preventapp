@@ -4,16 +4,19 @@ import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.AuditInterface
 import com.martin.preventapp.model.admin.audit.AuditModel
 import com.martin.preventapp.model.entities.Response.AuditItem
+import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
 import com.martin.preventapp.model.entities.Response.ProductPrice
 import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReport
 import com.martin.preventapp.model.entities.UserModel
 import com.martin.preventapp.view.adapter.UsersActionInterface
 import com.martin.preventapp.view.entities.Client
+import com.martin.preventapp.view.entities.ClientPurchaseAudit
 import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.Turnover
 import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.client.PurchasesClientAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.price.PriceAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.ChangeStateAuditFragment
@@ -143,5 +146,17 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
 
     override fun getClientSelected(): String {
         return clientSelected ?: ""
+    }
+
+    override fun getClientPurchases(clientName: String) {
+        AuditModel.instance!!.getClientPurchases(clientName)
+    }
+
+    override fun showClientPurchases(response: ClientPurchasesAuditResponse) {
+        AuditClientFragment.instance!!.showFragment(PurchasesClientAuditFragment.newInstance(response.clientPurchases.map {
+            ClientPurchaseAudit(
+                it.date, it.emailSeller, it.totalAmount.toString(), it.clientName
+            )
+        }))
     }
 }

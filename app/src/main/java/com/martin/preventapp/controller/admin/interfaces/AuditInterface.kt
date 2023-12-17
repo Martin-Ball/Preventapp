@@ -3,6 +3,7 @@ package com.martin.preventapp.controller.admin.interfaces
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.martin.preventapp.model.entities.Response.AuditItem
+import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
 import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReport
 import com.martin.preventapp.model.entities.UserModel
@@ -45,6 +46,8 @@ interface AuditInterface {
         fun showClients(list: List<Client>)
         fun setClientSelected(client: String)
         fun getClientSelected(): String
+        fun getClientPurchases(clientName: String)
+        fun showClientPurchases(response: ClientPurchasesAuditResponse)
     }
 
     interface Model {
@@ -56,5 +59,6 @@ interface AuditInterface {
         fun getChangeStateOrder(username: String)
         fun getProductPrice(username: String, month: String, productName: String)
         fun getListProducts()
+        fun getClientPurchases(clientName: String)
     }
 }
