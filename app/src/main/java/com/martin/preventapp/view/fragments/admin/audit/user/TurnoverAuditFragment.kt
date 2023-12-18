@@ -100,7 +100,7 @@ class TurnoverAuditFragment : Fragment() {
 
         lineChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                binding.tvVolumme.text = "El cliente compro en el mes ${e!!.x.toInt()} $${e.y}"
+                binding.tvVolumme.text = "El preventista vendio en el mes ${e!!.x.toInt()} $${e.y}"
             }
 
             override fun onNothingSelected() {

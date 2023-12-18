@@ -13,7 +13,7 @@
         android:paddingStart="15dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="Volumen de compra por mes"
+        android:text="Volumen de venta por mes"
         android:textColor="@color/white"
         android:textSize="15dp" />
 
