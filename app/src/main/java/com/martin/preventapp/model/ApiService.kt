@@ -10,6 +10,7 @@ import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
 import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
 import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
+import com.martin.preventapp.model.entities.Response.CreationClientResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
@@ -206,4 +207,10 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("clientName") clientName: String
     ): Call<ClientPurchasesAuditResponse>
+
+    @GET("audit/getClientCreation")
+    fun getClientCreation(
+        @Header("x-token") token: String,
+        @Query("clientName") clientName: String
+    ): Call<CreationClientResponse>
 }

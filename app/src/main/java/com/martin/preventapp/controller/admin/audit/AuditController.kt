@@ -16,6 +16,7 @@ import com.martin.preventapp.view.entities.Product
 import com.martin.preventapp.view.entities.Turnover
 import com.martin.preventapp.view.fragments.admin.audit.client.AuditClientFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.ClientListAuditFragment
+import com.martin.preventapp.view.fragments.admin.audit.client.CreationClientAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.client.PurchasesClientAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.price.PriceAuditFragment
 import com.martin.preventapp.view.fragments.admin.audit.user.AuditUserFragment
@@ -158,5 +159,13 @@ class AuditController : AuditInterface.Controller, UsersActionInterface {
                 it.date, it.emailSeller, it.totalAmount.toString(), it.clientName
             )
         }))
+    }
+
+    override fun getCreationClient(clientName: String) {
+        AuditModel.instance!!.getCreationClient(clientName)
+    }
+
+    override fun showCreationClient(date: String) {
+        AuditClientFragment.instance!!.showFragment(CreationClientAuditFragment.newInstance(date))
     }
 }

@@ -9,6 +9,7 @@ import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
 import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
+import com.martin.preventapp.model.entities.Response.CreationClientResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
@@ -321,6 +322,38 @@ class AuditModel : AuditInterface.Model {
             }
 
             override fun onFailure(call: Call<ClientPurchasesAuditResponse>, t: Throwable) {
+                Log.e("Login error: ", t.toString())
+                AuditController.instance!!.showToast(t.toString())
+            }
+        })
+    }
+
+    override fun getCreationClient(clientName: String) {
+        val apiService = Application.getApiService()
+
+        val call = apiService.getClientCreation(
+            Application.getTokenShared(AuditController.instance!!.context!!) ?: "",
+            clientName
+        )
+
+        call.enqueue(object : Callback<CreationClientResponse> {
+            override fun onResponse(call: Call<CreationClientResponse>, response: Response<CreationClientResponse>) {
+                if (response.isSuccessful) {
+                    val responseList = response.body()
+                    if (responseList != null) {
+                        AuditController.instance!!.showCreationClient(responseList.date)
+                    }else{
+                        AuditController.instance!!.showToast("Error en la respuesta")
+                    }
+                } else if (response.code() == 400){
+                    response.errorBody()?.string()?.let { AuditController.instance!!.showToast(it) }
+                } else{
+                    Log.e("Login error: ", response.code().toString())
+                    AuditController.instance!!.showToast(response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<CreationClientResponse>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
                 AuditController.instance!!.showToast(t.toString())
             }

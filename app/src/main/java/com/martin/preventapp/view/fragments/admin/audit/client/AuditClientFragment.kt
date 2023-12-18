@@ -45,7 +45,7 @@ class AuditClientFragment : Fragment() {
 
         val client = AuditController.instance!!.getClientSelected()
 
-        itemsToAudit = arrayOf("Compras", "Pedidos", "Creacion del cliente")
+        itemsToAudit = arrayOf("Compras", "Creacion del cliente")
 
         val adapter = ArrayAdapter(requireContext(), R.layout.item_rol, itemsToAudit)
 
@@ -60,11 +60,8 @@ class AuditClientFragment : Fragment() {
                     "Compras" -> {
                         AuditController.instance!!.getClientPurchases(client)
                     }
-                    "Pedidos" -> {
-
-                    }
                     "Creacion del cliente" -> {
-
+                        AuditController.instance!!.getCreationClient(client)
                     }
                 }
             }

@@ -48,6 +48,8 @@ interface AuditInterface {
         fun getClientSelected(): String
         fun getClientPurchases(clientName: String)
         fun showClientPurchases(response: ClientPurchasesAuditResponse)
+        fun getCreationClient(clientName: String)
+        fun showCreationClient(date: String)
     }
 
     interface Model {
@@ -60,5 +62,6 @@ interface AuditInterface {
         fun getProductPrice(username: String, month: String, productName: String)
         fun getListProducts()
         fun getClientPurchases(clientName: String)
+        fun getCreationClient(clientName: String)
     }
 }
