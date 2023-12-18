@@ -48,7 +48,7 @@ class UserListFragment : Fragment() {
 
     fun setUsers(users: List<UserModel>){
         this.users = users
-        val adapter = UsersAdapter(requireContext(), users)
+        val adapter = UsersAdapter(requireContext(), users, UserManagerController.instance!!)
         binding.usersList.adapter = adapter
     }
 

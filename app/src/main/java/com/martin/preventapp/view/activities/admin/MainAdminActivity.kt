@@ -13,6 +13,7 @@ import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverControlle
 import com.martin.preventapp.databinding.ActivityMainAdminBinding
 import com.martin.preventapp.model.Application
 import com.martin.preventapp.view.entities.Permission
+import com.martin.preventapp.view.fragments.admin.audit.AuditFragment
 import com.martin.preventapp.view.fragments.admin.list.ListFragment
 import com.martin.preventapp.view.fragments.admin.neworders.ConfirmedOrdersFragment
 import com.martin.preventapp.view.fragments.admin.neworders.OrdersAdminFragment
@@ -112,6 +113,28 @@ class MainAdminActivity : AppCompatActivity() {
                     if (permissionToSendOrder.all { it.isEnabled }) {
                         ProfileController.instance!!.setContext(this)
                         showFragment(ProfileFragment.instance!!)
+                    } else {
+                        removeCurrentFragment()
+                        binding.tvEnabledAction.visibility = View.VISIBLE
+
+                        val disabledPermissions = permissionToSendOrder.filter { !it.isEnabled }
+                        val disabledPermissionsText = disabledPermissions.joinToString { it.name }
+
+                        binding.tvEnabledAction.text = "Los siguientes permisos están deshabilitados: $disabledPermissionsText"
+                    }
+
+                    true
+                }
+                R.id.navigation_audit -> {
+
+                    binding.tvEnabledAction.visibility = View.GONE
+                    val permissionToSendOrder : List<Permission> = permissions.filter {
+                        it.name.equals("Auditar", ignoreCase = true)
+                    }
+
+                    if (permissionToSendOrder.all { it.isEnabled }) {
+                        //ProfileController.instance!!.setContext(this)
+                        showFragment(AuditFragment.instance!!)
                     } else {
                         removeCurrentFragment()
                         binding.tvEnabledAction.visibility = View.VISIBLE

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.admin.users.UserFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_audit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Auditoria"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/tv_audit_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:text="Tipos de auditoria"
+        android:textColor="@color/white"
+        android:textSize="15dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_audit_user"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/ic_person"
+        android:drawableTint="@color/white"
+        android:gravity="center_vertical|center"
+        android:paddingHorizontal="20dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/button_not_pressed"
+        android:text="AUDITAR USUARIO"
+        android:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_audit_price"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/ic_price"
+        android:drawableTint="@color/white"
+        android:gravity="center_vertical|center"
+        android:paddingHorizontal="20dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/button_not_pressed"
+        android:text="AUDITAR PRECIOS"
+        android:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_audit_client"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableStart="@drawable/ic_person"
+        android:drawableTint="@color/white"
+        android:gravity="center_vertical|center"
+        android:paddingHorizontal="20dp"
+        android:layout_marginVertical="15dp"
+        android:background="@drawable/button_not_pressed"
+        android:text="AUDITAR CLIENTE"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

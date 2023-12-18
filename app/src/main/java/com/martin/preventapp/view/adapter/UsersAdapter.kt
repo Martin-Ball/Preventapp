@@ -14,7 +14,8 @@ import com.martin.preventapp.view.entities.User
 
 class UsersAdapter(
     private val context: Context,
-    private val items: List<UserModel>
+    private val items: List<UserModel>,
+    private val userActions: UsersActionInterface
 ): BaseAdapter()  {
     override fun getCount(): Int {
         return items.size
@@ -46,7 +47,7 @@ class UsersAdapter(
         viewHolder.userName.text = item.username
         viewHolder.rol.text = item.groupName
         viewHolder.actionButton.setOnClickListener {
-            UserManagerController.instance!!.showUser(item)
+            userActions.showUser(item)
         }
 
         return view
@@ -57,4 +58,8 @@ class UsersAdapter(
         val rol: TextView = view.findViewById(R.id.rol)
         val actionButton: ImageButton = view.findViewById(R.id.actionButton)
     }
+}
+
+interface UsersActionInterface {
+    fun showUser(user: UserModel)
 }

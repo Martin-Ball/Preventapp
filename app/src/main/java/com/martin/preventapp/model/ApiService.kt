@@ -8,14 +8,21 @@ import com.martin.preventapp.model.entities.Request.LoginRequest
 import com.martin.preventapp.model.entities.Request.PermissionsUpdate
 import com.martin.preventapp.model.entities.Request.RegisterRequest
 import com.martin.preventapp.model.entities.Request.UserToModifyRequest
+import com.martin.preventapp.model.entities.Response.ChangeStateAuditResponse
+import com.martin.preventapp.model.entities.Response.ClientPurchasesAuditResponse
+import com.martin.preventapp.model.entities.Response.CreationClientResponse
 import com.martin.preventapp.model.entities.Response.ListClientResponse
 import com.martin.preventapp.model.entities.Response.NewOrdersResponse
 import com.martin.preventapp.model.entities.Response.ListResponse
 import com.martin.preventapp.model.entities.Response.LoginResponse
+import com.martin.preventapp.model.entities.Response.LoginsAuditResponse
+import com.martin.preventapp.model.entities.Response.ProductsPriceResponse
 import com.martin.preventapp.model.entities.Response.ProfileResponse
+import com.martin.preventapp.model.entities.Response.RecommendedReportResponse
 import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
+import com.martin.preventapp.model.entities.Response.TurnoverResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -112,13 +119,15 @@ interface ApiService {
     @POST("orders/sendOrderToDelivery")
     fun sendOrderToDelivery(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @POST("orders/cancelOrder")
     fun cancelOrder(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @GET("orders/getOrdersByDate")
@@ -132,13 +141,15 @@ interface ApiService {
     @POST("orders/orderDelivered")
     fun orderDelivered(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @POST("orders/notDeliverOrder")
     fun notDeliverOrder(
         @Header("x-token") token: String,
-        @Query("idOrder") idOrder: Int
+        @Query("idOrder") idOrder: Int,
+        @Query("username") username: String
     ): Call<ResponseBody>
 
     @GET("recommended/getRecommendedProducts")
@@ -157,4 +168,49 @@ interface ApiService {
     fun restoreBackup(
         @Header("x-token") token: String
     ): Call<ResponseBody>
+
+    /**AUDIT**/
+    @GET("audit/getLoginUser")
+    fun getLogins(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<LoginsAuditResponse>
+
+    @GET("audit/getTurnoverUser")
+    fun getTurnover(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<TurnoverResponse>
+
+    @GET("audit/getReportsRecommendedUser")
+    fun getRecommendedReports(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<RecommendedReportResponse>
+
+    @GET("audit/getChangeStateUser")
+    fun getChangeStateOrder(
+        @Header("x-token") token: String,
+        @Query("username") username: String
+    ): Call<ChangeStateAuditResponse>
+
+    @GET("audit/getProductsPrice")
+    fun getProductPrice(
+        @Header("x-token") token: String,
+        @Query("username") username: String,
+        @Query("month") month: String,
+        @Query("productName") productName: String,
+    ): Call<ProductsPriceResponse>
+
+    @GET("audit/getClientPurchases")
+    fun getClientPurchases(
+        @Header("x-token") token: String,
+        @Query("clientName") clientName: String
+    ): Call<ClientPurchasesAuditResponse>
+
+    @GET("audit/getClientCreation")
+    fun getClientCreation(
+        @Header("x-token") token: String,
+        @Query("clientName") clientName: String
+    ): Call<CreationClientResponse>
 }

@@ -86,7 +86,8 @@ class OrdersToDeliverModel: OrdersToDeliverInterface.Model {
 
         val call = apiService.notDeliverOrder(
             Application.getTokenShared(OrdersToDeliverController.instance!!.context!!) ?: "",
-            id
+            id,
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ResponseBody> {
@@ -114,7 +115,8 @@ class OrdersToDeliverModel: OrdersToDeliverInterface.Model {
 
         val call = apiService.orderDelivered(
             Application.getTokenShared(OrdersToDeliverController.instance!!.context!!) ?: "",
-            id
+            id,
+            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ResponseBody> {
