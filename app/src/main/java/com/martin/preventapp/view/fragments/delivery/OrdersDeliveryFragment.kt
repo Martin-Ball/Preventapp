@@ -68,7 +68,7 @@ class OrdersDeliveryFragment : Fragment(), OrdersToDeliverInterface.View {
             binding.tvEmptyOrders.visibility = View.GONE
         }
 
-        adapter = NewOrdersAdapter(requireContext(), list, false, OrdersToDeliverController.instance!!)
+        adapter = NewOrdersAdapter(requireContext(), list, 2, OrdersToDeliverController.instance!!)
         binding.orderList.adapter = adapter
 
         binding.btnConfirmOrders.setOnClickListener {
@@ -78,6 +78,21 @@ class OrdersDeliveryFragment : Fragment(), OrdersToDeliverInterface.View {
                     ConfirmedOrdersActivity::class.java
                 )
             )
+        }
+
+        binding.btnCreateRoute.setOnClickListener {
+            val items = adapter.getSelectedItems()
+            if(items.isEmpty()){
+                showToast("Debe seleccionar pedidos")
+            }else{
+                requireActivity().startActivity(
+                    Intent(
+                        requireContext(),
+                        RouteMapActivity::class.java
+                    )
+                )
+                items
+            }
         }
     }
 

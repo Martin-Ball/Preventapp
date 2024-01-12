@@ -21,11 +21,13 @@ import com.martin.preventapp.model.entities.Response.ProfileResponse
 import com.martin.preventapp.model.entities.Response.RecommendedReportResponse
 import com.martin.preventapp.model.entities.Response.RecommendedResponse
 import com.martin.preventapp.model.entities.Response.RegisterResponse
+import com.martin.preventapp.model.entities.Response.RouteResponse
 import com.martin.preventapp.model.entities.Response.TokenResponse
 import com.martin.preventapp.model.entities.Response.TurnoverResponse
 import com.martin.preventapp.model.entities.Response.UsersResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -213,4 +215,12 @@ interface ApiService {
         @Header("x-token") token: String,
         @Query("clientName") clientName: String
     ): Call<CreationClientResponse>
+
+    //MAP
+    @GET("/v2/directions/driving-car")
+    suspend fun getRoute(
+        @Query("api_key") key: String,
+        @Query("start", encoded = true) start: String,
+        @Query("end", encoded = true) end: String
+    ):Response<RouteResponse>
 }

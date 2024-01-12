@@ -17,7 +17,7 @@ import com.martin.preventapp.view.entities.NewOrder
 class NewOrdersAdapter (
     private val context: Context,
     private val items: List<NewOrder>,
-    private val isAdmin: Boolean,
+    private val userType: Int, //1 admin 2 Repartidor 3 Preventista
     private val orderController: OrderDetail
 ) : BaseAdapter() {
     private val selectedPositions = mutableSetOf<Int>()
@@ -71,16 +71,13 @@ class NewOrdersAdapter (
         viewHolder.seller.text = item.seller
         viewHolder.date.text = item.date
         viewHolder.actionButton.setOnClickListener {
-            orderController.setItemToDetail(item, isAdmin, position, isAdmin)
+            orderController.setItemToDetail(item, userType == 1, position, userType == 1)
             orderController.showFragmentDetail()
         }
-        if(!isAdmin){
-            viewHolder.checkBox.visibility = View.GONE
-        }else{
-            viewHolder.checkBox.visibility = View.VISIBLE
-            viewHolder.checkBox.setOnClickListener {
-                toggleItemSelection(position)
-            }
+
+        viewHolder.checkBox.visibility = View.VISIBLE
+        viewHolder.checkBox.setOnClickListener {
+            toggleItemSelection(position)
         }
 
         return view

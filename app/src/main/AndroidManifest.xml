@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +18,15 @@
         android:theme="@style/Theme.Preventapp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB0mS3G01i5Uvsaxo5RE4bEh7iyFWgGTvA"/>
+
+        <activity
+            android:name=".view.fragments.delivery.RouteMapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_route_map"
+            android:theme="@style/Theme.Preventapp" />
         <activity
             android:name=".view.fragments.admin.audit.AuditActivity"
             android:exported="false" />

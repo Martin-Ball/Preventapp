@@ -95,7 +95,7 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
             binding.tvEmptyOrders.visibility = View.GONE
         }
 
-        adapter = NewOrdersAdapter(requireContext(), list, true, NewOrdersController.instance!!)
+        adapter = NewOrdersAdapter(requireContext(), list, 1, NewOrdersController.instance!!)
         binding.orderList.adapter = adapter
 
         binding.btnConfirmOrders.setOnClickListener {
