@@ -1,5 +1,6 @@
 package com.martin.preventapp.view.fragments.delivery
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -72,14 +74,27 @@ GoogleMap.OnMyLocationClickListener {
     private fun enableLocation() {
         if (!::map.isInitialized) return
         if (isPermissionsGranted()) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+
             map.isMyLocationEnabled = true
-            map.setOnMyLocationChangeListener { location ->
+
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
+                    map.clear()
                     currentLocation = LatLng(location.latitude, location.longitude)
                     createMarker()
                     createPolylines()
                 }
             }
+
         } else {
             requestLocationPermission()
         }
