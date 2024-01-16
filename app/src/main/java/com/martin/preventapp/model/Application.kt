@@ -22,7 +22,7 @@ class Application {
         private const val SHARED_USER = "USER"
         private const val SHARED_GROUP = "GROUP"
         private const val SHARED_PERMISSIONS = "PERMISSIONS"
-        const val API_KEY_MAPS = "5b3ce3597851110001cf62480522c04be0284a8588891a002abb3afd"
+        const val API_KEY_MAPS = ""
 
         fun getApiService(): ApiService {
             val client = OkHttpClient.Builder()
