@@ -65,7 +65,9 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
                                     Client(
                                         it.client.name,
                                         it.client.address,
-                                        it.client.deliveryHour
+                                        it.client.deliveryHour,
+                                        it.client.lat,
+                                        it.client.long
                                     ),
                                     it.sellerName,
                                     it.note
@@ -184,7 +186,9 @@ class NewOrdersModel : NewOrderInterface.Model, ConfirmedOrderInterface.Model {
                                 Client(
                                     it.client.name,
                                     it.client.address,
-                                    it.client.deliveryHour
+                                    it.client.deliveryHour,
+                                    it.client.lat,
+                                    it.client.long
                                 ),
                                 it.sellerName,
                                 it.note

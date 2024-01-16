@@ -85,13 +85,14 @@ class OrdersDeliveryFragment : Fragment(), OrdersToDeliverInterface.View {
             if(items.isEmpty()){
                 showToast("Debe seleccionar pedidos")
             }else{
+                OrdersToDeliverController.instance!!.setItemsToRoute(items)
+
                 requireActivity().startActivity(
                     Intent(
                         requireContext(),
                         RouteMapActivity::class.java
                     )
                 )
-                items
             }
         }
     }

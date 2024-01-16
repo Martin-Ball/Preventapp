@@ -11,4 +11,8 @@ class ClientRequest (
     val address: String,
     @SerialName("horarioEntrega")
     val deliveryHour: String,
+    @SerialName("lat")
+    val lat: String,
+    @SerialName("long")
+    val long: String,
 )

@@ -1,5 +1,6 @@
 package com.martin.preventapp.model
 
+import com.martin.preventapp.model.entities.Request.CoordinatesRequest
 import com.martin.preventapp.model.entities.Request.CreateClientListRequest
 import com.martin.preventapp.model.entities.Request.CreateListRequest
 import com.martin.preventapp.model.entities.Request.CreateOrderRequest
@@ -217,10 +218,9 @@ interface ApiService {
     ): Call<CreationClientResponse>
 
     //MAP
-    @GET("/v2/directions/driving-car")
-    suspend fun getRoute(
+    @POST("/v2/directions/driving-car/geojson")
+    fun getRoute(
         @Query("api_key") key: String,
-        @Query("start", encoded = true) start: String,
-        @Query("end", encoded = true) end: String
-    ):Response<RouteResponse>
+        @Body coordinates: CoordinatesRequest
+    ):Call<RouteResponse>
 }

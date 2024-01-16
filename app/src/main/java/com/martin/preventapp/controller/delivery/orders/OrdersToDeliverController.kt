@@ -3,6 +3,8 @@ package com.martin.preventapp.controller.delivery.orders
 import android.content.Context
 import com.martin.preventapp.controller.admin.interfaces.OrderDetail
 import com.martin.preventapp.controller.delivery.interfaces.OrdersToDeliverInterface
+import com.martin.preventapp.model.entities.Request.CoordinatesRequest
+import com.martin.preventapp.model.entities.Response.RouteResponse
 import com.martin.preventapp.model.entities.delivery.OrdersToDeliverModel
 import com.martin.preventapp.view.adapter.OrderItemClickListener
 import com.martin.preventapp.view.entities.NewOrder
@@ -16,6 +18,8 @@ class OrdersToDeliverController: OrdersToDeliverInterface.Controller, OrderDetai
 
     @JvmField
     var context: Context? = null
+    @JvmField
+    var view: OrdersToDeliverInterface.ViewMap? = null
 
     companion object {
         private var ordersToDeliver: OrdersToDeliverController? = null
@@ -31,6 +35,10 @@ class OrdersToDeliverController: OrdersToDeliverInterface.Controller, OrderDetai
 
     override fun setContext(context: Context) {
         this.context = context
+    }
+
+    override fun setView(view: OrdersToDeliverInterface.ViewMap) {
+        this.view = view
     }
 
     override fun getNewOrders(isAdmin: Boolean) {
@@ -75,6 +83,22 @@ class OrdersToDeliverController: OrdersToDeliverInterface.Controller, OrderDetai
 
     override fun showToast(text: String) {
         OrdersDeliveryFragment.instance!!.showToast(text)
+    }
+
+    override fun setItemsToRoute(list: List<NewOrder>?) {
+        OrdersToDeliverModel.instance!!.setItemsToRoute(list)
+    }
+
+    override fun getItemsToRoute(): List<NewOrder>? {
+        return OrdersToDeliverModel.instance!!.getItemsToRoute()
+    }
+
+    override fun getRoute(list: CoordinatesRequest) {
+        OrdersToDeliverModel.instance!!.getRoute(list)
+    }
+
+    override fun showRoute(route: RouteResponse) {
+        view!!.showRoute(route)
     }
 
     override fun setItemToDetail(

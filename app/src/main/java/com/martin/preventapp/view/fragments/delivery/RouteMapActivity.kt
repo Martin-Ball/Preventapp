@@ -16,17 +16,23 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
 import com.martin.preventapp.R
+import com.martin.preventapp.controller.delivery.interfaces.OrdersToDeliverInterface
+import com.martin.preventapp.controller.delivery.orders.OrdersToDeliverController
 import com.martin.preventapp.databinding.ActivityRouteMapBinding
+import com.martin.preventapp.model.entities.Request.CoordinatesRequest
+import com.martin.preventapp.model.entities.Response.RouteResponse
 
 class RouteMapActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener,
-GoogleMap.OnMyLocationClickListener {
+GoogleMap.OnMyLocationClickListener, OrdersToDeliverInterface.ViewMap {
 
     private lateinit var binding: ActivityRouteMapBinding
     private lateinit var map: GoogleMap
     private lateinit var currentLocation: LatLng
+    var poly: Polyline? = null
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -38,10 +44,14 @@ GoogleMap.OnMyLocationClickListener {
         binding = ActivityRouteMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        OrdersToDeliverController.instance!!.setView(this)
+
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         binding.backButton.setOnClickListener {
+            OrdersToDeliverController.instance!!.setItemsToRoute(null)
             finish()
         }
 
@@ -54,21 +64,45 @@ GoogleMap.OnMyLocationClickListener {
         map.setOnMyLocationClickListener(this)
     }
 
-    private fun createPolylines(){
+    private fun createRoute(){
         val polylineOptions = PolylineOptions()
             .add(currentLocation)
-            .add(LatLng(40.419173113350965,-3.705976009368897))
-            .add(LatLng( 40.4150807746539, -3.706072568893432))
-            .add(LatLng( 40.41517062907432, -3.7012016773223873))
-            .add(LatLng( 40.41713105928677, -3.7037122249603267))
-            .add(LatLng( 40.41926296230622,  -3.701287508010864))
-            .add(LatLng( 40.419173113350965, -3.7048280239105225))
-            .add(LatLng(40.419173113350965,-3.705976009368897))
-            .width(15f)
-            .color(ContextCompat.getColor(this, R.color.border))
+        var listCoordinates : MutableList<List<Double>> = mutableListOf()
+        listCoordinates.add(listOf(currentLocation.longitude, currentLocation.latitude))
+
+        OrdersToDeliverController.instance!!.getItemsToRoute()?.forEach {
+            val latlng = LatLng(it.client.lat.toDouble(), it.client.long.toDouble())
+            polylineOptions.add(latlng)
+            map.addMarker(
+                MarkerOptions()
+                    .position(latlng)
+                    .title(it.client.name)
+            )
+            listCoordinates.add(listOf(it.client.long.toDouble(), it.client.lat.toDouble()))
+        }
+
+        OrdersToDeliverController.instance!!.getRoute(CoordinatesRequest(
+                listCoordinates
+            )
+        )
+
+        /*polylineOptions.width(15f).color(ContextCompat.getColor(this, R.color.border))
+
         val polyline = map.addPolyline(polylineOptions)
         polyline.startCap = RoundCap()
-        polyline.endCap = RoundCap()
+        polyline.endCap = RoundCap()*/
+    }
+
+    override fun showRoute(route: RouteResponse) {
+        val polyLineOptions = PolylineOptions()
+        route.features?.first()?.geometry?.coordinates?.forEach {
+            polyLineOptions.add(LatLng(it[1], it[0]))
+        }
+        polyLineOptions.width(15f).color(ContextCompat.getColor(this, R.color.border))
+
+        runOnUiThread {
+            poly = map.addPolyline(polyLineOptions)
+        }
     }
 
     private fun enableLocation() {
@@ -91,7 +125,7 @@ GoogleMap.OnMyLocationClickListener {
                     map.clear()
                     currentLocation = LatLng(location.latitude, location.longitude)
                     createMarker()
-                    createPolylines()
+                    createRoute()
                 }
             }
 
@@ -102,7 +136,7 @@ GoogleMap.OnMyLocationClickListener {
 
     private fun createMarker() {
         map.addMarker(MarkerOptions().position(currentLocation).title(""))
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 18f),
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14f),
             1500,
             null)
     }
@@ -128,8 +162,19 @@ GoogleMap.OnMyLocationClickListener {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
             REQUEST_CODE_LOCATION -> if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
                 map.isMyLocationEnabled = true
             }else{
                 Toast.makeText(this, "Para activar la localización ve a ajustes y acepta los permisos", Toast.LENGTH_SHORT).show()

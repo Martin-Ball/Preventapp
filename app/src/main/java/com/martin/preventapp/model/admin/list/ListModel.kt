@@ -118,7 +118,7 @@ class ListModel : ListControllerInterface.Model {
             Application.getTokenShared(ListController.instance!!.context!!) ?: "",
             CreateClientListRequest(
                 Application.getUserShared(ListController.instance!!.context!!) ?: "",
-                list.map { ClientRequest(it.name, it.address, it.deliveryHour) }
+                list.map { ClientRequest(it.name, it.address, it.deliveryHour, it.lat, it.long) }
             )
         )
 
@@ -161,7 +161,9 @@ class ListModel : ListControllerInterface.Model {
                                 responseList.listClient.map { Client(
                                     it.name,
                                     it.address,
-                                    it.deliveryHour
+                                    it.deliveryHour,
+                                    it.lat,
+                                    it.long
                                 ) }
                             )
                         )

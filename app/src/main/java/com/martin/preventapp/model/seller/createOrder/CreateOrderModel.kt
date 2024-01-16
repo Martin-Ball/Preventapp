@@ -113,7 +113,9 @@ class CreateOrderModel : CreateOrderInterface.Model {
                             responseList.listClient.map { Client(
                                 it.name,
                                 it.address,
-                                it.deliveryHour
+                                it.deliveryHour,
+                                it.lat,
+                                it.long
                             ) }
                         )
                     }

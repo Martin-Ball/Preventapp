@@ -90,8 +90,10 @@ class ClientListActivity : AppCompatActivity(), ListControllerInterface.View {
                 val clientName: String = row.getCell(0).stringCellValue
                 val address: String = row.getCell(1).stringCellValue
                 val deliveryHour: String = row.getCell(2).stringCellValue
+                val lat: String = row.getCell(3).numericCellValue.toString()
+                val long: String = row.getCell(4).numericCellValue.toString()
 
-                val client = Client(clientName, address, deliveryHour)
+                val client = Client(clientName, address, deliveryHour, lat, long)
                 clientsListXls.add(client)
             }
 
