@@ -15,14 +15,14 @@ import retrofit2.Retrofit
 
 class Application {
     companion object {
-        private const val BASE_URL = "http://192.168.0.148:8000/api/"
+        private const val BASE_URL = "https://preventapp.site/api/"
         private const val BASE_URL_ROUTE = "https://api.openrouteservice.org/"
         private const val SHARED_NAME = "PREVENTAPP"
         private const val SHARED_TOKEN = "TOKEN"
         private const val SHARED_USER = "USER"
         private const val SHARED_GROUP = "GROUP"
         private const val SHARED_PERMISSIONS = "PERMISSIONS"
-        const val API_KEY_MAPS = ""
+        const val API_KEY_MAPS = "5b3ce3597851110001cf62480522c04be0284a8588891a002abb3afd"
 
         fun getApiService(): ApiService {
             val client = OkHttpClient.Builder()

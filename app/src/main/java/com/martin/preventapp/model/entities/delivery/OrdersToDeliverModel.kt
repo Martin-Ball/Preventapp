@@ -123,7 +123,7 @@ class OrdersToDeliverModel: OrdersToDeliverInterface.Model {
         val call = apiService.orderDelivered(
             Application.getTokenShared(OrdersToDeliverController.instance!!.context!!) ?: "",
             id,
-            Application.getUserShared(NewOrdersController.instance!!.context!!) ?: ""
+            Application.getUserShared(OrdersToDeliverController.instance!!.context!!) ?: ""
         )
 
         call.enqueue(object : Callback<ResponseBody> {

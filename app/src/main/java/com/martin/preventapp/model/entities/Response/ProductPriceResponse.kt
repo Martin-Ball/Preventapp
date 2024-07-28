@@ -24,7 +24,7 @@ data class ProductData(
     @SerialName("nombreLista")
     val listName: String,
     @SerialName("precioUnitario")
-    val unitPrice: Int,
+    val unitPrice: Float,
     @SerialName("fechaVigencia")
     val dateValidity: String,
     @SerialName("fechaCreacion")

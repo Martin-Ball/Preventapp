@@ -1,12 +1,19 @@
 package com.martin.preventapp.view.fragments.admin.neworders
 
+import android.Manifest
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -29,6 +36,8 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     private var isEnabled: Boolean = true
     private lateinit var listOrders: List<NewOrder>
     private lateinit var adapter: NewOrdersAdapter
+
+    private val REQUEST_WRITE_PERMISSION = 100
 
     companion object {
         private var ordersAdminFragment: OrdersAdminFragment? = null
@@ -55,6 +64,11 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
 
         NewOrdersController.instance!!.getNewOrders(true)
 
+        setupExportButton()
+
+    }
+
+    private fun setupExportButton() {
         binding.btnExport.setOnClickListener {
             try {
                 if(adapter.getSelectedItems().isEmpty()){
@@ -76,7 +90,6 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
                 println("Error al generar el archivo Excel: ${e.message}")
             }
         }
-
     }
 
     override fun showFragmentDetail() {
@@ -108,56 +121,68 @@ class OrdersAdminFragment : Fragment(), NewOrderInterface.ViewOrders {
     }
 
     private fun generateExcelFile(orders: List<NewOrder>) {
-        orders.forEach {order ->
-            val workbook = XSSFWorkbook()
-            val sheet = workbook.createSheet("Pedido")
+        try {
+            orders.forEach { order ->
+                val workbook = XSSFWorkbook()
+                val sheet = workbook.createSheet("Pedido")
 
-            val row0 = sheet.createRow(0)
-            row0.createCell(0).setCellValue("Nombre del Cliente")
-            row0.createCell(1).setCellValue(order.client.name)
+                val row0 = sheet.createRow(0)
+                row0.createCell(0).setCellValue("Nombre del Cliente")
+                row0.createCell(1).setCellValue(order.client.name)
 
+                val row1 = sheet.createRow(1)
+                row1.createCell(0).setCellValue("Dirección")
+                row1.createCell(1).setCellValue(order.client.address)
 
-            val row1 = sheet.createRow(1)
-            row1.createCell(0).setCellValue("Direccion")
-            row1.createCell(1).setCellValue(order.client.address)
+                val row2 = sheet.createRow(2)
+                row2.createCell(0).setCellValue("Horario de entrega")
+                row2.createCell(1).setCellValue(order.client.deliveryHour)
 
+                val headerRow = sheet.createRow(5)
 
-            val row2 = sheet.createRow(2)
-            row2.createCell(0).setCellValue("Horario de entrega")
-            row2.createCell(1).setCellValue(order.client.deliveryHour)
+                headerRow.createCell(0).setCellValue("Nombre")
+                headerRow.createCell(1).setCellValue("Marca")
+                headerRow.createCell(2).setCellValue("Unidad")
+                headerRow.createCell(3).setCellValue("Cantidad")
+                headerRow.createCell(4).setCellValue("Precio")
 
-            val headerRow = sheet.createRow(5)
+                var length = 0
 
-            headerRow.createCell(0).setCellValue("Nombre")
-            headerRow.createCell(1).setCellValue("Marca")
-            headerRow.createCell(2).setCellValue("Unidad")
-            headerRow.createCell(3).setCellValue("Cantidad")
-            headerRow.createCell(4).setCellValue("Precio")
+                for ((index, product) in order.products.withIndex()) {
+                    val row = sheet.createRow(index + 6)
+                    row.createCell(0).setCellValue(product.productName)
+                    row.createCell(1).setCellValue(product.brand)
+                    row.createCell(2).setCellValue(product.unit)
+                    row.createCell(3).setCellValue(product.amount.toString())
+                    row.createCell(4).setCellValue("$${product.price}")
+                    length = product.productName.length
+                }
 
-            var length = 0
+                for (i in 0..4) {
+                    sheet.setColumnWidth(i, length * 255)
+                }
 
-            for ((index, product) in order.products.withIndex()) {
-                val row = sheet.createRow(index + 6)
-                row.createCell(0).setCellValue(product.productName)
-                row.createCell(1).setCellValue(product.brand)
-                row.createCell(2).setCellValue(product.unit)
-                row.createCell(3).setCellValue(product.amount.toString())
-                row.createCell(4).setCellValue("$${product.price}")
-                length = product.productName.length
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.Downloads.DISPLAY_NAME, "Pedido ${order.client.name.trim()}-${order.date}.xlsx")
+                    put(MediaStore.Downloads.MIME_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                }
+
+                val uri = requireContext().contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+
+                uri?.let {
+                    val outputStream = requireContext().contentResolver.openOutputStream(it)
+                    outputStream?.use { stream ->
+                        workbook.write(stream)
+                    }
+                }
+                workbook.close()
             }
-
-            for (i in 0..3){
-                sheet.setColumnWidth(i, length * 255)
-            }
-
-            val file = File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS),
-                "Pedido ${order.client.name.trim()}-${order.date}.xlsx")
-            val outputStream = FileOutputStream(file)
-            workbook.write(outputStream)
-            outputStream.close()
+        } catch (e: Exception) {
+            Log.e("EXCEL ERROR", e.message.toString())
         }
     }
+
 
     override fun showToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_LONG).show()
