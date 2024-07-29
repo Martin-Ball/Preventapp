@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.seller.create.CreateOrderFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/next_step_order"
-        android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,7 +80,6 @@
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next_step_order"
