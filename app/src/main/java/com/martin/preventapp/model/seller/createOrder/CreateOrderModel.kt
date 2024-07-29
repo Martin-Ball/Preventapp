@@ -60,6 +60,7 @@ class CreateOrderModel : CreateOrderInterface.Model {
     }
 
     override fun sendOrder(order: OrderModel) {
+        CreateOrderController.instance!!.showLoader(true)
         val apiService = Application.getApiService()
 
         val call = apiService.createOrder(
@@ -82,9 +83,11 @@ class CreateOrderModel : CreateOrderInterface.Model {
                         itemList.clear()
 
                         CreateOrderController.instance!!.goToMain()
+                        CreateOrderController.instance!!.showLoader(false)
                     }
                 } else if (response.code() == 400){
                     response.errorBody()?.string()?.let { CreateOrderController.instance!!.showToast(it) }
+                    CreateOrderController.instance!!.showLoader(false)
                 } else{
                     Log.e("Login error: ", response.code().toString())
                 }
@@ -92,6 +95,7 @@ class CreateOrderModel : CreateOrderInterface.Model {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("Login error: ", t.toString())
+                CreateOrderController.instance!!.showLoader(false)
             }
         })
     }

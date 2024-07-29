@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/tv_enabled_action"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="Accion no habilitada para el usuario"
         android:textColor="@color/white"
         android:textSize="25dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/tv_title_send"
@@ -25,7 +25,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@id/tv_enabled_action" />
 
     <TextView
         android:id="@+id/tv_new_client"
@@ -35,9 +35,7 @@
         android:text="Nuevos pedidos"
         android:textColor="@color/white"
         android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        android:layout_below="@id/tv_title_send" />
 
     <TextView
         android:id="@+id/tv_empty_orders"
@@ -50,53 +48,46 @@
         android:textColor="@color/white"
         android:textSize="15dp"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        android:layout_below="@id/tv_new_client" />
 
     <LinearLayout
+        android:id="@+id/ll_order_list"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:orientation="vertical"
-        android:paddingVertical="10dp">
+        android:paddingVertical="10dp"
+        android:layout_below="@id/tv_empty_orders"
+        android:layout_above="@id/btn_confirm_orders">
 
         <ListView
             android:id="@+id/order_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_new_order"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/blue" />
-
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_route"
         android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
         android:text="CREAR RUTA DE ENTREGA"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_profile_type"
-        app:layout_constraintVertical_bias="0.256" />
+        android:layout_centerHorizontal="true" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_confirm_orders"
         android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="15dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/btn_create_route"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_not_pressed"
         android:text="BUSCAR PEDIDOS POR FECHA"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_profile_type"
-        app:layout_constraintVertical_bias="0.256" />
-</LinearLayout>
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

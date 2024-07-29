@@ -17,6 +17,7 @@ interface CreateOrderInterface {
 
     interface CompleteOrderView {
         fun showFragment(fragment: Fragment)
+        fun showLoader(boolean: Boolean)
         fun goToMain()
     }
 
@@ -40,6 +41,7 @@ interface CreateOrderInterface {
         fun getOrder() : OrderModel
         fun sendOrder(order: OrderModel)
         fun showToast(text: String)
+        fun showLoader(show: Boolean)
 
         fun goToMain()
     }

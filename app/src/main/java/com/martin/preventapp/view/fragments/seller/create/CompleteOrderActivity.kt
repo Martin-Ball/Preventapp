@@ -2,6 +2,7 @@ package com.martin.preventapp.view.fragments.seller.create
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -39,5 +40,9 @@ class CompleteOrderActivity : AppCompatActivity(), CreateOrderInterface.Complete
         transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
+    }
+
+    override fun showLoader(boolean: Boolean) {
+        binding.progressBar.visibility = if (boolean) View.VISIBLE else View.GONE
     }
 }

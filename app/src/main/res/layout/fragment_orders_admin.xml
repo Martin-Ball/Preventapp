@@ -57,7 +57,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="400dp"
         android:orientation="vertical"
         android:paddingVertical="10dp">
 
@@ -74,7 +74,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_confirm_orders"
         android:layout_width="327dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"
@@ -93,7 +93,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_export"
         android:layout_width="327dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginVertical="15dp"
         android:background="@drawable/button_not_pressed"

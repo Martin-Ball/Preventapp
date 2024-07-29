@@ -184,7 +184,6 @@ GoogleMap.OnMyLocationClickListener, OrdersToDeliverInterface.ViewMap {
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        Toast.makeText(this, "Boton pulsado", Toast.LENGTH_SHORT).show()
         return false
     }
 

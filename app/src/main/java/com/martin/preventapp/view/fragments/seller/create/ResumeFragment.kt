@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.martin.preventapp.controller.seller.createOrder.CreateOrderController
 import com.martin.preventapp.databinding.FragmentResumeBinding
 import com.martin.preventapp.model.seller.createOrder.CreateOrderModel
+import com.martin.preventapp.view.activities.admin.MainAdminActivity
 import com.martin.preventapp.view.adapter.ProductResumeAdapter
 import com.martin.preventapp.view.entities.ItemAmount
 
@@ -61,6 +62,4 @@ class ResumeFragment : Fragment() {
             requireActivity().onBackPressed()
         }
     }
-
-
 }

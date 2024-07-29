@@ -2,11 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Preventapp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.Preventapp" parent="Base.Theme.Preventapp">
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -14,6 +17,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="colorPrimaryDark">@color/background</item>
         <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="ButtonWithBorder">

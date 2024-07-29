@@ -78,6 +78,10 @@ class CreateOrderController : CreateOrderInterface.Controller {
         CreateOrderFragment.instance!!.showToast(text)
     }
 
+    override fun showLoader(show: Boolean) {
+        viewClient!!.showLoader(show)
+    }
+
     override fun goToMain() {
         viewClient!!.goToMain()
         CreateOrderFragment.instance!!.clearItems()
